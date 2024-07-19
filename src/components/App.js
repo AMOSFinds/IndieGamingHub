@@ -1,0 +1,36 @@
+import React from "react";
+import Navbar from "./Navbar";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./Home/Home";
+import AllGames from "./Home/AllGames/AllGames";
+import AllDevs from "./Home/DevProfile/AllDevs";
+import DevProfileForm from "./Home/DevProfile/DevProfileForm";
+import Favorites from "./Home/AllGames/Favorites";
+import { AuthProvider, useAuth } from "./Authentication/AuthContext";
+import SignUp from "./Authentication/SignUp";
+import SignIn from "./Authentication/SignIn";
+import Algorithm from "./Home/Recommendations/Algorithm";
+import Contact from "./Contact";
+
+function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/allgames" element={<AllGames />} />
+          <Route path="/all-devs" element={<AllDevs />} />
+          <Route path="/devprofile-form" element={<DevProfileForm />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/algorithm" element={<Algorithm />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
+  );
+}
+
+export default App;

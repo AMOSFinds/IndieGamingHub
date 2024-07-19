@@ -1,0 +1,56 @@
+.slideshow {
+  position: "relative";
+  width: "600px";
+  margin: "auto";
+}
+
+.slideshow-img {
+  width: "100%";
+  height: "300px";
+  object-fit: "cover";
+  margin-top: "50px";
+}
+
+.slide-arrows {
+  position: "absolute";
+  top: "50%";
+  transform: "translateY(-50%)";
+  width: "100%";
+}
+
+.slideshow-arrow {
+  font-size: 24px; /* Large arrow icons */
+  /* background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  );  */
+  padding: 5px 10px; /* Padding around arrows */
+  border-radius: 50%; /* Circular background */
+  cursor: pointer;
+  color: #ffd23f;
+  position: "absolute";
+  left: "-100px";
+  cursor: "pointer";
+  font-size: "50px";
+}
+
+.slideshow-arrow:hover {
+  /* background-color: rgba(0, 0, 0, 0.8);  */
+  color: #ff8911;
+}
+
+.slideshow-body {
+  padding: "10px";
+}
+
+.game-title {
+  text-align: "center";
+  font-size: "30px";
+  color: "#ee4266";
+}
+
+.game-text {
+  font-size: "20px";
+}
