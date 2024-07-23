@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { db, auth } from "../../firebase/firebase-config";
-import { doc, setDoc, getDoc, updateDoc, increment } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  increment,
+} from "firebase/firestore";
 import "./AllGames.css";
 import CustomAlert from "../../CustomAlert";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 function AllGamesCard({ allgame }) {
+  const [user, setUser] = useState(null);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [userRating, setUserRating] = useState(null);
@@ -14,6 +23,9 @@ function AllGamesCard({ allgame }) {
     decent: 0,
     bad: 0,
   });
+  const [loading, setLoading] = useState(true);
+  const auth = getAuth();
+  // const user = auth.currentUser;
 
   const addToFavorites = async () => {
     try {
@@ -48,15 +60,12 @@ function AllGamesCard({ allgame }) {
   };
 
   useEffect(() => {
-    const fetchUserRating = async () => {
-      const user = auth.currentUser;
-      if (user) {
-        const ratingDoc = await getDoc(
-          doc(db, `users/${user.uid}/ratings`, allgame.id.toString())
-        );
-        if (ratingDoc.exists()) {
-          setUserRating(ratingDoc.data().rating);
-        }
+    const fetchUserRating = async (user) => {
+      const ratingDoc = await getDoc(
+        doc(db, `users/${user.uid}/ratings`, allgame.id.toString())
+      );
+      if (ratingDoc.exists()) {
+        setUserRating(ratingDoc.data().rating);
       }
     };
 
@@ -74,8 +83,18 @@ function AllGamesCard({ allgame }) {
       }
     };
 
-    fetchUserRating();
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      if (currentUser) {
+        fetchUserRating(currentUser);
+      }
+      setLoading(false);
+    });
+
     fetchRatingCounts();
+
+    return () => unsubscribe();
   }, [allgame.id]);
 
   const handleRating = async (rating) => {
@@ -106,7 +125,8 @@ function AllGamesCard({ allgame }) {
         // Undo previous rating if it exists
         if (userRating) {
           await updateDoc(gameRef, {
-            [`ratings.${userRating}`]: increment(-1),
+            [`ratings.${userRating.toLowerCase().replace(" ", "")}`]:
+              increment(-1),
           });
         }
 
@@ -117,7 +137,8 @@ function AllGamesCard({ allgame }) {
         if (newRating) {
           await setDoc(userRatingsRef, { rating: newRating }, { merge: true });
           await updateDoc(gameRef, {
-            [`ratings.${newRating}`]: increment(1),
+            [`ratings.${newRating.toLowerCase().replace(" ", "")}`]:
+              increment(1),
           });
         } else {
           await setDoc(userRatingsRef, { rating: newRating }, { merge: true });
@@ -129,7 +150,11 @@ function AllGamesCard({ allgame }) {
           setRatingCounts(updatedGameDoc.data().ratings);
         }
       } else {
-        alert("You need to be signed in to rate games.");
+        setAlertMessage("You need to be signed in to rate games.");
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 3000); // Hide alert after 3 seconds
       }
     } catch (error) {
       console.error("Error rating game:", error);
@@ -160,8 +185,8 @@ function AllGamesCard({ allgame }) {
               }`}
               onClick={() => handleRating(rating)}
             >
-              {rating.replace(/([A-Z])/g, " $1").trim()} ({ratingCounts[rating]}
-              )
+              {rating.replace(/([A-Z])/g, " $1").trim()} (
+              {ratingCounts[rating.toLowerCase().replace(" ", "")] || 0})
             </button>
           ))}
         </div>
