@@ -7,6 +7,11 @@ import {
   getDoc,
   updateDoc,
   increment,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  onSnapshot,
 } from "firebase/firestore";
 import "./AllGames.css";
 import CustomAlert from "../../CustomAlert";
@@ -24,7 +29,11 @@ function AllGamesCard({ allgame }) {
     bad: 0,
   });
   const [loading, setLoading] = useState(true);
+  const [reviews, setReviews] = useState([]);
+  const [newReview, setNewReview] = useState("");
+
   const auth = getAuth();
+  const db = getFirestore();
   // const user = auth.currentUser;
 
   const addToFavorites = async () => {
@@ -60,30 +69,55 @@ function AllGamesCard({ allgame }) {
   };
 
   useEffect(() => {
+    const fetchReviews = () => {
+      try {
+        const reviewsRef = collection(
+          db,
+          "games",
+          allgame.id.toString(),
+          "reviews"
+        );
+        const q = query(reviewsRef, orderBy("timestamp", "desc"));
+        onSnapshot(q, (snapshot) => {
+          const reviewsList = snapshot.docs.map((doc) => doc.data());
+          setReviews(reviewsList);
+        });
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
+    };
+
     const fetchUserRating = async (user) => {
-      const ratingDoc = await getDoc(
-        doc(db, `users/${user.uid}/ratings`, allgame.id.toString())
-      );
-      if (ratingDoc.exists()) {
-        setUserRating(ratingDoc.data().rating);
+      try {
+        const ratingDoc = await getDoc(
+          doc(db, `users/${user.uid}/ratings`, allgame.id.toString())
+        );
+        if (ratingDoc.exists()) {
+          setUserRating(ratingDoc.data().rating);
+        }
+      } catch (error) {
+        console.error("Error fetching user rating:", error);
       }
     };
 
     const fetchRatingCounts = async () => {
-      const gameDoc = await getDoc(doc(db, "games", allgame.id.toString()));
-      if (gameDoc.exists()) {
-        setRatingCounts(
-          gameDoc.data().ratings || {
-            veryGood: 0,
-            good: 0,
-            decent: 0,
-            bad: 0,
-          }
-        );
+      try {
+        const gameDoc = await getDoc(doc(db, "games", allgame.id.toString()));
+        if (gameDoc.exists()) {
+          setRatingCounts(
+            gameDoc.data().ratings || {
+              veryGood: 0,
+              good: 0,
+              decent: 0,
+              bad: 0,
+            }
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching rating counts:", error);
       }
     };
 
-    const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
@@ -93,9 +127,10 @@ function AllGamesCard({ allgame }) {
     });
 
     fetchRatingCounts();
+    fetchReviews();
 
     return () => unsubscribe();
-  }, [allgame.id]);
+  }, [allgame.id, db]);
 
   const handleRating = async (rating) => {
     try {
@@ -110,7 +145,6 @@ function AllGamesCard({ allgame }) {
         const gameRef = doc(db, "games", allgame.id.toString());
         const gameDoc = await getDoc(gameRef);
 
-        // If the game document does not exist, create it
         if (!gameDoc.exists()) {
           await setDoc(gameRef, {
             ratings: {
@@ -122,7 +156,6 @@ function AllGamesCard({ allgame }) {
           });
         }
 
-        // Undo previous rating if it exists
         if (userRating) {
           await updateDoc(gameRef, {
             [`ratings.${userRating.toLowerCase().replace(" ", "")}`]:
@@ -130,7 +163,6 @@ function AllGamesCard({ allgame }) {
           });
         }
 
-        // Set or undo the new rating
         const newRating = userRating === rating ? null : rating;
         setUserRating(newRating);
 
@@ -144,7 +176,6 @@ function AllGamesCard({ allgame }) {
           await setDoc(userRatingsRef, { rating: newRating }, { merge: true });
         }
 
-        // Fetch updated rating counts
         const updatedGameDoc = await getDoc(gameRef);
         if (updatedGameDoc.exists()) {
           setRatingCounts(updatedGameDoc.data().ratings);
@@ -158,6 +189,35 @@ function AllGamesCard({ allgame }) {
       }
     } catch (error) {
       console.error("Error rating game:", error);
+    }
+  };
+
+  const handleAddReview = async () => {
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        const reviewData = {
+          username: userDoc.data().username,
+          profilePicUrl: userDoc.data().profilePicUrl,
+          comment: newReview,
+          timestamp: new Date(),
+        };
+
+        await addDoc(
+          collection(db, "games", allgame.id.toString(), "reviews"),
+          reviewData
+        );
+        setNewReview("");
+      } else {
+        setAlertMessage("You need to be signed in to add reviews.");
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 3000);
+      }
+    } catch (error) {
+      console.error("Error adding review:", error);
     }
   };
 
@@ -176,19 +236,53 @@ function AllGamesCard({ allgame }) {
         <button className="btn-favorite" onClick={addToFavorites}>
           Add to Favorites
         </button>
-        <div className="rating-system">
-          {["Very Good", "Good", "Decent", "Bad"].map((rating) => (
-            <button
-              key={rating}
-              className={`rating-button ${
-                userRating === rating ? "selected" : ""
-              }`}
-              onClick={() => handleRating(rating)}
-            >
-              {rating.replace(/([A-Z])/g, " $1").trim()} (
-              {ratingCounts[rating.toLowerCase().replace(" ", "")] || 0})
-            </button>
-          ))}
+        <div className="game-content">
+          <div className="rating-system">
+            {["Very Good", "Good", "Decent", "Bad"].map((rating) => (
+              <button
+                key={rating}
+                className={`rating-button ${
+                  userRating === rating ? "selected" : ""
+                }`}
+                onClick={() => handleRating(rating)}
+              >
+                {rating.replace(/([A-Z])/g, " $1").trim()} (
+                {ratingCounts[rating.toLowerCase().replace(" ", "")] || 0})
+              </button>
+            ))}
+          </div>
+          <div className="review-section">
+            {/* <h2 className="review-title">Reviews</h2> */}
+            <div className="review-entries">
+              <div className="add-review">
+                {user && (
+                  <img
+                    src={user.photoURL || "default-profile-pic-url"}
+                    alt="Profile"
+                  />
+                )}
+                <textarea
+                  value={newReview}
+                  onChange={(e) => setNewReview(e.target.value)}
+                  placeholder="Write a review..."
+                ></textarea>
+                <button onClick={handleAddReview}>Add Review</button>
+              </div>
+              {reviews.map((review, index) => (
+                <div key={index} className="review-entry">
+                  <img
+                    src={review.profilePicUrl}
+                    alt="Profile"
+                    className="review-profile-pic"
+                  />
+                  <div className="review-content">
+                    <p className="review-username">{review.username}</p>
+                    <p className="review-comment">{review.comment}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 

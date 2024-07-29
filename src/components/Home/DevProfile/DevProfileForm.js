@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { db, serverTimestamp } from "../../firebase/firebase-config";
-import { collection, addDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 import { getFirestore, doc, setDoc } from "firebase/firestore";

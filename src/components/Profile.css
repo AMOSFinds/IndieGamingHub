@@ -1,0 +1,39 @@
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.profile-info {
+  text-align: center;
+}
+
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.profile-username {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #76abae;
+}
+
+.profile-email {
+  font-size: 18px;
+  color: gray;
+  margin-bottom: 20px;
+}
+
+.favorites {
+  margin-top: 20px;
+}
+
+.favorites h2 {
+  font-size: 20px;
+  font-weight: bold;
+}

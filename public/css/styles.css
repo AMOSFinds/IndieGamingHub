@@ -678,6 +678,14 @@ input[type="radio"] {
   border-radius: 5px;
 }
 
+.profile-input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
 .signin-button {
   width: calc(100%);
   padding: 10px;
