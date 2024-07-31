@@ -27,17 +27,17 @@ const allgames = [
     release: "Release Date: September 5 2023",
     platform: "Platforms: PC, Switch, PS4, XBOX ONE",
   },
-  // {
-  //   id: 3,
-  //   title: "Wall World",
-  //   imageUrl: "images/wallworld.png",
-  //   description:
-  //     "A mining rogue-lite with tower defense elements. Explore procedurally generated mines and discover fantastical biomes. Find resources and technologies for purchasing valuable upgrades. Fight off hordes of aggressive monsters using your mobile base.",
-  //   developer: "By Alawar",
-  //   genre: "Genre: Adventure",
-  //   release: "Release Date: April 5 2023",
-  //   platform: "Platforms: PC, Switch, PS5, XBOX SERIES X, SERIES S",
-  // },
+  {
+    id: 3,
+    title: "Wall World",
+    imageUrl: "images/wallworld2.jpg",
+    description:
+      "A mining rogue-lite with tower defense elements. Explore procedurally generated mines and discover fantastical biomes. Find resources and technologies for purchasing valuable upgrades. Fight off hordes of aggressive monsters using your mobile base.",
+    developer: "By Alawar",
+    genre: "Genre: Adventure",
+    release: "Release Date: April 5 2023",
+    platform: "Platforms: PC, Switch, PS5, XBOX SERIES X, SERIES S",
+  },
   {
     id: 4,
     title: "Edenfall: Legacy of the First Wardens",
@@ -49,17 +49,17 @@ const allgames = [
     release: "Release Date: TBA",
     platform: "Platforms: PC",
   },
-  // {
-  //   id: 5,
-  //   title: "Isles of Sea and Sky",
-  //   imageUrl: "images/seasky.jpg",
-  //   description:
-  //     " Solve novel block-pushing puzzles while unearthing a mystifying narrative.",
-  //   developer: "By Cicada Games",
-  //   genre: "Genre: Adventure, Puzzle",
-  //   release: "Release Date: March 31 2024",
-  //   platform: "Platforms: PC, Switch",
-  // },
+  {
+    id: 5,
+    title: "Isles of Sea and Sky",
+    imageUrl: "images/seasky.jpg",
+    description:
+      " Solve novel block-pushing puzzles while unearthing a mystifying narrative.",
+    developer: "By Cicada Games",
+    genre: "Genre: Adventure, Puzzle",
+    release: "Release Date: March 31 2024",
+    platform: "Platforms: PC, Switch",
+  },
   {
     id: 6,
     title: "Against the Storm",
