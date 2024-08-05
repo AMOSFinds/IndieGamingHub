@@ -12,6 +12,7 @@ import SignIn from "./Authentication/SignIn";
 import Algorithm from "./Home/Recommendations/Algorithm";
 import Contact from "./Contact";
 import Profile from "./Profile";
+import DevPage from "./Home/DevProfile/DevPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/allgames" element={<AllGames />} />
           <Route path="/all-devs" element={<AllDevs />} />
           <Route path="/devprofile-form" element={<DevProfileForm />} />
+          <Route path="/devpage" element={<DevPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/signup" element={<SignUp />} />

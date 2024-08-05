@@ -1,7 +1,59 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { getAuth } from "firebase/auth";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import "./DevProfileCard.css";
 
 function DevProfileCard({ dev }) {
+  // const [isFollowing, setIsFollowing] = useState(false);
+  const auth = getAuth();
+  const db = getFirestore();
+  const user = auth.currentUser;
+
+  // useEffect(() => {
+  //   if (user) {
+  //     const checkFollowing = async () => {
+  //       const docRef = doc(db, `users/${user.uid}/following`, dev.id);
+  //       const docSnap = await getDoc(docRef);
+  //       setIsFollowing(docSnap.exists());
+  //     };
+  //     checkFollowing();
+  //   }
+  // }, [user, dev.id, db]);
+
+  // const handleFollow = async () => {
+  //   if (user) {
+  //     const userFollowRef = doc(db, `users/${user.uid}/following`, dev.id);
+  //     const developerFollowerRef = doc(
+  //       db,
+  //       `developers/${dev.id}/followers`,
+  //       user.uid
+  //     );
+  //     if (isFollowing) {
+  //       await deleteDoc(userFollowRef);
+  //       await deleteDoc(developerFollowerRef);
+  //       setIsFollowing(false);
+  //     } else {
+  //       await setDoc(userFollowRef, {
+  //         developerId: dev.id,
+  //         developerName: dev.name,
+  //         developerProfilePic: dev.profilePicUrl,
+  //       });
+  //       await setDoc(developerFollowerRef, {
+  //         userId: user.uid,
+  //         userName: user.displayName,
+  //         userProfilePic: user.photoURL,
+  //       });
+  //       setIsFollowing(true);
+  //     }
+  //   }
+  // };
+
   // Ensure dev.games is always an array or a single string
   let games = [];
   if (Array.isArray(dev.games)) {
@@ -11,8 +63,11 @@ function DevProfileCard({ dev }) {
   }
   return (
     <div className="dev-profile-card">
+      {/* <button onClick={handleFollow} className="follow-button">
+        {isFollowing ? "Unfollow" : "Follow"}
+      </button> */}
       <img
-        src={dev.imageUrl}
+        src={dev.profilePicUrl}
         alt={`${dev.name}'s profile`}
         className="dev-image"
       />

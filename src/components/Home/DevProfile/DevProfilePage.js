@@ -18,6 +18,9 @@ function DevProfilePage() {
         <Link to="/devprofile-form">
           <button className="createprofile-btn">Create Dev Profile</button>
         </Link>
+        <Link to="/devpage">
+          <button className="createprofile-btn">View Dev Profile</button>
+        </Link>
       </div>
     </div>
   );

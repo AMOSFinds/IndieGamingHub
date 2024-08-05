@@ -59,7 +59,7 @@ function DevProfileForm() {
           twitter,
           linkedin,
           games,
-          imageUrl: profileImageUrl,
+          profilePicUrl: profileImageUrl,
           userId: user.uid,
         },
         { merge: true }

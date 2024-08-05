@@ -51,21 +51,6 @@ function AllDevs() {
     fetchDevProfiles();
   }, []);
 
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this profile?"
-    );
-    if (confirmDelete) {
-      try {
-        const db = getFirestore();
-        await deleteDoc(doc(db, "developers", id));
-        setDevProfiles(devProfiles.filter((dev) => dev.id !== id));
-      } catch (err) {
-        console.error("Error deleting profile: ", err);
-      }
-    }
-  };
-
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = devProfiles.slice(indexOfFirstItem, indexOfLastItem);
@@ -88,14 +73,6 @@ function AllDevs() {
           currentItems.map((dev) => (
             <div key={dev.id} className="dev-profile-card">
               <DevProfileCard dev={dev} />
-              {user && dev.userId && user.uid === dev.userId && (
-                <button
-                  onClick={() => handleDelete(dev.id)}
-                  className="delete-button"
-                >
-                  Delete
-                </button>
-              )}
             </div>
           ))
         )}

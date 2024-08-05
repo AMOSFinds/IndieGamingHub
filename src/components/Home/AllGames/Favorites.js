@@ -4,6 +4,7 @@ import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import FavoritesCard from "./FavoritesCard";
 import "./Favorites.css";
 import LoadingIndicator from "../../LoadingIndicator";
+import { useAuth } from "../../Authentication/AuthContext";
 
 const itemsPerPage = 5;
 
@@ -11,6 +12,7 @@ function Favorites() {
   const [favorites, setFavorites] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     const fetchFavorites = async () => {
@@ -33,6 +35,12 @@ function Favorites() {
     setFavorites(favorites.filter((fav) => fav.id !== id));
   };
 
+  const handleShare = () => {
+    const shareLink = `${window.location.origin}/favorites/${currentUser.uid}`;
+    navigator.clipboard.writeText(shareLink);
+    alert("Shareable link copied to clipboard!");
+  };
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = favorites.slice(indexOfFirstItem, indexOfLastItem);
@@ -50,6 +58,7 @@ function Favorites() {
         ) : (
           currentItems.map((game) => (
             <div key={game.id} className="game-card">
+              <button onClick={handleShare}>Share Favorites</button>
               <FavoritesCard
                 key={game.id}
                 allgame={game}
