@@ -458,7 +458,7 @@ nav {
 }
 
 .btn-favorite:hover {
-  background-color: #31363f;
+  background-color: #76abae;
   color: #fff;
 }
 
@@ -700,7 +700,7 @@ input[type="radio"] {
 
 .signin-button:hover {
   /* background-color: #0056b3; */
-  background-color: #222831;
+  background-color: #76abae;
   color: #fff;
 }
 
@@ -766,7 +766,7 @@ input[type="radio"] {
 }
 
 .filters button:hover {
-  background-color: #222831;
+  background-color: #76abae;
   color: #fff;
 }
 

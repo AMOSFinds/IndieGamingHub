@@ -99,7 +99,7 @@
 .follow-button {
   margin-bottom: 20px;
   padding: 8px 16px;
-  background-color: #007bff;
+  background-color: #76abae;
   color: white;
   border: none;
   border-radius: 4px;
@@ -110,7 +110,7 @@
   margin-left: 10px;
   margin-bottom: 20px;
   padding: 8px 16px;
-  background-color: #007bff;
+  background-color: #76abae;
   color: white;
   border: none;
   border-radius: 4px;
@@ -118,7 +118,13 @@
 }
 
 .follow-button:hover {
-  background-color: #0056b3;
+  background-color: #76abae;
+  color: #ffffff;
+}
+
+.delete2-button:hover {
+  background-color: #76abae;
+  color: #ffffff;
 }
 
 .dev-view {

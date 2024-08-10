@@ -38,17 +38,17 @@ const allgames = [
     release: "Release Date: April 5 2023",
     platform: "Platforms: PC, Switch, PS5, XBOX SERIES X, SERIES S",
   },
-  {
-    id: 4,
-    title: "Edenfall: Legacy of the First Wardens",
-    imageUrl: "images/edenfall.jfif",
-    description:
-      "Untangle the mysteries of Eden - a forgotten realm as Venya, a young girl.",
-    developer: "By Everflux Games",
-    genre: "Genre: Adventure",
-    release: "Release Date: TBA",
-    platform: "Platforms: PC",
-  },
+  // {
+  //   id: 4,
+  //   title: "Edenfall: Legacy of the First Wardens",
+  //   imageUrl: "images/edenfall.jfif",
+  //   description:
+  //     "Untangle the mysteries of Eden - a forgotten realm as Venya, a young girl.",
+  //   developer: "By Everflux Games",
+  //   genre: "Genre: Adventure",
+  //   release: "Release Date: TBA",
+  //   platform: "Platforms: PC",
+  // },
   {
     id: 5,
     title: "Isles of Sea and Sky",
