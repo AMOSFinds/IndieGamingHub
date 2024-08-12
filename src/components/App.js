@@ -13,6 +13,8 @@ import Algorithm from "./Home/Recommendations/Algorithm";
 import Contact from "./Contact";
 import Profile from "./Profile";
 import DevPage from "./Home/DevProfile/DevPage";
+import Terms from "./Terms";
+import Privacy from "./Privacy";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/algorithm" element={<Algorithm />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
         </Routes>
       </Router>
     </AuthProvider>
