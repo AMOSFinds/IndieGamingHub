@@ -6,6 +6,7 @@ import {
   setDoc,
   getDoc,
   updateDoc,
+  deleteDoc,
   increment,
   collection,
   addDoc,
@@ -14,6 +15,7 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import "./AllGames.css";
+import { FaEllipsisV } from "react-icons/fa";
 import CustomAlert from "../../CustomAlert";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
@@ -23,7 +25,7 @@ function AllGamesCard({ allgame }) {
   const [showAlert, setShowAlert] = useState(false);
   const [userRating, setUserRating] = useState(null);
   const [ratingCounts, setRatingCounts] = useState({
-    veryGood: 0,
+    verygood: 0,
     good: 0,
     decent: 0,
     bad: 0,
@@ -31,6 +33,7 @@ function AllGamesCard({ allgame }) {
   const [loading, setLoading] = useState(true);
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState("");
+  const [showDeleteOptions, setShowDeleteOptions] = useState({}); // Track delete menu visibility
 
   const auth = getAuth();
   const db = getFirestore();
@@ -79,7 +82,10 @@ function AllGamesCard({ allgame }) {
         );
         const q = query(reviewsRef, orderBy("timestamp", "desc"));
         onSnapshot(q, (snapshot) => {
-          const reviewsList = snapshot.docs.map((doc) => doc.data());
+          const reviewsList = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
           setReviews(reviewsList);
         });
       } catch (error) {
@@ -106,7 +112,7 @@ function AllGamesCard({ allgame }) {
         if (gameDoc.exists()) {
           setRatingCounts(
             gameDoc.data().ratings || {
-              veryGood: 0,
+              verygood: 0,
               good: 0,
               decent: 0,
               bad: 0,
@@ -148,7 +154,7 @@ function AllGamesCard({ allgame }) {
         if (!gameDoc.exists()) {
           await setDoc(gameRef, {
             ratings: {
-              veryGood: 0,
+              verygood: 0,
               good: 0,
               decent: 0,
               bad: 0,
@@ -221,6 +227,24 @@ function AllGamesCard({ allgame }) {
     }
   };
 
+  const handleDeleteReview = async (reviewId) => {
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        await deleteDoc(
+          doc(db, "games", allgame.id.toString(), "reviews", reviewId)
+        );
+        setAlertMessage("Review deleted successfully.");
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 3000);
+      }
+    } catch (error) {
+      console.error("Error deleting review:", error);
+    }
+  };
+
   return (
     <div className="game-entry">
       <img src={allgame.imageUrl} alt={allgame.title} className="game-image" />
@@ -279,6 +303,27 @@ function AllGamesCard({ allgame }) {
                     <p className="review-username">{review.username}</p>
                     <p className="review-comment">{review.comment}</p>
                   </div>
+                  {user && review.username === user.displayName && (
+                    <div className="review-options">
+                      <FaEllipsisV
+                        onClick={() =>
+                          setShowDeleteOptions((prevState) => ({
+                            ...prevState,
+                            [review.id]: !prevState[review.id],
+                          }))
+                        }
+                        className="three-dot-icon"
+                      />
+                      {showDeleteOptions[review.id] && (
+                        <div
+                          className="delete-option"
+                          onClick={() => handleDeleteReview(review.id)}
+                        >
+                          Delete
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

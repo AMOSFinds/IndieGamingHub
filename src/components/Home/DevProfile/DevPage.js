@@ -13,7 +13,6 @@ import {
 } from "firebase/firestore";
 import "./DevProfileCard.css";
 import LoadingIndicator from "../../LoadingIndicator";
-import AnalyticsDashboard from "./AnalyticsDashboard";
 import AllGamesData from "../AllGames/AllGameData";
 
 function DevPage() {
@@ -25,6 +24,7 @@ function DevPage() {
   const [loading, setLoading] = useState(true);
   const [curatedGames, setCuratedGames] = useState([]);
   const [developerGames, setDeveloperGames] = useState([]);
+  const [analyticsData, setAnalyticsData] = useState({});
 
   useEffect(() => {
     const fetchUserData = async (user) => {
@@ -37,26 +37,64 @@ function DevPage() {
 
       const devDoc = await getDoc(doc(db, "developers", user.uid));
       if (devDoc.exists()) {
+        const gamesFromProfile = devDoc
+          .data()
+          .games.split(",")
+          .map((game) => game.trim().toLowerCase()); // Normalize
+
         setDevProfile(devDoc.data());
-        setDeveloperGames(
-          devDoc
-            .data()
-            .games.split(",")
-            .map((game) => game.trim())
+        setDeveloperGames(gamesFromProfile);
+
+        // Fetch the followers count
+        const followersSnapshot = await getDocs(
+          collection(db, "developers", user.uid, "followers")
         );
+        const followersCount = followersSnapshot.size;
+
+        // Fetch the analytics data for each game
+        const gameStats = {};
+        for (const gameName of gamesFromProfile) {
+          const matchingGame = AllGamesData.find(
+            (game) => game.title.trim().toLowerCase() === gameName
+          );
+
+          if (matchingGame) {
+            const gameId = matchingGame.id;
+            const gameDoc = await getDoc(doc(db, "games", gameId.toString()));
+
+            if (gameDoc.exists()) {
+              const ratings = gameDoc.data().ratings || {};
+              const reviewsSnapshot = await getDocs(
+                collection(db, "games", gameId.toString(), "reviews")
+              );
+              const reviewCount = reviewsSnapshot.size;
+
+              const averageRating =
+                (ratings.verygood || 0) * 5 +
+                (ratings.good || 0) * 4 +
+                (ratings.decent || 0) * 3 +
+                (ratings.bad || 0) * 2;
+
+              const totalRatings =
+                (ratings.verygood || 0) +
+                (ratings.good || 0) +
+                (ratings.decent || 0) +
+                (ratings.bad || 0);
+
+              gameStats[matchingGame.title] = {
+                averageRating: totalRatings
+                  ? (averageRating / totalRatings).toFixed(1)
+                  : "No ratings yet",
+                reviewCount,
+              };
+            }
+          }
+        }
+
+        setAnalyticsData({ followers: followersCount, gameStats });
       }
       setLoading(false);
     };
-
-    // const fetchCuratedGames = async () => {
-    //   const db = getFirestore();
-    //   const curatedGamesCollection = collection(db, "games");
-    //   const curatedGamesSnapshot = await getDocs(curatedGamesCollection);
-    //   const curatedGamesList = curatedGamesSnapshot.docs.map(
-    //     (doc) => doc.data().gameId
-    //   );
-    //   setCuratedGames(curatedGamesList);
-    // };
 
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -69,10 +107,6 @@ function DevPage() {
 
     return () => unsubscribe();
   }, []);
-
-  const relevantGames = developerGames.filter((devGame) =>
-    curatedGames.some((curatedGame) => curatedGame.name === devGame)
-  );
 
   const handleEditClick = () => {
     setEditedProfile(devProfile);
@@ -169,17 +203,25 @@ function DevPage() {
               <p className="dev-bio">{devProfile.games}</p>
             </div>
           )}
-          {/* {relevantGames.length > 0 && (
+          {Object.keys(analyticsData).length > 0 && (
             <div className="analytics-section">
-              <h3>Analytics for Your Games</h3>
-              {relevantGames.map((gameName) => {
-                const gameId = curatedGames.find(
-                  (curatedGame) => curatedGame.name === gameName
-                ).id;
-                return <AnalyticsDashboard key={gameId} gameId={gameId} />;
-              })}
+              <h3 className="analytics-title">Analytics for Your Games</h3>
+              {/* <p>Follower Count: {analyticsData.followers}</p> */}
+              {Object.keys(analyticsData.gameStats).map((gameName) => (
+                <div key={gameName} className="game-analytics">
+                  <h4>{gameName}</h4>
+                  <p>
+                    Average Rating:{" "}
+                    {analyticsData.gameStats[gameName].averageRating}
+                  </p>
+                  <p>
+                    Review Count:{" "}
+                    {analyticsData.gameStats[gameName].reviewCount}
+                  </p>
+                </div>
+              ))}
             </div>
-          )} */}
+          )}
         </div>
       ) : (
         <p className="no-profiles">You have no developer profile.</p>

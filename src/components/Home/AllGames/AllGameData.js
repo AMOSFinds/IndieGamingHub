@@ -4,7 +4,7 @@ const allgames = [
     title: "ViewFinder",
     imageUrl: "images/viewfinder.jpg",
     ratings: {
-      veryGood: 0,
+      verygood: 0,
       good: 0,
       decent: 0,
       bad: 0,
@@ -20,6 +20,12 @@ const allgames = [
     id: 2,
     title: "Chants of Sennaar",
     imageUrl: "images/chants.jfif",
+    ratings: {
+      verygood: 0,
+      good: 0,
+      decent: 0,
+      bad: 0,
+    },
     description:
       "Unveil mysteries behind the fragments of the past Divided since the dawn of time.",
     developer: "By Rundisc",
@@ -31,6 +37,12 @@ const allgames = [
     id: 3,
     title: "Wall World",
     imageUrl: "images/wallworld2.jpg",
+    ratings: {
+      verygood: 0,
+      good: 0,
+      decent: 0,
+      bad: 0,
+    },
     description:
       "A mining rogue-lite with tower defense elements. Explore procedurally generated mines and discover fantastical biomes. Find resources and technologies for purchasing valuable upgrades. Fight off hordes of aggressive monsters using your mobile base.",
     developer: "By Alawar",
@@ -53,6 +65,12 @@ const allgames = [
     id: 5,
     title: "Isles of Sea and Sky",
     imageUrl: "images/seasky.jpg",
+    ratings: {
+      verygood: 0,
+      good: 0,
+      decent: 0,
+      bad: 0,
+    },
     description:
       " Solve novel block-pushing puzzles while unearthing a mystifying narrative.",
     developer: "By Cicada Games",
@@ -64,6 +82,12 @@ const allgames = [
     id: 6,
     title: "Against the Storm",
     imageUrl: "images/storm.jpg",
+    ratings: {
+      veryGood: 0,
+      good: 0,
+      decent: 0,
+      bad: 0,
+    },
     description:
       "A dark fantasy city builder where you must rebuild civilization in the face of apocalyptic rains. ",
     developer: "By Eremite Games",
@@ -75,6 +99,12 @@ const allgames = [
     id: 7,
     title: "Final Profit: A Shop",
     imageUrl: "images/finalprofit.jpg",
+    ratings: {
+      verygood: 0,
+      good: 0,
+      decent: 0,
+      bad: 0,
+    },
     description:
       "Gather products and find customers. Spend your hard-earned profits on upgrades and investments. Make far-reaching choices as you expand your business. ",
     developer: "By Brent Arnold",
@@ -86,6 +116,12 @@ const allgames = [
     id: 8,
     title: "Darkest Dungeon 2",
     imageUrl: "images/darkest.jpg",
+    ratings: {
+      verygood: 0,
+      good: 0,
+      decent: 0,
+      bad: 0,
+    },
     description:
       "Form a party, equip your stagecoach, and set off across the decaying landscape on a last gasp quest to avert the apocalypse.",
     developer: "By Red Hook Studios",
@@ -97,6 +133,12 @@ const allgames = [
     id: 9,
     title: "Spaceflux",
     imageUrl: "images/spaceflux.jfif",
+    ratings: {
+      verygood: 0,
+      good: 0,
+      decent: 0,
+      bad: 0,
+    },
     description:
       "The psychedelic shooter where the map contains itself recursively, like a fractal. Experience arena deathmatches like never before in fractal worlds, infinite landscapes and fully destructible environments. ",
     developer: "By Calin Ardelean",

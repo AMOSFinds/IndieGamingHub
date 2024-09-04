@@ -49,6 +49,12 @@ function DevProfileForm() {
         setImageUrl(profileImageUrl);
       }
 
+      // Normalize game titles
+      const normalizedGames = games
+        .split(",")
+        .map((game) => game.trim().toLowerCase()) // Trim and convert to lowercase
+        .join(","); // Join back to string for storage
+
       const userRef = doc(db, `developers/${user.uid}`);
       await setDoc(
         userRef,
@@ -58,7 +64,7 @@ function DevProfileForm() {
           website,
           twitter,
           linkedin,
-          games,
+          games: normalizedGames,
           profilePicUrl: profileImageUrl,
           userId: user.uid,
         },

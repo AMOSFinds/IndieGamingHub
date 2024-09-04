@@ -55,7 +55,7 @@ function Navbar() {
           Developers
         </Link>
         <Link to="/contact" className="navbar-profile" onClick={closeNavbar}>
-          Contact Us
+          Feedback
         </Link>
         {currentUser ? (
           <div className="navbar-user">

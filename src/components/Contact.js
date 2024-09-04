@@ -47,7 +47,7 @@ function Contact() {
     <div className="contact-page">
       <h1 className="contact-title">Contact Us</h1>
       <p className="contact-paragraph">
-        For business inquiries or feedback/criticism about our app, please
+        For business inquiries or feedback/criticism about our site, please
         contact us using the form below. Your feedback is valuable to us and
         helps us improve.
       </p>
