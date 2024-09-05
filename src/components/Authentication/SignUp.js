@@ -35,10 +35,19 @@ function SignUp() {
       );
       const user = userCredential.user;
 
-      // Upload profile picture
-      const profilePicRef = ref(storage, `profilePictures/${user.uid}`);
-      await uploadBytes(profilePicRef, profilePicture);
-      const profilePicUrl = await getDownloadURL(profilePicRef);
+      let profilePicUrl = "";
+
+      if (profilePicture) {
+        // Upload the selected profile picture
+        const profilePicRef = ref(storage, `profilePictures/${user.uid}`);
+        await uploadBytes(profilePicRef, profilePicture);
+        profilePicUrl = await getDownloadURL(profilePicRef);
+      } else {
+        // Generate a default profile picture with the first letter of the username
+        profilePicUrl = `https://ui-avatars.com/api/?name=${username.charAt(
+          0
+        )}&background=random&color=ffffff&bold=true`;
+      }
 
       await updateProfile(user, {
         displayName: username,
@@ -92,13 +101,12 @@ function SignUp() {
               type="file"
               accept="image/*"
               onChange={handleProfilePictureChange}
-              required
               className="file-input"
             />
           </div>
 
           <input
-            type="username"
+            type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Username"
