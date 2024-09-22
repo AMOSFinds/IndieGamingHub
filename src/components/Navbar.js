@@ -1,7 +1,15 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { useAuth } from "./Authentication/AuthContext";
 import SignOut from "./Authentication/SignOut";
 import SignInButton from "./Authentication/SignInButton";
@@ -11,6 +19,7 @@ function Navbar() {
   const { currentUser } = useAuth();
   const navRef = useRef();
   const [username, setUsername] = useState("");
+  const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
 
   const showNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
@@ -29,10 +38,25 @@ function Navbar() {
       }
     };
 
+    const checkForUnreadNotifications = async (user) => {
+      const db = getFirestore();
+      const notificationsRef = collection(
+        db,
+        "users",
+        user.uid,
+        "notifications"
+      );
+      const q = query(notificationsRef, where("hasUnread", "==", true));
+      const querySnapshot = await getDocs(q);
+
+      setHasUnreadNotifications(!querySnapshot.empty);
+    };
+
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         fetchUserUsername(user);
+        checkForUnreadNotifications(user);
       }
     });
 
@@ -61,7 +85,9 @@ function Navbar() {
           <div className="navbar-user">
             <Link
               to="/profile"
-              className="navbar-profile"
+              className={`navbar-profile ${
+                hasUnreadNotifications ? "highlight" : ""
+              }`}
               onClick={closeNavbar}
             >
               {username}

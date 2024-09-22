@@ -73,7 +73,7 @@
 .dev-image {
   width: 100%;
   height: auto;
-  /* border-radius: 50%; */
+  border-radius: 50%;
   object-fit: cover;
   margin-bottom: 15px;
 }

@@ -37,7 +37,6 @@ function AllGamesCard({ allgame }) {
 
   const auth = getAuth();
   const db = getFirestore();
-  // const user = auth.currentUser;
 
   const addToFavorites = async () => {
     try {
@@ -245,6 +244,13 @@ function AllGamesCard({ allgame }) {
     }
   };
 
+  const starRatings = [
+    { label: "★★★★★", value: "Very Good", count: ratingCounts.verygood },
+    { label: "★★★★", value: "Good", count: ratingCounts.good },
+    { label: "★★★", value: "Decent", count: ratingCounts.decent },
+    { label: "★★", value: "Bad", count: ratingCounts.bad },
+  ];
+
   return (
     <div className="game-entry">
       <img src={allgame.imageUrl} alt={allgame.title} className="game-image" />
@@ -262,16 +268,15 @@ function AllGamesCard({ allgame }) {
         </button>
         <div className="game-content">
           <div className="rating-system">
-            {["Very Good", "Good", "Decent", "Bad"].map((rating) => (
+            {starRatings.map((rating) => (
               <button
-                key={rating}
+                key={rating.value}
                 className={`rating-button ${
-                  userRating === rating ? "selected" : ""
+                  userRating === rating.value ? "selected" : ""
                 }`}
-                onClick={() => handleRating(rating)}
+                onClick={() => handleRating(rating.value)}
               >
-                {rating.replace(/([A-Z])/g, " $1").trim()} (
-                {ratingCounts[rating.toLowerCase().replace(" ", "")] || 0})
+                {rating.label} ({rating.count || 0})
               </button>
             ))}
           </div>

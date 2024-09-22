@@ -27,6 +27,8 @@ function App() {
           <Route path="/all-devs" element={<AllDevs />} />
           <Route path="/devprofile-form" element={<DevProfileForm />} />
           <Route path="/devpage" element={<DevPage />} />
+          <Route path="/devpage/:devId" element={<DevPage />} />
+          {/* DevPage route */}
           <Route path="/profile" element={<Profile />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/signup" element={<SignUp />} />

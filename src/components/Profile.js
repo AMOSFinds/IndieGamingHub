@@ -4,6 +4,7 @@ import {
   getFirestore,
   doc,
   getDoc,
+  setDoc,
   collection,
   getDocs,
   updateDoc,
@@ -14,7 +15,9 @@ import { FaUpload } from "react-icons/fa";
 import Favorites from "../components/Home/AllGames/Favorites";
 import LoadingIndicator from "./LoadingIndicator";
 import "./Profile.css";
-function Profile() {
+import { Link } from "react-router-dom";
+
+function Profile(dev) {
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState({});
   const [following, setFollowing] = useState([]);
@@ -23,6 +26,9 @@ function Profile() {
   const [editedProfile, setEditedProfile] = useState({});
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [highlightedDevs, setHighlightedDevs] = useState([]);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const db = getFirestore();
 
   useEffect(() => {
     const fetchUserData = async (user) => {
@@ -43,6 +49,20 @@ function Profile() {
       const followingCollection = collection(db, `users/${user.uid}/following`);
       const followingSnapshot = await getDocs(followingCollection);
       const followingList = followingSnapshot.docs.map((doc) => doc.data());
+
+      // Check for new updates in the developers the user is following
+      const highlightedDevsList = [];
+      for (const dev of followingList) {
+        const devUpdatesRef = collection(
+          db,
+          `developers/${dev.developerId}/updates`
+        );
+        const updatesSnapshot = await getDocs(devUpdatesRef);
+        if (!updatesSnapshot.empty) {
+          highlightedDevsList.push(dev.developerId);
+        }
+      }
+      setHighlightedDevs(highlightedDevsList);
       setFollowing(followingList);
     };
 
@@ -112,6 +132,34 @@ function Profile() {
     }
   };
 
+  const handleFollow = async () => {
+    if (user) {
+      const userFollowRef = doc(db, `users/${user.uid}/following`, dev.id);
+      const developerFollowerRef = doc(
+        db,
+        `developers/${dev.id}/followers`,
+        user.uid
+      );
+      if (isFollowing) {
+        await deleteDoc(userFollowRef);
+        await deleteDoc(developerFollowerRef);
+        setIsFollowing(false);
+      } else {
+        await setDoc(userFollowRef, {
+          developerId: dev.id,
+          developerName: dev.name,
+          developerProfilePic: dev.profilePicUrl,
+        });
+        await setDoc(developerFollowerRef, {
+          userId: user.uid,
+          userName: user.displayName,
+          userProfilePic: user.photoURL,
+        });
+        setIsFollowing(true);
+      }
+    }
+  };
+
   return (
     <div className="profile-container">
       {user ? (
@@ -129,7 +177,6 @@ function Profile() {
                 }
                 className="signin-input"
               />
-
               <div className="form-group">
                 <label className="profile-title">Profile Image:</label>
                 <label htmlFor="file-upload" className="custom-file-upload">
@@ -166,21 +213,34 @@ function Profile() {
           )}
           <Favorites />
 
-          {/* <div className="alldevs-list">
+          {/* Following Developers Section */}
+          <div className="alldevs-list">
             <h3 className="favorites-title">Following Developers</h3>
             <div className="dev-profile-card">
               {following.map((dev) => (
-                <div key={dev.developerId} className="following-card">
+                <div
+                  key={dev.developerId}
+                  className={`following-card ${
+                    highlightedDevs.includes(dev.developerId) ? "highlight" : ""
+                  }`}
+                >
                   <img
                     src={dev.developerProfilePic}
                     alt={dev.developerName}
                     className="dev-image"
                   />
                   <h4 className="dev-name">{dev.developerName}</h4>
+
+                  <Link
+                    to={`/devpage/${dev.developerId}`}
+                    className="view-dev-button"
+                  >
+                    View Dev
+                  </Link>
                 </div>
               ))}
             </div>
-          </div> */}
+          </div>
         </div>
       ) : (
         <LoadingIndicator />
