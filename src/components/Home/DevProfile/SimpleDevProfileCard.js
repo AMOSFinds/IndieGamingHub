@@ -4,15 +4,13 @@ import {
   getFirestore,
   doc,
   setDoc,
-  getDoc,
   deleteDoc,
+  getDoc,
 } from "firebase/firestore";
-import { useNavigate } from "react-router-dom"; // Import this to navigate to the DevPage
-import "./DevProfileCard.css";
-import { BsTwitterX } from "react-icons/bs";
-import { FaLinkedin } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import "../DeveloperProfileSection.css";
 
-function DevProfileCard({ dev }) {
+function SimpleDevProfileCard({ dev }) {
   const [isFollowing, setIsFollowing] = useState(false);
   const auth = getAuth();
   const db = getFirestore();
@@ -59,61 +57,28 @@ function DevProfileCard({ dev }) {
   };
 
   const handleViewDev = () => {
-    navigate(`/devpage/${dev.id}`); // Redirect to the developer's page
+    navigate(`/devpage/${dev.id}`);
   };
 
-  let games = [];
-  if (Array.isArray(dev.games)) {
-    games = dev.games;
-  } else if (typeof dev.games === "string") {
-    games = [dev.games];
-  }
-
   return (
-    <div className="dev-profile-card">
+    <div className="profile-card">
       <img
         src={dev.profilePicUrl}
         alt={`${dev.name}'s profile`}
         className="dev-image"
       />
-      <h3 className="dev-name">{dev.name}</h3>
-      <p className="dev-bio">{dev.bio}</p>
-      {dev.job && <p className="dev-job">{dev.job}</p>}{" "}
-      {dev.website && (
-        <div className="dev-website">
-          <a href={dev.website} target="_blank" rel="noopener noreferrer">
-            Website
-          </a>
-        </div>
-      )}
-      <div className="dev-socials">
-        {dev.twitter && (
-          <a href={dev.twitter} target="_blank" rel="noopener noreferrer">
-            <BsTwitterX />
-          </a>
-        )}
-        {dev.linkedin && (
-          <a href={dev.linkedin} target="_blank" rel="noopener noreferrer">
-            <FaLinkedin />
-          </a>
-        )}
-      </div>
-      <div className="dev-games">
-        <h4 className="games-title">Games:</h4>
-        <ul className="games-list">
-          {dev.games && games.map((game, index) => <li key={index}>{game}</li>)}
-        </ul>
-      </div>
-      <div className="dev-actions">
+      <div className="developer-info">
+        <h3 className="developer-name">{dev.name}</h3>
+        <p className="developer-bio">{dev.bio}</p>
         <button onClick={handleFollow} className="follow-button">
           {isFollowing ? "Unfollow" : "Follow"}
         </button>
         <button onClick={handleViewDev} className="view-dev-button">
-          View Dev
+          View Profile
         </button>
       </div>
     </div>
   );
 }
 
-export default DevProfileCard;
+export default SimpleDevProfileCard;

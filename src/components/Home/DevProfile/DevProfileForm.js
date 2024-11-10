@@ -6,6 +6,7 @@ import { FaUpload } from "react-icons/fa";
 import CustomAlert from "../../CustomAlert";
 import LoadingIndicator from "../../LoadingIndicator";
 import { useNavigate } from "react-router-dom";
+import "./DevProfileForm.css";
 
 function DevProfileForm() {
   const [alertMessage, setAlertMessage] = useState("");
@@ -19,12 +20,24 @@ function DevProfileForm() {
   const [linkedin, setLinkedin] = useState("");
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
+  const [job, setJob] = useState("");
 
   const navigate = useNavigate();
+  const bioWordLimit = 100;
 
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
+      const reader = new FileReader();
+      reader.onload = () => setImageUrl(reader.result);
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  const handleBioChange = (e) => {
+    const words = e.target.value.split(/\s+/);
+    if (words.length <= bioWordLimit) {
+      setBio(e.target.value);
     }
   };
 
@@ -40,6 +53,7 @@ function DevProfileForm() {
       let profileImageUrl = "";
 
       if (image) {
+        // Upload the selected profile image to Firebase Storage
         const storageRef = ref(
           storage,
           `profileImages/${user.uid}/${image.name}`
@@ -47,6 +61,13 @@ function DevProfileForm() {
         await uploadBytes(storageRef, image);
         profileImageUrl = await getDownloadURL(storageRef);
         setImageUrl(profileImageUrl);
+      } else {
+        // Generate a default profile picture URL using initials from the developer's name
+        const initials = name
+          .split(" ")
+          .map((word) => word[0])
+          .join("");
+        profileImageUrl = `https://ui-avatars.com/api/?name=${initials}&background=random&color=ffffff&bold=true`;
       }
 
       // Normalize game titles
@@ -55,16 +76,20 @@ function DevProfileForm() {
         .map((game) => game.trim().toLowerCase()) // Trim and convert to lowercase
         .join(","); // Join back to string for storage
 
+      // Save games as an array
+      const gamesArray = games.split(",").map((game) => game.trim());
+
       const userRef = doc(db, `developers/${user.uid}`);
       await setDoc(
         userRef,
         {
           name,
+          job,
           bio,
           website,
           twitter,
           linkedin,
-          games: normalizedGames,
+          games: gamesArray,
           profilePicUrl: profileImageUrl,
           userId: user.uid,
         },
@@ -107,6 +132,18 @@ function DevProfileForm() {
               onChange={handleImageChange}
               className="file-input"
             />
+            {imageUrl && (
+              <img
+                src={imageUrl}
+                alt="Profile Preview"
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  borderRadius: "50%",
+                  marginTop: "10px",
+                }}
+              />
+            )}
           </div>
           <input
             type="text"
@@ -116,10 +153,17 @@ function DevProfileForm() {
             required
             className="signin-input"
           />
+          <input
+            type="text"
+            placeholder="Job Title (e.g., Software Engineer)"
+            value={job}
+            onChange={(e) => setJob(e.target.value)}
+            className="signin-input"
+          />
           <textarea
-            placeholder="Bio"
+            placeholder="Bio (Max 100 words)"
             value={bio}
-            onChange={(e) => setBio(e.target.value)}
+            onChange={handleBioChange}
             required
             className="signin-input"
           />
@@ -131,20 +175,21 @@ function DevProfileForm() {
             required
             className="signin-input"
           />
+          <small style={{ color: "#888899", fontSize: "14px" }}>
+            Enter game titles, separated by commas.
+          </small>
           <input
             type="url"
             placeholder="Website"
             value={website}
             onChange={(e) => setWebsite(e.target.value)}
-            required
             className="signin-input"
           />
           <input
             type="url"
-            placeholder="Twitter Profile URL"
+            placeholder="X Profile URL"
             value={twitter}
             onChange={(e) => setTwitter(e.target.value)}
-            required
             className="signin-input"
           />
           <input
@@ -152,7 +197,6 @@ function DevProfileForm() {
             placeholder="LinkedIn Profile URL"
             value={linkedin}
             onChange={(e) => setLinkedin(e.target.value)}
-            required
             className="signin-input"
           />
           <button type="submit" className="signin-button">

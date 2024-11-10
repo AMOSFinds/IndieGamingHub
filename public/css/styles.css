@@ -1,7 +1,27 @@
+@font-face {
+  font-family: "RetroFont"; /* Name your font family */
+  src: url("/css/retro_gaming/Retro Gaming.ttf"); /* Locate the .ttf file within your directory*/
+}
+
 body {
   margin: 0;
   font-family: "Roboto", sans-serif;
-  background-color: #222831;
+  /* background-color: #222831; */
+  background-color: #1a1a2e;
+}
+
+header {
+  background-image: url("/images/realheaderpic.jpg");
+  /* height: "100vh"; */
+  width: 100%;
+  height: 100vh;
+  object-fit: contain;
+  display: "flex";
+  justify-content: "center";
+  align-items: "center";
+  flex-direction: "column";
+  color: "#fff";
+  opacity: 0.7;
 }
 
 nav {
@@ -19,7 +39,7 @@ nav {
   font-weight: 700;
   font-size: 34px;
   margin-right: 50px;
-  color: #76abae;
+  color: #d4a6ff;
   text-decoration: none;
 }
 
@@ -27,8 +47,9 @@ nav {
 .navbar-profile {
   margin-left: 150px;
   font-size: 24px;
+  font-weight: bolder;
   text-decoration: none;
-  color: #76abae;
+  color: #d4a6ff;
   position: relative;
   padding: 5px 0; /* To give some space for the underline */
 }
@@ -41,7 +62,7 @@ nav {
   bottom: 0;
   width: 0;
   height: 2px;
-  background-color: #76abae;
+  background-color: #d4a6ff;
   transition: width 0.3s ease-in-out;
 }
 
@@ -61,7 +82,8 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #31363f;
+  /* background-color: #31363f; */
+  background-color: #1a1a2e;
 }
 
 .nav-btn {
@@ -71,7 +93,7 @@ nav {
   background: transparent;
   border: none;
   outline: none;
-  color: #76abae;
+  color: #d4a6ff;
   font-size: 1.8rem;
 }
 
@@ -169,9 +191,10 @@ nav {
   /* margin-left: 150px; */
   /* font-size: 24px; */
   text-decoration: none;
-  color: #76abae;
+  color: #d4a6ff;
   position: relative;
   padding: 5px 0;
+  font-weight: bolder;
 }
 
 .signout-btn2 {
@@ -180,7 +203,7 @@ nav {
   /* margin-left: 150px; */
   /* font-size: 24px; */
   text-decoration: none;
-  color: #76abae;
+  color: #d4a6ff;
   position: relative;
   padding: 5px 0;
   transition: color 100ms;
@@ -192,6 +215,7 @@ nav {
   display: inline-block;
   font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial,
     sans-serif;
+  font-weight: bolder;
 }
 
 .signout-btn::after,
@@ -202,7 +226,7 @@ nav {
   bottom: 0;
   width: 0;
   height: 2px;
-  background-color: #76abae;
+  background-color: #d4a6ff;
   transition: width 0.3s ease-in-out;
 }
 
@@ -227,8 +251,11 @@ nav {
 }
 
 .tagline {
-  color: #76abae;
-  font-size: 40px;
+  /* color: #76abae; */
+  color: #d4a6ff;
+  font-family: "RetroFont";
+  font-size: 43px;
+  font-weight: bolder;
   margin-bottom: 20px;
   max-width: 1000px; /* Set a max-width for alignment */
   margin-left: auto;
@@ -237,7 +264,7 @@ nav {
 
 .description {
   color: #e0e0e0;
-  font-size: 20px;
+  font-size: 23px;
   line-height: 1.5;
   text-align: justify; /* Ensure text is justified */
   text-align-last: center; /* Center the last line */
@@ -272,7 +299,7 @@ nav {
   touch-action: manipulation;
 }
 .createprofile-btn {
-  background-color: #ffd23f;
+  background-color: #d4a6ff;
   border-radius: 8px;
   border-style: none;
   color: #2c003e;
@@ -432,7 +459,7 @@ nav {
   /* display: flex; */
 }
 
-.game-entry {
+/* .game-entry {
   display: flex;
   margin-bottom: 20px;
   color: #fff;
@@ -450,7 +477,7 @@ nav {
 }
 
 .btn-favorite {
-  background-color: #76abae;
+  background-color: #d4a6ff;
   border: none;
   padding: 10px;
   cursor: pointer;
@@ -458,11 +485,11 @@ nav {
 }
 
 .btn-favorite:hover {
-  background-color: #76abae;
+  background-color: #d4a6ff;
   color: #fff;
-}
+} */
 
-.search-box {
+/* .search-box {
   margin-left: 600px;
   margin-top: 50px;
 }
@@ -491,17 +518,16 @@ nav {
 .rating:hover {
   background-color: #ee4266;
   /* background-color: #ffec99; */
-  border-radius: 5px;
-  width: 90px;
-}
+/* border-radius: 5px;
+  width: 90px; */
+/* } */
 
-.rating-count {
+/* .rating-count {
   margin-left: 10px;
   font-size: 14px;
   color: #fff;
-}
-
-.preferences-form {
+} */
+*/ .preferences-form {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
@@ -605,7 +631,7 @@ input[type="radio"] {
 }
 
 .createprofile-btn {
-  background-color: #76abae;
+  background-color: #d4a6ff;
   border-radius: 8px;
   border-style: none;
   box-sizing: border-box;
@@ -635,14 +661,14 @@ input[type="radio"] {
 }
 
 .createprofile-btn:hover {
-  background-color: #76abae;
+  background-color: #d4a6ff;
   color: white;
 }
 
 .create-title {
   padding: 20px;
   font-size: 35px;
-  color: #76abae;
+  color: #ff69b4;
   text-align: center;
 }
 
@@ -718,56 +744,6 @@ input[type="radio"] {
 
 .signup-link a:hover {
   text-decoration: underline;
-}
-
-.allgames-search-filter {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.search-box {
-  background-color: #31363f;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  width: 100%;
-  text-align: center;
-  height: 200px;
-  margin-left: 1300px;
-}
-
-.search-bar {
-  width: 100%;
-  max-width: 600px;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-size: 16px;
-}
-
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.filters button {
-  padding: 10px 20px;
-  background-color: #76abae;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.filters button:hover {
-  background-color: #76abae;
-  color: #fff;
 }
 
 .pagination {
@@ -903,4 +879,16 @@ input[type="radio"] {
     padding: 6px;
     font-size: 12px;
   }
+}
+
+.alldev-title {
+  color: #d4a6ff;
+  font-family: "RetroFont";
+  font-size: 43px;
+  font-weight: bolder;
+  margin-bottom: 20px;
+  max-width: 1000px; /* Set a max-width for alignment */
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }

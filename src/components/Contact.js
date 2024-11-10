@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
 import "./Contact.css";
 import CustomAlert from "./CustomAlert";
+import Footer from "./Footer";
 
 function Contact() {
   const [message, setMessage] = useState("");
@@ -63,6 +64,7 @@ function Contact() {
           Send Message
         </button>
       </form>
+
       {showAlert && (
         <CustomAlert
           message={alertMessage}

@@ -58,7 +58,7 @@ function Favorites() {
         ) : (
           currentItems.map((game) => (
             <div key={game.id} className="game-card">
-              <button onClick={handleShare}>Share Favorites</button>
+              {/* <button onClick={handleShare}>Share Favorites</button> */}
               <FavoritesCard
                 key={game.id}
                 allgame={game}

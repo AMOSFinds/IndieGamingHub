@@ -2,265 +2,180 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 40px 20px;
 }
 
 .profile-info {
   text-align: center;
+  margin-bottom: 30px;
 }
 
 .profile-pic {
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .profile-username {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: bold;
-  margin-bottom: 10px;
-  color: #76abae;
+  margin-bottom: 5px;
+  color: #d4a6ff;
 }
 
 .profile-email {
   font-size: 18px;
-  color: gray;
-  margin-bottom: 20px;
+  color: #8c8c8c;
+  margin-bottom: 25px;
 }
 
-.favorites {
-  margin-top: 20px;
-}
-
-.favorites h2 {
-  font-size: 20px;
+.favorites-title,
+.following-title {
+  font-size: 22px;
   font-weight: bold;
+  color: #d4a6ff;
+  margin: 20px 0 10px;
+  text-align: center;
 }
 
-.following-list {
+/* Following Developer Section */
+.alldevs-list {
   display: flex;
   flex-wrap: wrap;
+  gap: 20px;
   justify-content: center;
+  max-width: 800px;
 }
 
 .following-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 8px;
-  text-align: center;
-  width: 150px;
-}
-
-.following-pic {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-bottom: 8px;
-}
-
-.dev-profile-card {
   background-color: #31363f;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  border-radius: 8px;
+  padding: 15px;
+  width: 160px;
   text-align: center;
-  max-width: 400px;
-  margin: 0 auto;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.following-card:hover {
+  transform: translateY(-5px);
 }
 
 .dev-image {
-  width: 100%;
-  height: auto;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .dev-name {
-  font-size: 24px;
-  color: #ffff;
-  margin-bottom: 10px;
-}
-
-.dev-bio {
   font-size: 18px;
-  color: #ffff;
-  margin-bottom: 15px;
-}
-
-.dev-website a,
-.dev-socials a {
-  /* color: #ffd23f; */
-  color: #76abae;
-  text-decoration: none;
-  font-size: 18px;
-  padding: 5px;
-}
-
-.dev-website a:hover,
-.dev-socials a:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.dev-socials {
-  font-size: 14px;
-  color: black;
-}
-
-.dev-games {
-  margin-top: 20px;
-  text-align: center;
-  color: #ffff;
-}
-
-.dev-games h4 {
+  color: #d4a6ff;
   margin-bottom: 10px;
-  color: #ffff;
 }
 
-.dev-games ul {
-  list-style-type: none;
-  padding: 0;
-  color: #ffff;
-}
-
-.dev-games li {
-  margin-bottom: 10px;
-  font-size: 16px;
-  color: #ffff;
-}
-
-.pagination {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.pagination-button {
-  margin: 0 5px;
+/* Buttons */
+.follow-button,
+.delete2-button,
+.view-dev-button {
+  background-color: #d4a6ff;
+  border: none;
   padding: 10px 15px;
-  border: 1px solid #007bff;
   border-radius: 5px;
-  background-color: #ffffff;
-  color: #007bff;
+  font-size: 16px;
+  color: #1a1a2e;
   cursor: pointer;
-  font-size: 14px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 5px;
 }
 
-.pagination-button:hover {
-  background-color: #007bff;
+.follow-button:hover,
+.delete2-button:hover,
+.view-dev-button:hover {
+  background-color: #b392ff;
   color: #ffffff;
 }
 
-.website-title {
+/* Edit Mode Styling */
+.profile-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-edit input {
+  width: 100%;
+  max-width: 300px;
+  padding: 8px;
+  border: 1px solid #d4a6ff;
+  border-radius: 5px;
+  margin-bottom: 15px;
   color: #ffffff;
 }
 
-.follow-button {
+.custom-file-upload {
+  display: inline-block;
+  padding: 8px 12px;
+  cursor: pointer;
+  border: 1px solid #d4a6ff;
+  border-radius: 5px;
+  background-color: #31363f;
+  color: #d4a6ff;
   margin-bottom: 20px;
-  padding: 8px 16px;
-  background-color: #76abae;
-
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
 }
 
-.delete2-button {
-  margin-left: 10px;
-  margin-bottom: 20px;
-  padding: 8px 16px;
-  background-color: #76abae;
-
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.custom-file-upload:hover {
+  background-color: #2a2f3a;
 }
 
-.follow-button:hover {
-  background-color: #76abae;
-  color: #ffffff;
-}
-
-.delete2-button:hover {
-  background-color: #76abae;
-  color: #ffffff;
-}
-
-.dev-view {
-  margin-top: 100px;
-}
-
-/* Media Queries for Responsiveness */
-
+/* Media Queries */
 @media (max-width: 768px) {
-  .favorites-title {
-    font-size: 28px;
-    padding: 15px;
+  .profile-username {
+    font-size: 22px;
   }
 
-  .dev-profile-card {
-    padding: 15px;
-    max-width: 100%;
-    margin: 15px auto;
-  }
-
-  .dev-name {
+  .favorites-title,
+  .following-title {
     font-size: 20px;
   }
 
-  .dev-bio {
-    font-size: 16px;
+  .following-card {
+    width: 140px;
   }
 
-  .dev-website a,
-  .dev-socials a {
-    font-size: 16px;
-  }
-
-  .dev-games li {
-    font-size: 14px;
-  }
-
-  .pagination-button {
+  .follow-button,
+  .delete2-button,
+  .view-dev-button {
     padding: 8px 12px;
-    font-size: 12px;
+    font-size: 14px;
   }
 }
 
 @media (max-width: 480px) {
-  .favorites-title {
-    font-size: 24px;
-    padding: 10px;
+  .profile-container {
+    padding: 20px;
   }
 
-  .dev-profile-card {
-    padding: 10px;
-    max-width: 100%;
-    margin: 10px auto;
+  .profile-username {
+    font-size: 20px;
   }
 
-  .dev-name {
+  .favorites-title,
+  .following-title {
     font-size: 18px;
   }
 
-  .dev-bio {
-    font-size: 14px;
+  .following-card {
+    width: 120px;
   }
 
-  .dev-website a,
-  .dev-socials a {
-    font-size: 14px;
-  }
-
-  .dev-games li {
-    font-size: 12px;
-  }
-
-  .pagination-button {
+  .follow-button,
+  .delete2-button,
+  .view-dev-button {
     padding: 6px 10px;
-    font-size: 10px;
+    font-size: 12px;
   }
 }

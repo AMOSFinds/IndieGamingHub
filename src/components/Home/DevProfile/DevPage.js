@@ -15,9 +15,11 @@ import {
   onSnapshot,
   arrayUnion,
 } from "firebase/firestore";
-import "./DevProfileCard.css";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import "./DevPage.css";
 import LoadingIndicator from "../../LoadingIndicator";
 import AllGamesData from "../AllGames/AllGameData";
+import { FaUpload } from "react-icons/fa";
 
 function DevPage() {
   const [user, setUser] = useState(null);
@@ -37,6 +39,9 @@ function DevPage() {
   const [polls, setPolls] = useState([]);
   const [newPollQuestion, setNewPollQuestion] = useState("");
   const [newPollOptions, setNewPollOptions] = useState([""]);
+  const [userVotes, setUserVotes] = useState({});
+  const [showDeleteOptions, setShowDeleteOptions] = useState({});
+  const [image, setImage] = useState(null); // State for storing the selected image file
 
   useEffect(() => {
     const handlePostUpdate = async (content) => {
@@ -117,10 +122,8 @@ function DevPage() {
 
         const devDoc = await getDoc(doc(db, "developers", user.uid));
         if (devDoc.exists()) {
-          const gamesFromProfile = devDoc
-            .data()
-            .games.split(",")
-            .map((game) => game.trim().toLowerCase()); // Normalize
+          // Retrieve games as an array directly
+          const gamesFromProfile = devDoc.data().games || []; // Set default empty array if games is undefined
 
           setDevProfile(devDoc.data());
           setDeveloperGames(gamesFromProfile);
@@ -134,8 +137,6 @@ function DevPage() {
             ...doc.data(),
           }));
           setPolls(pollsData);
-
-          setLoading(false);
 
           // Fetch the followers count
           const followersSnapshot = await getDocs(
@@ -186,20 +187,17 @@ function DevPage() {
           setAnalyticsData({ followers: followersCount, gameStats });
         }
 
-        // Fetch comments
+        // Fetch comments for the developer
         const commentsSnapshot = await getDocs(
           query(
             collection(db, "developers", user.uid, "comments"),
             orderBy("timestamp", "asc")
           )
         );
-
-        const fetchedComments = [];
-        commentsSnapshot.forEach((doc) => {
-          fetchedComments.push({ id: doc.id, ...doc.data() });
-        });
-
-        // If there are no comments, set an empty array
+        const fetchedComments = commentsSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
         setComments(fetchedComments);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -230,11 +228,35 @@ function DevPage() {
   };
 
   const handleSaveClick = async () => {
+    setLoading(true);
     const db = getFirestore();
+    const storage = getStorage();
+    let profileImageUrl = devProfile.profilePicUrl; // Existing image URL
+
+    // If a new image is selected, upload it to Firebase Storage
+    if (image) {
+      const storageRef = ref(
+        storage,
+        `profileImages/${user.uid}/${image.name}`
+      );
+      await uploadBytes(storageRef, image);
+      profileImageUrl = await getDownloadURL(storageRef);
+    }
+
+    // Update the developer's profile in Firestore
     const devDocRef = doc(db, "developers", user.uid);
-    await updateDoc(devDocRef, editedProfile);
-    setDevProfile(editedProfile);
+    await updateDoc(devDocRef, {
+      ...editedProfile,
+      profilePicUrl: profileImageUrl,
+    });
+
+    // Update the local state with new profile data
+    setDevProfile({
+      ...editedProfile,
+      profilePicUrl: profileImageUrl,
+    });
     setIsEditing(false);
+    setLoading(false);
   };
 
   const handleDelete = async () => {
@@ -253,26 +275,40 @@ function DevPage() {
   };
 
   const handleAddComment = async () => {
-    if (user) {
-      try {
-        const commentData = {
-          text: newComment,
-          username: user.displayName,
-          userId: user.uid,
-          timestamp: new Date(),
-        };
+    if (!newComment) return;
 
-        const db = getFirestore();
-        await addDoc(
-          collection(db, "developers", user.uid, "comments"),
-          commentData
-        );
-        setNewComment(""); // Clear the input field after adding a comment
-      } catch (error) {
-        console.error("Error adding comment: ", error);
-      }
-    } else {
-      alert("You need to be signed in to comment.");
+    const db = getFirestore();
+    const commentData = {
+      text: newComment,
+      username: user.displayName,
+      profilePicUrl: user.photoURL || "default-profile-pic-url",
+      timestamp: new Date(),
+    };
+
+    try {
+      await addDoc(
+        collection(db, "developers", devProfile.userId, "comments"),
+        commentData
+      );
+      setComments((prevComments) => [commentData, ...prevComments]);
+      setNewComment(""); // Clear the input field after adding a comment
+    } catch (error) {
+      console.error("Error adding comment: ", error);
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    const db = getFirestore();
+
+    try {
+      await deleteDoc(
+        doc(db, "developers", devProfile.userId, "comments", commentId)
+      );
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment.id !== commentId)
+      );
+    } catch (error) {
+      console.error("Error deleting comment: ", error);
     }
   };
 
@@ -324,6 +360,7 @@ function DevPage() {
             option,
             votes: 0,
           })),
+          timestamp: new Date(),
         }
       );
 
@@ -342,65 +379,105 @@ function DevPage() {
 
   const handleVote = async (pollId, optionIndex) => {
     const db = getFirestore();
-    const pollRef = doc(db, "developers", user.uid, "polls", pollId);
+    const pollRef = doc(db, "developers", devProfile.userId, "polls", pollId);
     const pollDoc = await getDoc(pollRef);
     const pollData = pollDoc.data();
 
-    const updatedOptions = pollData.options.map((option, index) => {
-      if (index === optionIndex) {
-        return { ...option, votes: option.votes + 1 };
-      }
-      return option;
-    });
+    // Check if the user has voted before
+    const previousVoteIndex = userVotes[pollId];
 
-    await updateDoc(pollRef, { options: updatedOptions });
+    // If user has voted before on this poll, decrease the vote count of the previous option
+    if (previousVoteIndex !== undefined && previousVoteIndex !== optionIndex) {
+      pollData.options[previousVoteIndex].votes -= 1;
+    }
 
+    // Increase the vote count of the selected option
+    pollData.options[optionIndex].votes += 1;
+
+    await updateDoc(pollRef, { options: pollData.options });
+
+    // Update the user's vote in state
+    setUserVotes((prevVotes) => ({
+      ...prevVotes,
+      [pollId]: optionIndex,
+    }));
+
+    // Update the poll in the UI
     setPolls((prevPolls) =>
       prevPolls.map((poll) =>
-        poll.id === pollId ? { ...poll, options: updatedOptions } : poll
+        poll.id === pollId ? { ...poll, options: pollData.options } : poll
       )
     );
+  };
+
+  const handleDeletePoll = async (pollId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this poll?"
+    );
+    if (confirmDelete) {
+      try {
+        const db = getFirestore();
+        await deleteDoc(
+          doc(db, "developers", devProfile.userId, "polls", pollId)
+        );
+        setPolls((prevPolls) => prevPolls.filter((poll) => poll.id !== pollId));
+      } catch (error) {
+        console.error("Error deleting poll: ", error);
+      }
+    }
+  };
+
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
   };
 
   if (loading) return <LoadingIndicator />;
 
   return (
-    <div className="dev-view">
+    <div className="dev-page">
       {devProfile ? (
-        <div className="dev-profile-card">
-          <div className="dev-name">
-            <h3>Developer Profile</h3>
-            <button onClick={handleEditClick} className="follow-button">
+        <div className="dev-profile">
+          <div className="devprofile-header">
+            <h3 className="all-devs-title">Developer Profile</h3>
+            <button onClick={handleEditClick} className="devedit-button">
               Edit
             </button>
-            {user && devProfile.userId && user.uid === devProfile.userId && (
-              <button onClick={handleDelete} className="delete2-button">
+            {user.uid === devProfile.userId && (
+              <button onClick={handleDelete} className="devdelete-button">
                 Delete
               </button>
             )}
           </div>
+
           {isEditing ? (
-            <div className="dev-profile-edit">
+            <div className="devprofile-edit">
+              <label className="profile-title">Profile Image: </label>
+              <label htmlFor="file-upload" className="custom-file-upload">
+                <FaUpload /> Choose Image
+              </label>
+              <input
+                id="file-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange} // Handler for image selection
+                className="file-input"
+              />
               <input
                 type="text"
                 value={editedProfile.name}
                 onChange={(e) =>
-                  setEditedProfile({
-                    ...editedProfile,
-                    name: e.target.value,
-                  })
+                  setEditedProfile({ ...editedProfile, name: e.target.value })
                 }
-                className="signin-input"
+                className="editing-input"
               />
               <textarea
                 value={editedProfile.bio}
                 onChange={(e) =>
-                  setEditedProfile({
-                    ...editedProfile,
-                    bio: e.target.value,
-                  })
+                  setEditedProfile({ ...editedProfile, bio: e.target.value })
                 }
-                className="signin-input"
+                className="editing-input"
               />
               <input
                 type="text"
@@ -411,102 +488,33 @@ function DevPage() {
                     games: e.target.value,
                   })
                 }
-                className="signin-input"
+                className="editing-input"
               />
-              <button onClick={handleSaveClick} className="follow-button">
+              <button onClick={handleSaveClick} className="editing-save-button">
                 Save
               </button>
             </div>
           ) : (
-            <div className="alldevs-list">
+            <div className="devprofile-details">
               <img
                 src={devProfile.profilePicUrl}
                 alt={devProfile.name}
-                className="dev-image"
+                className="devprofile-pic"
               />
               <h4 className="dev-name">{devProfile.name}</h4>
               <p className="dev-bio">{devProfile.bio}</p>
-              <p className="dev-bio">{devProfile.games}</p>
             </div>
           )}
 
-          {Object.keys(analyticsData).length > 0 && (
-            <div className="analytics-section">
-              <h3 className="analytics-title">Analytics for Your Games</h3>
-              {Object.keys(analyticsData.gameStats).map((gameName) => (
-                <div key={gameName} className="game-analytics">
-                  <h4>{gameName}</h4>
-                  <p>
-                    Average Rating:{" "}
-                    {analyticsData.gameStats[gameName].averageRating}
-                  </p>
-                  <p>
-                    Review Count:{" "}
-                    {analyticsData.gameStats[gameName].reviewCount}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Dev Diaries and Updates Section */}
-          <div className="dev-diaries-section">
-            <h3 className="analytics-title">Dev Diaries and Updates</h3>
-
-            {/* Only show post form if the current user is the developer */}
-            {user && devProfile.userId === user.uid && (
-              <div className="add-post">
-                <input
-                  type="text"
-                  placeholder="Post Title"
-                  value={newPostTitle}
-                  onChange={(e) => setNewPostTitle(e.target.value)}
-                  className="post-input"
-                />
-                <textarea
-                  placeholder="What's new?"
-                  value={newPostContent}
-                  onChange={(e) => setNewPostContent(e.target.value)}
-                  className="post-textarea"
-                />
-                <button onClick={handleAddPost} className="follow-button">
-                  Add Post
-                </button>
-              </div>
-            )}
-
-            {/* Displaying posts */}
-            {posts.length > 0 ? (
-              <div className="posts-list">
-                {posts.map((post) => (
-                  <div key={post.id} className="post-item">
-                    <h4>{post.title}</h4>
-                    <p>{post.content}</p>
-                    <small>
-                      Posted on:{" "}
-                      {new Date(post.timestamp.toDate()).toLocaleString()}
-                    </small>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="no-posts">No posts yet.</p>
-            )}
-          </div>
-
-          {/* Polls and Surveys Section */}
-          <div className="polls-section">
-            <h3 className="analytics-title">Polls and Surveys</h3>
-
-            {/* Only show poll creation form if the current user is the developer */}
-            {user && devProfile.userId === user.uid && (
-              <div className="add-poll">
+          <div className="devpolls-section">
+            <h3 className="devpoll-title">Polls and Surveys</h3>
+            {user.uid === devProfile.userId && (
+              <div className="devpoll-create">
                 <input
                   type="text"
                   placeholder="Poll Question"
                   value={newPollQuestion}
                   onChange={(e) => setNewPollQuestion(e.target.value)}
-                  className="poll-input"
                 />
                 {newPollOptions.map((option, index) => (
                   <input
@@ -515,70 +523,57 @@ function DevPage() {
                     placeholder={`Option ${index + 1}`}
                     value={option}
                     onChange={(e) =>
-                      handlePollOptionChange(index, e.target.value)
+                      setNewPollOptions(
+                        newPollOptions.map((opt, idx) =>
+                          idx === index ? e.target.value : opt
+                        )
+                      )
                     }
-                    className="poll-input"
                   />
                 ))}
-                <button onClick={handleAddPollOption} className="follow-button">
-                  Add Option
-                </button>
-                <button onClick={handleCreatePoll} className="delete2-button">
-                  Create Poll
-                </button>
+                <button onClick={handleAddPollOption}>Add Option</button>
+                <button onClick={handleCreatePoll}>Create Poll</button>
               </div>
             )}
-
-            {/* Displaying polls */}
             {polls.length > 0 ? (
-              <div className="polls-list">
+              <div className="devpoll-list">
                 {polls.map((poll) => (
-                  <div key={poll.id} className="poll-item">
-                    <h4>{poll.question}</h4>
+                  <div key={poll.id} className="devpoll-item">
+                    <h4 className="devpoll-question">{poll.question}</h4>
+                    {/* Poll options with voting functionality */}
                     <div className="poll-options">
                       {poll.options.map((option, index) => (
                         <button
                           key={index}
                           onClick={() => handleVote(poll.id, index)}
-                          className="poll-option"
+                          className={`devpoll-option ${
+                            userVotes[poll.id] === index ? "selected" : ""
+                          }`}
                         >
                           {option.option} ({option.votes} votes)
                         </button>
                       ))}
                     </div>
+
+                    {/* Show delete button only for the poll creator */}
+                    {user && devProfile.userId === user.uid && (
+                      <button
+                        onClick={() => handleDeletePoll(poll.id)}
+                        className="delete2-button"
+                      >
+                        Delete Poll
+                      </button>
+                    )}
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="no-posts">No polls yet.</p>
+              <p className="no-polls">No polls yet.</p>
             )}
-          </div>
-
-          {/* Comment Section */}
-          <div className="comments-section">
-            <h3 className="analytics-title">Discussion</h3>
-            <div className="comments-list">
-              {comments.map((comment) => (
-                <div key={comment.id} className="comment">
-                  <strong>{comment.username}</strong>
-                  <p>{comment.text}</p>
-                </div>
-              ))}
-            </div>
-            <div className="add-comment">
-              <textarea
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-                placeholder="Add a comment..."
-              ></textarea>
-              <button className="follow-button" onClick={handleAddComment}>
-                Post Comment
-              </button>
-            </div>
           </div>
         </div>
       ) : (
-        <p className="no-profiles">You have no developer profile.</p>
+        <p className="nodevprofile">No developer profile found.</p>
       )}
     </div>
   );

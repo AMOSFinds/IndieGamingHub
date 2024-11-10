@@ -1,0 +1,41 @@
+.game-discovery-section {
+  padding: 2rem;
+}
+
+.game-cards-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Explore All Card Styling */
+.explore-all-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #d4a6ff; /* Highlight color for the CTA card */
+  color: #333;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, background-color 0.2s;
+}
+
+.explore-all-card:hover {
+  transform: translateY(-5px);
+  background-color: #9b49e8; /* Slightly darker shade for hover effect */
+}
+
+.explore-all-card h3 {
+  margin: 0;
+}
+
+.explore-arrow {
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  color: #333;
+}

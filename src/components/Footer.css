@@ -1,61 +1,80 @@
-.footer-container {
-  background-color: #31363f;
-  color: #fff;
-  padding: 20px 0;
+/* Footer Styling */
+.footer {
+  background-color: #1a1a2e; /* Dark blue/indigo color for an indie feel */
+  color: #b0b0b0; /* Light text for contrast */
+  padding: 2rem;
   text-align: center;
 }
 
-.footer-content {
+.footer h4 {
+  font-size: 1.5rem;
+  color: #d4a6ff; /* Highlight color for section titles */
+  margin-bottom: 0.5rem;
+}
+
+.footer-column {
+  margin: 1rem 0;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.footer-links {
-  margin-bottom: 10px;
+.footer-column ul {
+  list-style: none;
+  padding: 0;
 }
 
-.footer-link {
-  margin: 0 10px;
-  color: #76abae;
+.footer-column ul li {
+  margin: 0.5rem 0;
+}
+
+.footer-column ul li a {
+  color: #f0f0f0;
   text-decoration: none;
+  transition: color 0.2s;
 }
 
-.footer-link:hover {
-  text-decoration: underline;
+.footer-column ul li a:hover {
+  color: #b392ff; /* Same highlight color for hover effect */
 }
 
-.footer-social {
-  margin-top: 10px;
+.footer .footer-social-icons {
+  margin-top: 1rem;
 }
 
-.footer-social a {
-  margin: 0 10px;
-  color: #76abae;
+.footer .footer-social-icons a {
+  color: #f0f0f0;
+  margin: 0 0.5rem;
+  font-size: 1.5rem;
+  transition: color 0.3s;
+}
+
+.footer .footer-social-icons a:hover {
+  color: #b392ff;
+}
+
+.footer hr {
+  border: none;
+  border-top: 1px solid #4b4b6a; /* Subtle divider */
+  margin: 1rem 0;
+}
+
+.footer .footer-bottom {
+  font-size: 1.1rem;
+  color: #ccc; /* Lighter color for the bottom text */
+}
+
+.footer .footer-bottom a {
+  color: #ccc;
   text-decoration: none;
+  transition: color 0.2s;
 }
 
-.footer-social a:hover {
-  text-decoration: underline;
-}
-
-.footer-titles {
-  color: #76abae;
-}
-
-.footer-paragraphs {
-  color: #fff;
-  line-height: 1.5;
-  text-align: justify; /* Ensure text is justified */
-  text-align-last: center; /* Center the last line */
-  max-width: 1500px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.terms-container {
-  text-align: center;
-}
-
-.privacy-container {
-  text-align: center;
+.footer .footer-bottom a:hover {
+  color: #b392ff;
 }

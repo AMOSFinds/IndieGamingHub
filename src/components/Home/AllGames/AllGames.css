@@ -1,53 +1,152 @@
-.game-description {
-  max-width: 700px;
-}
-
-.game-content {
+/* Overall page container */
+.allgames-page {
   display: flex;
-  /* justify-content: space-between; */
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.rating-system {
+/* Search box styling */
+.search-box {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 30px;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #d4a6ff;
+  outline: none;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
   margin-top: 10px;
+}
+
+.filters button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  background-color: #d4a6ff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filters button:hover {
+  background-color: #b392ff;
+  color: #ffffff;
+}
+
+/* Game card entry */
+.game-entry {
   display: flex;
-  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #31363f;
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.game-image {
+  width: 200px;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.game-info {
+  flex-grow: 1;
+}
+
+.game-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #d4a6ff;
+  margin-bottom: 8px;
+}
+
+.game-developer {
+  font-size: 16px;
+  color: #76abae;
+  margin-bottom: 15px;
+}
+
+.game-description {
+  font-size: 14px;
+  color: #d0d0d0;
+  margin-bottom: 15px;
+}
+
+.game-details li {
+  color: #b0b0b0;
+  margin: 3px 0;
+}
+
+/* Favorites button */
+.btn-favorite {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #d4a6ff;
+  border: none;
+  border-radius: 5px;
+  color: #1a1a2e;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-favorite:hover {
+  background-color: #b392ff;
+  color: #ffffff;
+}
+
+/* Rating system */
+.rating-system {
+  display: flex;
   gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 15px;
 }
 
 .rating-button {
-  padding: 10px 15px;
+  padding: 8px 10px;
   background-color: #fff;
-  font-weight: bold;
   color: black;
-  border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 14px;
   transition: background-color 0.3s ease, color 0.3s ease;
-  width: 200px;
 }
 
-.rating-button:hover {
+.rating-button:hover,
+.rating-button.selected {
   background-color: #76abae;
   color: white;
 }
 
-.rating-button.selected {
-  background-color: #76abae;
-  color: black;
-}
 .rating-count {
-  margin-top: 5px;
-  font-size: 14px;
+  font-size: 12px;
   color: #333;
 }
 
+/* Review section */
 .review-section {
-  display: flex;
-  flex-direction: row;
-  width: 50%;
-  background-color: #31363f;
+  width: 100%;
+  background-color: #3c3f47;
+  padding: 15px;
+  border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-left: 20px;
+  margin-top: 20px;
 }
 
 .review-title {
@@ -57,8 +156,34 @@
 
 .add-review {
   display: flex;
+  gap: 10px;
   align-items: center;
-  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.add-review textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #b392ff;
+  outline: none;
+  resize: none;
+}
+
+.add-review button {
+  padding: 8px 12px;
+  background-color: #d4a6ff;
+  border: none;
+  border-radius: 5px;
+  color: #1a1a2e;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.add-review button:hover {
+  background-color: #b392ff;
+  color: #ffffff;
 }
 
 .add-review img {
@@ -68,35 +193,9 @@
   margin-right: 10px;
 }
 
-.add-review textarea {
-  flex-grow: 1;
-  height: 40px;
-  padding: 10px;
-  /* border: 1px solid #ccc; */
-  border-radius: 20px;
-  resize: none;
-  width: 500px;
-}
-
 ::placeholder {
   color: #31363f;
   font-size: 16px;
-}
-
-.add-review button {
-  margin-left: 10px;
-  padding: 10px 20px;
-  background-color: #76abae;
-  border: none;
-  border-radius: 20px;
-  color: black;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.add-review button:hover {
-  background-color: #76abae;
-  color: #fff;
 }
 
 .review-entries {
@@ -110,32 +209,31 @@
 
 .review-entry {
   display: flex;
-  align-items: flex-start;
-  /* margin-bottom: 20px; */
+  gap: 10px;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #76abae;
+  border-radius: 5px;
 }
 
 .review-profile-pic {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin-right: 10px;
+}
+
+.review-username {
+  font-weight: bold;
+}
+
+.review-comment {
+  font-size: 14px;
+  color: black;
 }
 
 .review-content {
   display: flex;
   flex-direction: column;
-}
-
-.review-username {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.review-comment {
-  background: #76abae;
-  padding: 10px;
-  border-radius: 10px;
-  color: black;
 }
 
 .three-dot-icon {
@@ -164,6 +262,29 @@
 
 .delete-option:hover {
   background-color: #f8d7da;
+}
+
+/* Pagination styling */
+.pagination {
+  display: flex;
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.pagination-button {
+  padding: 10px;
+  background-color: #d4a6ff;
+  color: #1a1a2e;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.pagination-button:hover {
+  background-color: #b392ff;
+  color: #ffffff;
 }
 
 /* Media Queries for Responsiveness */

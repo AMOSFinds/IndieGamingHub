@@ -1,0 +1,110 @@
+/* Container and Form Styling */
+.signin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #1e1e2f; /* Darker background for contrast */
+  padding: 20px;
+}
+
+.signin-form {
+  background-color: #2b2e3d; /* Darker background for the form */
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+  padding: 30px;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
+
+/* Title Styling */
+.create-title {
+  font-size: 28px;
+  color: #d4a6ff; /* Highlight color for title */
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Form Group Styling */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* File Upload Button */
+.custom-file-upload {
+  display: inline-block;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #d4a6ff;
+  color: #1a1a2e;
+  transition: background-color 0.3s ease;
+}
+
+.custom-file-upload:hover {
+  background-color: #b392ff; /* Slightly darker for hover */
+}
+
+/* Input Fields */
+.signin-input {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 8px 0;
+  border: 1px solid #44475a;
+  border-radius: 5px;
+  background-color: #333344;
+  color: #ffffff;
+  font-size: 16px;
+  outline: none;
+}
+
+.signin-input::placeholder {
+  color: #888899;
+  font-size: 14px;
+}
+
+/* Textarea */
+textarea.signin-input {
+  resize: vertical;
+  height: 100px;
+}
+
+/* Submit Button */
+.signin-button {
+  width: 100%;
+  padding: 12px 20px;
+  background-color: #d4a6ff;
+  border: none;
+  border-radius: 5px;
+  color: #1a1a2e;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.signin-button:hover {
+  background-color: #b392ff;
+  color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .signin-form {
+    padding: 20px;
+    width: 90%;
+  }
+
+  .create-title {
+    font-size: 24px;
+  }
+
+  .signin-input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .signin-button {
+    padding: 10px 15px;
+  }
+}

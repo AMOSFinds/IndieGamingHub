@@ -1,0 +1,58 @@
+/* DeveloperProfileSection.css */
+
+.developer-profile-section {
+  padding: 2rem;
+  /* background-color: #f0f0f0; */
+  text-align: center;
+}
+
+.developer-profile-section h2 {
+  font-size: 1.8rem;
+  color: #d4a6ff;
+  margin-bottom: 1.5rem;
+}
+
+.developer-carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding: 1rem 0;
+  scroll-snap-type: x mandatory;
+}
+
+.developer-carousel::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for a cleaner look */
+}
+
+.developer-info {
+  color: white;
+}
+
+.developer-name {
+  color: white;
+}
+
+.developer-bio {
+  color: white;
+  padding: 10px;
+}
+
+.profile-card {
+  flex: 0 0 300px; /* Ensure each card has a fixed width */
+  scroll-snap-align: start;
+  background-color: #31363f;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  transition: transform 0.3s;
+  padding: 20px;
+}
+
+.dev-profile-card:hover {
+  transform: scale(1.05);
+}
+
+.featured-title {
+  padding: 50px;
+  font-weight: bolder;
+  font-family: "RetroFont";
+}

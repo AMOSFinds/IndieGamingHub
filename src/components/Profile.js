@@ -212,10 +212,10 @@ function Profile(dev) {
             </div>
           )}
           <Favorites />
+          <h3 className="favorites-title">Following Developers</h3>
 
           {/* Following Developers Section */}
           <div className="alldevs-list">
-            <h3 className="favorites-title">Following Developers</h3>
             <div className="dev-profile-card">
               {following.map((dev) => (
                 <div

@@ -15,12 +15,13 @@ import Profile from "./Profile";
 import DevPage from "./Home/DevProfile/DevPage";
 import Terms from "./Terms";
 import Privacy from "./Privacy";
-
+import Footer from "./Footer";
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Navbar />
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/allgames" element={<AllGames />} />
@@ -38,6 +39,7 @@ function App() {
           <Route path="/privacy" element={<Privacy />} />
         </Routes>
       </Router>
+      <Footer />
     </AuthProvider>
   );
 }

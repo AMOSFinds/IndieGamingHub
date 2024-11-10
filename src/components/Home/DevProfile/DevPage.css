@@ -1,0 +1,201 @@
+.dev-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.all-devs-title {
+  font-size: 2rem;
+  margin: 1.5rem 0;
+  color: #d4a6ff;
+}
+
+.dev-profile {
+  background-color: #2b2e3d;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for card */
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.devprofile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.devprofile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin: 0 auto 15px;
+}
+
+.dev-name {
+  font-size: 1.5em;
+  color: #d4a6ff;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.dev-bio,
+.dev-games {
+  text-align: center;
+  color: #ffffff;
+  font-size: 1em;
+  margin-top: 8px;
+}
+
+/* Style for the editing input fields */
+.editing-input {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+  border: 1px solid #d4a6ff; /* Match this to your accent color */
+  border-radius: 5px;
+  background-color: #1f1f2e; /* Dark background to blend in */
+  color: #fff; /* White text for visibility */
+}
+
+/* Style for the Save button in edit mode */
+.editing-save-button {
+  background-color: #d4a6ff; /* Accent color */
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #1a1a2e; /* Darker text color to contrast with button */
+  transition: background-color 0.3s ease;
+}
+
+.editing-save-button:hover {
+  background-color: #b392ff; /* Slightly darker shade on hover */
+  color: #ffffff;
+}
+
+.devpoll-title {
+  color: #d4a6ff;
+}
+
+.devpoll-create {
+  margin-top: 20px;
+  padding: 15px;
+  /* background-color: #222; */
+  border-radius: 8px;
+}
+
+.devpoll-create input {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #d4a6ff;
+  border-radius: 5px;
+  color: #ffffff;
+  background-color: #333344;
+}
+
+.devpoll-create ::placeholder {
+  color: #888899;
+  font-size: 14px;
+}
+
+.devpoll-create button {
+  background-color: #d4a6ff;
+  border: none;
+  border-radius: 4px;
+  color: #1a1a2e;
+  padding: 8px 15px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.devpoll-create button:hover {
+  background-color: #b392ff;
+  color: #ffffff;
+}
+
+.devpoll-list .devpoll-item {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #333344;
+  border-radius: 8px;
+}
+
+.devpoll-question {
+  color: #ffffff;
+}
+
+.devpoll-option {
+  background-color: #76abae;
+  /* color: #ffffff; */
+  color: #1a1a2e;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: background-color 0.3s;
+  margin-right: 10px;
+}
+
+.devpoll-option:hover {
+  background-color: #5c8a99;
+  color: #ffffff;
+}
+
+.devedit-button,
+.devdelete-button {
+  background-color: #d4a6ff;
+  color: #1a1a2e;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.devedit-button {
+  margin-left: 240px;
+}
+
+.devedit-button:hover,
+.devdelete-button:hover {
+  background-color: #b392ff;
+  color: #ffffff;
+}
+
+.no-polls {
+  color: #ffffff;
+  text-align: center;
+}
+
+.nodevprofile {
+  font-size: large;
+  color: #d4a6ff;
+  text-align: center;
+}
+
+.profile-title {
+  color: #ffffff;
+  margin: 5px;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  color: #d4a6ff;
+  font-size: 14px;
+  border: 1px solid #d4a6ff;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+
+.file-input {
+  display: none; /* Hide the default file input */
+}

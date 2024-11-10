@@ -13,6 +13,8 @@ import DevProfileCard from "./DevProfileCard";
 import DevProfilePage from "./DevProfilePage";
 import CustomAlert from "../../CustomAlert";
 import LoadingIndicator from "../../LoadingIndicator";
+import { Link } from "react-router-dom";
+import "./AllDevs.css";
 
 const itemsPerPage = 5;
 
@@ -61,20 +63,23 @@ function AllDevs() {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div>
-      <DevProfilePage />
-      <h2 className="favorites-title">All Developers</h2>
-      <div className="alldevs-list">
+    <div className="all-devs-container">
+      <div className="dev-action-buttons">
+        <Link to="/devprofile-form">
+          <button className="action-btn">Create Dev Profile</button>
+        </Link>
+        <Link to="/devpage">
+          <button className="action-btn">View Dev Profile</button>
+        </Link>
+      </div>
+      <h2 className="all-devs-title">All Developers</h2>
+      <div className="dev-cards-list">
         {devProfiles.length === 0 ? (
           <p className="no-profiles">
             No available developer profiles at this moment.
           </p>
         ) : (
-          currentItems.map((dev) => (
-            <div key={dev.id} className="dev-profile-card">
-              <DevProfileCard dev={dev} />
-            </div>
-          ))
+          currentItems.map((dev) => <DevProfileCard key={dev.id} dev={dev} />)
         )}
       </div>
       {devProfiles.length > 0 && (
@@ -84,7 +89,9 @@ function AllDevs() {
               <button
                 key={i}
                 onClick={() => paginate(i + 1)}
-                className="pagination-button"
+                className={`pagination-button ${
+                  currentPage === i + 1 ? "active" : ""
+                }`}
               >
                 {i + 1}
               </button>
