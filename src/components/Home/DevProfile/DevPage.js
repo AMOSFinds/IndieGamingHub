@@ -20,8 +20,10 @@ import "./DevPage.css";
 import LoadingIndicator from "../../LoadingIndicator";
 import AllGamesData from "../AllGames/AllGameData";
 import { FaUpload } from "react-icons/fa";
+import { useParams } from "react-router-dom";
 
 function DevPage() {
+  const { developerId } = useParams(); // Get the developer ID from the URL
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState({});
   const [devProfile, setDevProfile] = useState(null);
@@ -44,183 +46,55 @@ function DevPage() {
   const [image, setImage] = useState(null); // State for storing the selected image file
 
   useEffect(() => {
-    const handlePostUpdate = async (content) => {
-      const db = getFirestore();
-      const updateData = {
-        content,
-        timestamp: new Date(),
-      };
+    const db = getFirestore();
 
+    // Function to fetch developer profile
+    const fetchDeveloperProfile = async () => {
       try {
-        // Save the update to the developer's DevPage
-        await addDoc(
-          collection(db, "developers", user.uid, "updates"),
-          updateData
-        );
+        const devDocRef = doc(db, "developers", developerId);
+        const devDoc = await getDoc(devDocRef);
 
-        // Notify followers
-        const followersSnapshot = await getDocs(
-          collection(db, "developers", user.uid, "followers")
-        );
-        followersSnapshot.forEach(async (doc) => {
-          const followerId = doc.id;
-          const followerNotificationsRef = doc(
-            db,
-            "users",
-            followerId,
-            "notifications",
-            user.uid
-          );
-          await setDoc(
-            followerNotificationsRef,
-            {
-              developerId: user.uid,
-              developerName: devProfile.name,
-              hasUnread: true,
-              lastUpdate: new Date(),
-            },
-            { merge: true }
-          );
-        });
-      } catch (error) {
-        console.error("Error posting update: ", error);
-      }
-    };
-
-    const fetchPosts = async (user) => {
-      setLoading(true);
-      const db = getFirestore();
-
-      try {
-        const postsSnapshot = await getDocs(
-          query(
-            collection(db, "developers", user.uid, "posts"),
-            orderBy("timestamp", "desc")
-          )
-        );
-        const fetchedPosts = [];
-        postsSnapshot.forEach((doc) => {
-          fetchedPosts.push({ id: doc.id, ...doc.data() });
-        });
-        setPosts(fetchedPosts);
-      } catch (error) {
-        console.error("Error fetching posts: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const fetchUserData = async (user) => {
-      setLoading(true);
-      const db = getFirestore();
-
-      try {
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        if (userDoc.exists()) {
-          setUserData(userDoc.data());
-        }
-
-        const devDoc = await getDoc(doc(db, "developers", user.uid));
         if (devDoc.exists()) {
-          // Retrieve games as an array directly
-          const gamesFromProfile = devDoc.data().games || []; // Set default empty array if games is undefined
+          const devData = devDoc.data();
+          setDevProfile(devData);
+          setLoading(false);
 
-          setDevProfile(devDoc.data());
-          setDeveloperGames(gamesFromProfile);
+          // Fetch comments
+          const commentsSnapshot = await getDocs(
+            query(
+              collection(db, "developers", developerId, "comments"),
+              orderBy("timestamp", "asc")
+            )
+          );
+          setComments(
+            commentsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+          );
 
-          // Fetch polls/surveys
+          // Fetch polls
           const pollsSnapshot = await getDocs(
-            collection(db, "developers", user.uid, "polls")
+            collection(db, "developers", developerId, "polls")
           );
-          const pollsData = pollsSnapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          setPolls(pollsData);
-
-          // Fetch the followers count
-          const followersSnapshot = await getDocs(
-            collection(db, "developers", user.uid, "followers")
+          setPolls(
+            pollsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
           );
-          const followersCount = followersSnapshot.size;
-
-          // Fetch the analytics data for each game
-          const gameStats = {};
-          for (const gameName of gamesFromProfile) {
-            const matchingGame = AllGamesData.find(
-              (game) => game.title.trim().toLowerCase() === gameName
-            );
-
-            if (matchingGame) {
-              const gameId = matchingGame.id;
-              const gameDoc = await getDoc(doc(db, "games", gameId.toString()));
-
-              if (gameDoc.exists()) {
-                const ratings = gameDoc.data().ratings || {};
-                const reviewsSnapshot = await getDocs(
-                  collection(db, "games", gameId.toString(), "reviews")
-                );
-                const reviewCount = reviewsSnapshot.size;
-
-                const averageRating =
-                  (ratings.verygood || 0) * 5 +
-                  (ratings.good || 0) * 4 +
-                  (ratings.decent || 0) * 3 +
-                  (ratings.bad || 0) * 2;
-
-                const totalRatings =
-                  (ratings.verygood || 0) +
-                  (ratings.good || 0) +
-                  (ratings.decent || 0) +
-                  (ratings.bad || 0);
-
-                gameStats[matchingGame.title] = {
-                  averageRating: totalRatings
-                    ? (averageRating / totalRatings).toFixed(1)
-                    : "No ratings yet",
-                  reviewCount,
-                };
-              }
-            }
-          }
-
-          setAnalyticsData({ followers: followersCount, gameStats });
+        } else {
+          console.error("Developer profile not found.");
         }
-
-        // Fetch comments for the developer
-        const commentsSnapshot = await getDocs(
-          query(
-            collection(db, "developers", user.uid, "comments"),
-            orderBy("timestamp", "asc")
-          )
-        );
-        const fetchedComments = commentsSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setComments(fetchedComments);
       } catch (error) {
-        console.error("Error fetching data:", error);
-        // If there's an error or the document doesn't exist, ensure the loading state is still set to false
-      } finally {
-        setLoading(false); // Always set loading to false after fetching
+        console.error("Error fetching developer profile:", error);
       }
     };
 
+    fetchDeveloperProfile();
+
+    // Set current user data
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-        fetchUserData(currentUser);
-        fetchPosts(currentUser); // Fetch posts for the developer
-        setCuratedGames(AllGamesData);
-      } else {
-        setLoading(false); // Ensure loading is set to false if there's no current user
-      }
+      setUser(currentUser);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [developerId]);
 
   const handleEditClick = () => {
     setEditedProfile(devProfile);
@@ -441,9 +315,11 @@ function DevPage() {
         <div className="dev-profile">
           <div className="devprofile-header">
             <h3 className="all-devs-title">Developer Profile</h3>
-            <button onClick={handleEditClick} className="devedit-button">
-              Edit
-            </button>
+            {user && user.uid === devProfile.userId && (
+              <button onClick={handleEditClick} className="devedit-button">
+                Edit
+              </button>
+            )}
             {user.uid === devProfile.userId && (
               <button onClick={handleDelete} className="devdelete-button">
                 Delete
@@ -531,8 +407,18 @@ function DevPage() {
                     }
                   />
                 ))}
-                <button onClick={handleAddPollOption}>Add Option</button>
-                <button onClick={handleCreatePoll}>Create Poll</button>
+                <button
+                  className="addoption-button"
+                  onClick={handleAddPollOption}
+                >
+                  Add Option
+                </button>
+                <button
+                  className="createpoll-button"
+                  onClick={handleCreatePoll}
+                >
+                  Create Poll
+                </button>
               </div>
             )}
             {polls.length > 0 ? (

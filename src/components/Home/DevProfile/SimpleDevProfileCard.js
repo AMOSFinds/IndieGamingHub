@@ -69,6 +69,7 @@ function SimpleDevProfileCard({ dev }) {
       />
       <div className="developer-info">
         <h3 className="developer-name">{dev.name}</h3>
+        <h4 className="dev-job">{dev.job}</h4>
         <p className="developer-bio">{dev.bio}</p>
         <button onClick={handleFollow} className="follow-button">
           {isFollowing ? "Unfollow" : "Follow"}

@@ -77,8 +77,8 @@ function DevProfileCard({ dev }) {
         className="dev-image"
       />
       <h3 className="dev-name">{dev.name}</h3>
+      {dev.job && <h4 className="dev-job">{dev.job}</h4>}{" "}
       <p className="dev-bio">{dev.bio}</p>
-      {dev.job && <p className="dev-job">{dev.job}</p>}{" "}
       {dev.website && (
         <div className="dev-website">
           <a href={dev.website} target="_blank" rel="noopener noreferrer">

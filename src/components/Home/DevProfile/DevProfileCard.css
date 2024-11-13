@@ -85,3 +85,8 @@
 .games-list li {
   margin-bottom: 5px;
 }
+
+.dev-job {
+  font-size: 1.3rem;
+  color: #d4a6ff;
+}

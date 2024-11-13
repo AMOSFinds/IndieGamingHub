@@ -15,9 +15,10 @@
 .developer-carousel {
   display: flex;
   overflow-x: auto;
-  gap: 1rem;
+  gap: 2rem;
   padding: 1rem 0;
   scroll-snap-type: x mandatory;
+  /* justify-content: center; */
 }
 
 .developer-carousel::-webkit-scrollbar {

@@ -199,3 +199,7 @@
 .file-input {
   display: none; /* Hide the default file input */
 }
+
+.createpoll-button {
+  margin-left: 10px;
+}
