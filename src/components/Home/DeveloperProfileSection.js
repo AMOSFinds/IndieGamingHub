@@ -58,6 +58,7 @@ function DeveloperProfileSection() {
         </div>
       </div>
       <h2 className="featured-title">Featured Developers</h2>
+      <h4 className="showcase-profile">Showcase profiles</h4>
       <div className="developer-carousel">
         {devProfiles.slice(0, 5).map((dev) => (
           <SimpleDevProfileCard key={dev.id} dev={dev} />
