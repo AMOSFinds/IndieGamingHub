@@ -14,7 +14,7 @@ header {
   background-image: url("/images/realheaderpic.jpg");
   /* height: "100vh"; */
   width: 100%;
-  height: 100vh;
+  height: 95vh;
   object-fit: contain;
   display: "flex";
   justify-content: "center";
