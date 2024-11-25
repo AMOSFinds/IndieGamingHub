@@ -32,21 +32,42 @@ function DevPage() {
   const [loading, setLoading] = useState(true);
   const [curatedGames, setCuratedGames] = useState([]);
   const [developerGames, setDeveloperGames] = useState([]);
-  const [analyticsData, setAnalyticsData] = useState({});
-  const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState("");
-  const [posts, setPosts] = useState([]);
-  const [newPostTitle, setNewPostTitle] = useState("");
-  const [newPostContent, setNewPostContent] = useState("");
+  const [comments, setComments] = useState([]); // Store all comments
+  const [newComment, setNewComment] = useState(""); // Store new comment text
+  const [isFollowing, setIsFollowing] = useState(false); // Check if the user is following
   const [polls, setPolls] = useState([]);
   const [newPollQuestion, setNewPollQuestion] = useState("");
   const [newPollOptions, setNewPollOptions] = useState([""]);
   const [userVotes, setUserVotes] = useState({});
   const [showDeleteOptions, setShowDeleteOptions] = useState({});
   const [image, setImage] = useState(null); // State for storing the selected image file
+  const [updates, setUpdates] = useState([]);
+  const [newUpdateTitle, setNewUpdateTitle] = useState("");
+  const [newUpdateContent, setNewUpdateContent] = useState("");
 
   useEffect(() => {
     const db = getFirestore();
+
+    // Function to fetch comments
+    const fetchComments = async (developerId) => {
+      try {
+        const commentsSnapshot = await getDocs(
+          query(
+            collection(db, `developers/${developerId}/comments`),
+            orderBy("timestamp", "asc")
+          )
+        );
+
+        setComments(
+          commentsSnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }))
+        );
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
 
     // Function to fetch developer profile
     const fetchDeveloperProfile = async () => {
@@ -59,15 +80,15 @@ function DevPage() {
           setDevProfile(devData);
           setLoading(false);
 
-          // Fetch comments
-          const commentsSnapshot = await getDocs(
+          // Fetch developer updates
+          const updatesSnapshot = await getDocs(
             query(
-              collection(db, "developers", developerId, "comments"),
-              orderBy("timestamp", "asc")
+              collection(db, "developers", developerId, "developerUpdates"),
+              orderBy("timestamp", "desc")
             )
           );
-          setComments(
-            commentsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+          setUpdates(
+            updatesSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
           );
 
           // Fetch polls
@@ -77,6 +98,8 @@ function DevPage() {
           setPolls(
             pollsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
           );
+
+          fetchComments(developerId);
         } else {
           console.error("Developer profile not found.");
         }
@@ -85,12 +108,33 @@ function DevPage() {
       }
     };
 
+    // Function to check if the current user is following the developer
+    const checkFollowingStatus = async (currentUser) => {
+      if (currentUser) {
+        try {
+          const followingRef = doc(
+            db,
+            `users/${currentUser.uid}/following/${developerId}`
+          );
+          const followingDoc = await getDoc(followingRef);
+          setIsFollowing(followingDoc.exists());
+        } catch (error) {
+          console.error("Error checking following status:", error);
+        }
+      }
+    };
+
     fetchDeveloperProfile();
 
     // Set current user data
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      setUser(currentUser || null);
+
+      // Check following status after user is set
+      if (currentUser) {
+        checkFollowingStatus(currentUser);
+      }
     });
 
     return () => unsubscribe();
@@ -102,6 +146,10 @@ function DevPage() {
   };
 
   const handleSaveClick = async () => {
+    if (!user) {
+      console.error("User must be signed in to create a poll.");
+      return;
+    }
     setLoading(true);
     const db = getFirestore();
     const storage = getStorage();
@@ -134,6 +182,10 @@ function DevPage() {
   };
 
   const handleDelete = async () => {
+    if (!user) {
+      console.error("User must be signed in to create a poll.");
+      return;
+    }
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this profile?"
     );
@@ -148,71 +200,6 @@ function DevPage() {
     }
   };
 
-  const handleAddComment = async () => {
-    if (!newComment) return;
-
-    const db = getFirestore();
-    const commentData = {
-      text: newComment,
-      username: user.displayName,
-      profilePicUrl: user.photoURL || "default-profile-pic-url",
-      timestamp: new Date(),
-    };
-
-    try {
-      await addDoc(
-        collection(db, "developers", devProfile.userId, "comments"),
-        commentData
-      );
-      setComments((prevComments) => [commentData, ...prevComments]);
-      setNewComment(""); // Clear the input field after adding a comment
-    } catch (error) {
-      console.error("Error adding comment: ", error);
-    }
-  };
-
-  const handleDeleteComment = async (commentId) => {
-    const db = getFirestore();
-
-    try {
-      await deleteDoc(
-        doc(db, "developers", devProfile.userId, "comments", commentId)
-      );
-      setComments((prevComments) =>
-        prevComments.filter((comment) => comment.id !== commentId)
-      );
-    } catch (error) {
-      console.error("Error deleting comment: ", error);
-    }
-  };
-
-  const handleAddPost = async () => {
-    if (!newPostTitle || !newPostContent) {
-      alert("Please fill in both the title and content.");
-      return;
-    }
-
-    const db = getFirestore();
-    const auth = getAuth();
-    const user = auth.currentUser;
-
-    try {
-      const newPost = {
-        title: newPostTitle,
-        content: newPostContent,
-        timestamp: new Date(),
-      };
-
-      await addDoc(collection(db, "developers", user.uid, "posts"), newPost);
-
-      setPosts((prevPosts) => [newPost, ...prevPosts]);
-      setNewPostTitle("");
-      setNewPostContent("");
-    } catch (error) {
-      console.error("Error adding post: ", error);
-    }
-  };
-
   const handleAddPollOption = () => {
     setNewPollOptions([...newPollOptions, ""]);
   };
@@ -224,6 +211,10 @@ function DevPage() {
   };
 
   const handleCreatePoll = async () => {
+    if (!user) {
+      console.error("User must be signed in to create a poll.");
+      return;
+    }
     if (newPollQuestion && newPollOptions.filter((opt) => opt.trim()).length) {
       const db = getFirestore();
       const pollRef = await addDoc(
@@ -285,6 +276,7 @@ function DevPage() {
   };
 
   const handleDeletePoll = async (pollId) => {
+    if (!user) return;
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this poll?"
     );
@@ -307,6 +299,102 @@ function DevPage() {
     }
   };
 
+  const handleAddUpdate = async () => {
+    if (!user || !newUpdateTitle || !newUpdateContent) return;
+
+    const db = getFirestore();
+    const newUpdate = {
+      title: newUpdateTitle,
+      content: newUpdateContent,
+      timestamp: new Date(),
+    };
+
+    try {
+      const updateRef = await addDoc(
+        collection(db, "developers", user.uid, "developerUpdates"),
+        newUpdate
+      );
+
+      setUpdates([{ id: updateRef.id, ...newUpdate }, ...updates]);
+      setNewUpdateTitle("");
+      setNewUpdateContent("");
+    } catch (error) {
+      console.error("Error adding update:", error);
+      console.log("Current user UID:", user.uid);
+    }
+  };
+
+  const handleDeleteUpdate = async (updateId) => {
+    if (!user) return;
+
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this update?"
+    );
+    if (confirmDelete) {
+      const db = getFirestore();
+
+      try {
+        await deleteDoc(
+          doc(db, "developers", user.uid, "developerUpdates", updateId)
+        );
+        setUpdates((prevUpdates) =>
+          prevUpdates.filter((update) => update.id !== updateId)
+        );
+      } catch (error) {
+        console.error("Error deleting update:", error);
+      }
+    }
+  };
+
+  const handleAddComment = async () => {
+    if (!newComment.trim()) return; // Prevent empty comments
+    if (!isFollowing) {
+      alert("You need to follow this developer to comment.");
+      return;
+    }
+
+    const db = getFirestore();
+    const commentData = {
+      text: newComment,
+      userId: user.uid,
+      username: user.displayName,
+      profilePicUrl: user.photoURL || "default-profile-pic-url",
+      timestamp: new Date(),
+    };
+
+    await addDoc(
+      collection(db, `developers/${developerId}/comments`),
+      commentData
+    );
+
+    setComments((prevComments) => [commentData, ...prevComments]);
+    setNewComment(""); // Clear the input field
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    if (!user) {
+      console.error("User must be signed in to delete a comment.");
+      return;
+    }
+
+    try {
+      const db = getFirestore();
+      await deleteDoc(
+        doc(db, "developers", developerId, "comments", commentId)
+      );
+
+      // Update state to remove the comment from the UI
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment.id !== commentId)
+      );
+      console.log("Comment deleted successfully.");
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+    }
+  };
+
+  const isOwner = user?.uid === devProfile?.userId;
+
   if (loading) return <LoadingIndicator />;
 
   return (
@@ -315,15 +403,15 @@ function DevPage() {
         <div className="dev-profile">
           <div className="devprofile-header">
             <h3 className="all-devs-title">Developer Profile</h3>
-            {user && user.uid === devProfile.userId && (
-              <button onClick={handleEditClick} className="devedit-button">
-                Edit
-              </button>
-            )}
-            {user.uid === devProfile.userId && (
-              <button onClick={handleDelete} className="devdelete-button">
-                Delete
-              </button>
+            {isOwner && (
+              <>
+                <button onClick={handleEditClick} className="devedit-button">
+                  Edit
+                </button>
+                <button onClick={handleDelete} className="devdelete-button">
+                  Delete
+                </button>
+              </>
             )}
           </div>
 
@@ -337,7 +425,7 @@ function DevPage() {
                 id="file-upload"
                 type="file"
                 accept="image/*"
-                onChange={handleImageChange} // Handler for image selection
+                onChange={handleImageChange}
                 className="file-input"
               />
               <input
@@ -352,17 +440,6 @@ function DevPage() {
                 value={editedProfile.bio}
                 onChange={(e) =>
                   setEditedProfile({ ...editedProfile, bio: e.target.value })
-                }
-                className="editing-input"
-              />
-              <input
-                type="text"
-                value={editedProfile.games}
-                onChange={(e) =>
-                  setEditedProfile({
-                    ...editedProfile,
-                    games: e.target.value,
-                  })
                 }
                 className="editing-input"
               />
@@ -384,13 +461,14 @@ function DevPage() {
 
           <div className="devpolls-section">
             <h3 className="devpoll-title">Polls and Surveys</h3>
-            {user.uid === devProfile.userId && (
+            {isOwner && (
               <div className="devpoll-create">
                 <input
                   type="text"
                   placeholder="Poll Question"
                   value={newPollQuestion}
                   onChange={(e) => setNewPollQuestion(e.target.value)}
+                  className="poll-input"
                 />
                 {newPollOptions.map((option, index) => (
                   <input
@@ -399,12 +477,9 @@ function DevPage() {
                     placeholder={`Option ${index + 1}`}
                     value={option}
                     onChange={(e) =>
-                      setNewPollOptions(
-                        newPollOptions.map((opt, idx) =>
-                          idx === index ? e.target.value : opt
-                        )
-                      )
+                      handlePollOptionChange(index, e.target.value)
                     }
+                    className="poll-input"
                   />
                 ))}
                 <button
@@ -426,7 +501,6 @@ function DevPage() {
                 {polls.map((poll) => (
                   <div key={poll.id} className="devpoll-item">
                     <h4 className="devpoll-question">{poll.question}</h4>
-                    {/* Poll options with voting functionality */}
                     <div className="poll-options">
                       {poll.options.map((option, index) => (
                         <button
@@ -440,12 +514,10 @@ function DevPage() {
                         </button>
                       ))}
                     </div>
-
-                    {/* Show delete button only for the poll creator */}
-                    {user && devProfile.userId === user.uid && (
+                    {isOwner && (
                       <button
                         onClick={() => handleDeletePoll(poll.id)}
-                        className="delete2-button"
+                        className="polldelete2-button"
                       >
                         Delete Poll
                       </button>
@@ -456,6 +528,103 @@ function DevPage() {
             ) : (
               <p className="no-polls">No polls yet.</p>
             )}
+          </div>
+          {/* Developer Updates Section */}
+          <div className="developer-updates-section">
+            <h3 className="update-title">Developer Updates</h3>
+            {isOwner && (
+              <div className="update-form">
+                <input
+                  type="text"
+                  placeholder="Update Title"
+                  value={newUpdateTitle}
+                  onChange={(e) => setNewUpdateTitle(e.target.value)}
+                  className="update-input"
+                />
+                <textarea
+                  placeholder="Update Content"
+                  value={newUpdateContent}
+                  onChange={(e) => setNewUpdateContent(e.target.value)}
+                  className="update-input"
+                />
+                <button onClick={handleAddUpdate} className="add-update-button">
+                  Add Update
+                </button>
+              </div>
+            )}
+            <div className="updates-list">
+              {updates.length > 0 ? (
+                updates.map((update) => (
+                  <div key={update.id} className="update-item">
+                    <h4 className="updatelist-title">{update.title}</h4>
+                    <p className="update-content">{update.content}</p>
+                    {isOwner && (
+                      <button
+                        onClick={() => handleDeleteUpdate(update.id)}
+                        className="delete-update-button"
+                      >
+                        Delete
+                      </button>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <p className="no-updates">No updates yet.</p>
+              )}
+            </div>
+          </div>
+          <div className="developer-comments-section">
+            <h3 className="comments-title">Comments</h3>
+            {user ? (
+              <div className="comment-input-container">
+                <textarea
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder="Write a comment..."
+                  className="comment-input"
+                />
+                <button
+                  onClick={handleAddComment}
+                  className="comment-submit-button"
+                >
+                  Add Comment
+                </button>
+              </div>
+            ) : (
+              <p className="comments-login-message">
+                Please log in to leave a comment.
+              </p>
+            )}
+
+            <div className="comments-list">
+              {comments.length > 0 ? (
+                comments.map((comment) => (
+                  <div key={comment.id} className="comment-item">
+                    <img
+                      src={comment.profilePicUrl}
+                      alt={comment.username}
+                      className="comment-profile-pic"
+                    />
+                    <div className="comment-details">
+                      <h4 className="comment-username">{comment.username}</h4>
+                      <p className="comment-text">{comment.text}</p>
+                      {user && comment.userId === user.uid && (
+                        <button
+                          onClick={() => handleDeleteComment(comment.id)}
+                          className="delete-comment-button"
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="no-comments-message">
+                  No comments yet. Be the first to comment!
+                </p>
+              )}
+            </div>
           </div>
         </div>
       ) : (
