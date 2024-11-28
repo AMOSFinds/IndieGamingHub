@@ -18,7 +18,7 @@ import "./AllDevs.css";
 
 const itemsPerPage = 5;
 
-function AllDevs() {
+function AllDevs(dev) {
   const [devProfiles, setDevProfiles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -68,7 +68,8 @@ function AllDevs() {
         <Link to="/devprofile-form">
           <button className="action-btn">Create Dev Profile</button>
         </Link>
-        <Link to="/devpage">
+        {/* <Link to="/devpage"> */}
+        <Link to={`/devpage/${dev.id}`}>
           <button className="action-btn">View Dev Profile</button>
         </Link>
       </div>

@@ -19,7 +19,7 @@ import Footer from "./Footer";
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <Router basename="/">
         <Navbar />
 
         <Routes>
@@ -30,7 +30,6 @@ function App() {
           <Route path="/devpage" element={<DevPage />} />
           {/* <Route path="/devpage/:devId" element={<DevPage />} /> */}
           <Route path="/devpage/:developerId" element={<DevPage />} />
-          {/* DevPage route */}
           <Route path="/profile" element={<Profile />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/signup" element={<SignUp />} />

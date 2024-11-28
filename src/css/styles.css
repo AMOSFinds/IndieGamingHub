@@ -1,6 +1,6 @@
 @font-face {
   font-family: "RetroFont"; /* Name your font family */
-  src: url("/css/retro_gaming/Retro Gaming.ttf"); /* Locate the .ttf file within your directory*/
+  src: url("retro_gaming/Retro Gaming.ttf"); /* Locate the .ttf file within your directory*/
 }
 
 body {
@@ -8,10 +8,11 @@ body {
   font-family: "Roboto", sans-serif;
   /* background-color: #222831; */
   background-color: #1a1a2e;
+  /* background-color: red; */
 }
 
 header {
-  background-image: url("/images/realheaderpic.jpg");
+  background-image: url("../../public/images/realheaderpic.jpg");
   /* height: "100vh"; */
   width: 100%;
   height: 95vh;
@@ -892,3 +893,5 @@ input[type="radio"] {
   margin-right: auto;
   text-align: center;
 }
+
+/* DevPage styles */

@@ -16,11 +16,12 @@ import {
   arrayUnion,
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import "./DevPage.css";
+
 import LoadingIndicator from "../../LoadingIndicator";
 import AllGamesData from "../AllGames/AllGameData";
 import { FaUpload } from "react-icons/fa";
 import { useParams } from "react-router-dom";
+import "./DevPage.css";
 
 function DevPage() {
   const { developerId } = useParams(); // Get the developer ID from the URL
@@ -102,6 +103,7 @@ function DevPage() {
           fetchComments(developerId);
         } else {
           console.error("Developer profile not found.");
+          setDevProfile(null);
         }
       } catch (error) {
         console.error("Error fetching developer profile:", error);
@@ -124,7 +126,11 @@ function DevPage() {
       }
     };
 
-    fetchDeveloperProfile();
+    if (developerId) {
+      fetchDeveloperProfile();
+    }
+
+    // fetchDeveloperProfile();
 
     // Set current user data
     const auth = getAuth();
@@ -137,7 +143,14 @@ function DevPage() {
       }
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+      setDevProfile(null);
+      setComments([]);
+      setUpdates([]);
+      setPolls([]);
+      setLoading(true);
+    };
   }, [developerId]);
 
   const handleEditClick = () => {

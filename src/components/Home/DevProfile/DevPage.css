@@ -2,6 +2,9 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  min-height: 100vh; /* Ensure the page always fills the viewport */
+  overflow: auto; /* Prevent content overflow */
+  background-color: #1a1a2e; /* Ensure a consistent background color */
 }
 
 .all-devs-title {
@@ -390,4 +393,8 @@
 
 .delete-comment-button:hover {
   background-color: #e60000;
+}
+
+.comments-login-message {
+  color: white;
 }
