@@ -19,7 +19,7 @@ import Footer from "./Footer";
 function App() {
   return (
     <AuthProvider>
-      <Router basename="/">
+      <Router>
         <Navbar />
 
         <Routes>
