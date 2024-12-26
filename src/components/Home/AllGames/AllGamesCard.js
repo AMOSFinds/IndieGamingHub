@@ -13,13 +13,14 @@ import {
   query,
   orderBy,
   onSnapshot,
+  serverTimestamp,
 } from "firebase/firestore";
 import "./AllGames.css";
 import { FaEllipsisV } from "react-icons/fa";
 import CustomAlert from "../../CustomAlert";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-function AllGamesCard({ allgame }) {
+function AllGamesCard({ allgame, layout = "details" }) {
   const [user, setUser] = useState(null);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
@@ -48,7 +49,41 @@ function AllGamesCard({ allgame }) {
           allgame.id.toString()
         );
         await setDoc(userFavoritesRef, { ...allgame, userId: user.uid });
-        setAlertMessage("Added to favorites!");
+        const userRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userRef);
+
+        const now = new Date();
+        const today = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate()
+        );
+
+        const lastFavoritePoints = userDoc.data()?.lastFavoritePoints || null;
+        const lastFavoriteDate = lastFavoritePoints
+          ? new Date(lastFavoritePoints.seconds * 1000)
+          : null;
+
+        if (!lastFavoriteDate || lastFavoriteDate < today) {
+          await setDoc(
+            doc(db, `users/${user.uid}/favorites`, allgame.id.toString()),
+            {
+              ...allgame,
+              userId: user.uid,
+            }
+          );
+
+          await updateDoc(userRef, {
+            points: increment(3), // Award points for adding a favorite
+            lastFavoritePoints: now, // Update timestamp
+          });
+
+          setAlertMessage("Added to favorites! You've earned 3 points.");
+        } else {
+          setAlertMessage(
+            "Added to favorites, but no points awarded (daily limit reached)."
+          );
+        }
         setShowAlert(true);
         setTimeout(() => {
           setShowAlert(false);
@@ -71,6 +106,24 @@ function AllGamesCard({ allgame }) {
   };
 
   useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const currentUser = auth.currentUser;
+        if (currentUser) {
+          const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+          if (userDoc.exists()) {
+            setUser({
+              ...currentUser,
+              profilePicUrl:
+                userDoc.data().profilePicUrl || "default-profile-pic-url",
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
     const fetchReviews = () => {
       try {
         const reviewsRef = collection(
@@ -127,6 +180,7 @@ function AllGamesCard({ allgame }) {
       setUser(currentUser);
       if (currentUser) {
         fetchUserRating(currentUser);
+        fetchUserData();
       }
       setLoading(false);
     });
@@ -161,29 +215,82 @@ function AllGamesCard({ allgame }) {
           });
         }
 
+        const currentRatings = gameDoc.data()?.ratings || {
+          verygood: 0,
+          good: 0,
+          decent: 0,
+          bad: 0,
+        };
+
         if (userRating) {
-          await updateDoc(gameRef, {
-            [`ratings.${userRating.toLowerCase().replace(" ", "")}`]:
-              increment(-1),
-          });
+          const previousRatingKey = userRating.toLowerCase().replace(" ", "");
+          if (currentRatings[previousRatingKey] > 0) {
+            await updateDoc(gameRef, {
+              [`ratings.${previousRatingKey}`]: increment(-1),
+            });
+          }
         }
 
         const newRating = userRating === rating ? null : rating;
         setUserRating(newRating);
 
         if (newRating) {
-          await setDoc(userRatingsRef, { rating: newRating }, { merge: true });
+          const newRatingKey = newRating.toLowerCase().replace(" ", "");
           await updateDoc(gameRef, {
-            [`ratings.${newRating.toLowerCase().replace(" ", "")}`]:
-              increment(1),
+            [`ratings.${newRatingKey}`]: increment(1),
           });
-        } else {
           await setDoc(userRatingsRef, { rating: newRating }, { merge: true });
+        } else {
+          await deleteDoc(userRatingsRef); // Remove rating if unselected
         }
 
         const updatedGameDoc = await getDoc(gameRef);
         if (updatedGameDoc.exists()) {
           setRatingCounts(updatedGameDoc.data().ratings);
+        }
+
+        // Award points and update badges
+        const userDocRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+        const badges = userDoc.data()?.badges || [];
+        const hasFirstStepsBadge = badges.some(
+          (badge) => badge.id === "first_steps"
+        );
+
+        if (!hasFirstStepsBadge) {
+          badges.push({
+            id: "first_steps",
+            name: "First Steps",
+            description: "Rated your first game!",
+            icon: "/images/starbadge.png",
+          });
+
+          await updateDoc(userDocRef, { badges });
+        }
+
+        const now = new Date();
+        const today = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate()
+        );
+
+        const lastRatingPoints = userDoc.data()?.lastRatingPoints || null;
+        const lastRatingDate = lastRatingPoints
+          ? new Date(lastRatingPoints.seconds * 1000)
+          : null;
+
+        if (!lastRatingDate || lastRatingDate < today) {
+          await updateDoc(userDocRef, {
+            points: increment(5), // Award points for rating a game
+            lastRatingPoints: now, // Update timestamp
+          });
+
+          setAlertMessage("Rating submitted! You've earned 5 points.");
+        } else {
+          setAlertMessage(
+            "Rating submitted, but no points awarded (daily limit reached)."
+          );
         }
       } else {
         setAlertMessage("You need to be signed in to rate games.");
@@ -201,7 +308,8 @@ function AllGamesCard({ allgame }) {
     try {
       const user = auth.currentUser;
       if (user) {
-        const userDoc = await getDoc(doc(db, "users", user.uid));
+        const userDocRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
         const reviewData = {
           username: userDoc.data().username,
           profilePicUrl: userDoc.data().profilePicUrl,
@@ -213,6 +321,64 @@ function AllGamesCard({ allgame }) {
           collection(db, "games", allgame.id.toString(), "reviews"),
           reviewData
         );
+
+        const now = new Date();
+        const today = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate()
+        );
+
+        const lastReviewPoints = userDoc.data()?.lastReviewPoints || null;
+        const lastReviewDate = lastReviewPoints
+          ? new Date(lastReviewPoints.seconds * 1000)
+          : null;
+
+        if (!lastReviewDate || lastReviewDate < today) {
+          await addDoc(
+            collection(db, "games", allgame.id.toString(), "reviews"),
+            {
+              username: userDoc.data().username,
+              profilePicUrl: userDoc.data().profilePicUrl,
+              comment: newReview,
+              timestamp: new Date(),
+            }
+          );
+
+          await updateDoc(userDocRef, {
+            points: increment(10), // Award points for writing a review
+            lastReviewPoints: now, // Update timestamp
+          });
+
+          setAlertMessage("Review added! You've earned 10 points.");
+        } else {
+          setAlertMessage(
+            "Review added, but no points awarded (daily limit reached)."
+          );
+        }
+
+        const reviewsCount = userDoc.data().reviewsCount || 0;
+        const badges = userDoc.data().badges || [];
+        const hasReviewerBadge = badges.some(
+          (badge) => badge.id === "reviewer_extraordinaire"
+        );
+
+        if (reviewsCount + 1 >= 5 && !hasReviewerBadge) {
+          badges.push({
+            id: "reviewer_extraordinaire",
+            name: "Reviewer Extraordinaire",
+            description: "Wrote 5 reviews!",
+            icon: "/path-to-icons/torchbadge.png",
+          });
+
+          await updateDoc(userDocRef, { badges });
+        }
+
+        // Increment reviews count
+        await updateDoc(userDocRef, {
+          reviewsCount: increment(1),
+        });
+
         setNewReview("");
       } else {
         setAlertMessage("You need to be signed in to add reviews.");
@@ -263,9 +429,11 @@ function AllGamesCard({ allgame }) {
           <li>{allgame.release}</li>
           <li>{allgame.platform}</li>
         </ul>
+
         <button className="btn-favorite" onClick={addToFavorites}>
           Add to Favorites
         </button>
+
         <div className="game-content">
           <div className="rating-system">
             {starRatings.map((rating) => (
@@ -286,7 +454,7 @@ function AllGamesCard({ allgame }) {
               <div className="add-review">
                 {user && (
                   <img
-                    src={user.photoURL || "default-profile-pic-url"}
+                    src={user.profilePicUrl || "default-profile-pic-url"}
                     alt="Profile"
                   />
                 )}

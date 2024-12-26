@@ -7,7 +7,9 @@ import {
   query,
 } from "firebase/firestore";
 import SimpleDevProfileCard from "./DevProfile/SimpleDevProfileCard";
-import "./DeveloperProfileSection.css"; // Add CSS for styling
+import "./DeveloperProfileSection.css";
+import { Link } from "react-router-dom";
+import LoadingIndicator from "../LoadingIndicator";
 
 function DeveloperProfileSection() {
   const [devProfiles, setDevProfiles] = useState([]);
@@ -38,32 +40,35 @@ function DeveloperProfileSection() {
     fetchDevProfiles();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  const featuredProfiles = devProfiles.slice(0, 6);
+  // const latestProfiles = devProfiles.slice(-7);
+
+  // if (loading) return <LoadingIndicator />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
     <section className="developer-profile-section">
-      <div className="showcase-page">
-        <div>
-          <h1 className="tagline">Meet the Minds Behind the Games</h1>
-          <p className="description">
-            Go behind the scenes and connect with the creators with DevIndie's
-            Developer Profiles. Each profile showcases the studio's history,
-            game portfolio, and the passionate individuals behind the pixels.
-            Learn about their creative processes, developmental challenges, and
-            success stories. Supporting indie developers is more than just
-            playing their games—it's about connecting with their stories and
-            supporting their dreams.
-          </p>
+      <div className="developer-carousel-section">
+        <h3 className="carousel-title">Featured Developers</h3>
+        <div className="carousel">
+          {featuredProfiles.map((dev) => (
+            <SimpleDevProfileCard key={dev.id} dev={dev} />
+          ))}
         </div>
+        <Link to="/all-devs">
+          <button className="see-all-button">See All Developers</button>
+        </Link>
       </div>
-      <h2 className="featured-title">Featured Developers</h2>
-      <h4 className="showcase-profile">Showcase profiles</h4>
-      <div className="developer-carousel">
-        {devProfiles.slice(0, 5).map((dev) => (
-          <SimpleDevProfileCard key={dev.id} dev={dev} />
-        ))}
-      </div>
+
+      {/* <div className="developer-carousel-section">
+        <h3 className="carousel-title">Latest Added Developers</h3>
+
+        <div id="developer-carousel" className="carousel">
+          {latestProfiles.map((dev) => (
+            <SimpleDevProfileCard key={dev.id} dev={dev} />
+          ))}
+        </div>
+      </div> */}
     </section>
   );
 }

@@ -5,11 +5,22 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  where,
+  getDocs,
+  updateDoc,
+  increment,
+  query,
+  collection,
+} from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import CustomAlert from "../CustomAlert";
 import { FaUpload } from "react-icons/fa";
 import LoadingIndicator from "../LoadingIndicator";
+import { v4 as uuidv4 } from "uuid";
 
 function SignUp() {
   const [alertMessage, setAlertMessage] = useState("");
@@ -49,6 +60,9 @@ function SignUp() {
         )}&background=random&color=ffffff&bold=true`;
       }
 
+      const referralCode = uuidv4().slice(0, 6).toUpperCase(); // Generate a 6-character code
+      const referredBy = null; // Referral code entered by the new user
+
       await updateProfile(user, {
         displayName: username,
         photoURL: profilePicUrl,
@@ -59,7 +73,38 @@ function SignUp() {
         username,
         email,
         profilePicUrl,
+        points: 0, // Initialize points
+        badges: [], // Initialize badges
+        referralCode,
+        referredBy,
+        referralCount: 0,
       });
+
+      if (referredBy) {
+        // Update referrer's referral count and points
+        const referrerQuery = query(
+          collection(db, "users"),
+          where("referralCode", "==", referredBy)
+        );
+        const referrerSnapshot = await getDocs(referrerQuery);
+
+        if (!referrerSnapshot.empty) {
+          const referrerDoc = referrerSnapshot.docs[0];
+          const referrerRef = referrerDoc.ref;
+
+          await updateDoc(referrerRef, {
+            referralCount: increment(1),
+            points: increment(100), // Reward points for referrer
+          });
+
+          // Optional: Send notification to referrer
+          // await addDoc(collection(db, "users", referrerDoc.id, "notifications"), {
+          //   message: `You earned 100 points for referring ${username}!`,
+          //   timestamp: serverTimestamp(),
+          //   hasUnread: true,
+          // });
+        }
+      }
 
       setAlertMessage("Account created successfully");
       setShowAlert(true);

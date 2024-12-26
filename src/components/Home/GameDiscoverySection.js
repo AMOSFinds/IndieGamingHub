@@ -1,30 +1,80 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import allgames from "./AllGames/AllGameData"; // Make sure to adjust the import path if needed
-import SimpleAllGamesCard from "./AllGames/SimpleAllGamesCard";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  collection,
+  getDocs,
+  orderBy,
+  query,
+  getFirestore,
+} from "firebase/firestore";
+import allgames from "./AllGames/AllGameData";
 import "./GameDiscoverySection.css";
 
-const GameDiscoverySection = () => {
+const GameDiscoverySection = (allgame) => {
   const navigate = useNavigate();
 
   const handleExploreAllClick = () => {
-    navigate("/allgames"); // Update this path to the actual route for the full games page
+    navigate("/allgames");
   };
 
-  return (
-    <section className="game-discovery-section">
-      {/* Game Cards Grid */}
-      <div className="game-cards-grid">
-        {/* Display the first three games */}
-        {allgames.slice(0, 3).map((game) => (
-          <SimpleAllGamesCard key={game.id} allgame={game} />
-        ))}
+  const featuredGames = allgames.slice(0, 6);
+  // const latestGames = allgames.slice(0, 6);
 
-        <div className="explore-all-card" onClick={handleExploreAllClick}>
-          <h3>Uncover Full Selection</h3>
-          <p className="explore-arrow">→</p>
+  return (
+    <section id="game-discovery-section" className="game-discovery-section">
+      <div className="game-discovery-header">
+        <h2 className="gamesection-title">Discover Indie Gems</h2>
+      </div>
+
+      <div className="game-carousel-section">
+        <h3 className="carousel-title">Featured Games of the Week</h3>
+
+        <div id="games-carousel" className="carousel">
+          {featuredGames.map((game) => (
+            <Link
+              to={`/games/${game.id}`}
+              key={game.id}
+              className="carousel-item-link"
+            >
+              <div className="game-card">
+                <img
+                  src={game.imageUrl}
+                  alt={game.title}
+                  className="game-image"
+                />
+                <h4 className="game-title">{game.title}</h4>
+                <p className="game-subtitle">{game.genre}</p>
+              </div>
+            </Link>
+          ))}
+          <button className="see-all-games" onClick={handleExploreAllClick}>
+            See All Games →
+          </button>
         </div>
       </div>
+
+      {/* <div className="game-carousel-section">
+        <h3 className="carousel-title">Latest Added Games</h3>
+        <div className="carousel">
+          {latestGames.map((game) => (
+            <Link
+              to={`/games/${game.id}`}
+              key={game.id}
+              className="carousel-item-link"
+            >
+              <div className="game-card">
+                <img
+                  src={game.imageUrl}
+                  alt={game.title}
+                  className="game-image"
+                />
+                <h4 className="game-title">{game.title}</h4>
+                <p className="game-subtitle">{game.genre}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div> */}
     </section>
   );
 };

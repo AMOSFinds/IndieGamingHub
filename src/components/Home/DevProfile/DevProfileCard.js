@@ -6,6 +6,11 @@ import {
   setDoc,
   getDoc,
   deleteDoc,
+  updateDoc,
+  increment,
+  collection,
+  addDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom"; // Import this to navigate to the DevPage
 import "./DevProfileCard.css";
@@ -31,7 +36,10 @@ function DevProfileCard({ dev }) {
   }, [user, dev.id, db]);
 
   const handleFollow = async () => {
+    const user = auth.currentUser;
     if (user) {
+      const userDocRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
       const userFollowRef = doc(db, `users/${user.uid}/following`, dev.id);
       const developerFollowerRef = doc(
         db,
@@ -53,6 +61,33 @@ function DevProfileCard({ dev }) {
           userName: user.displayName,
           userProfilePic: user.photoURL,
         });
+
+        await updateDoc(doc(db, "users", user.uid), {
+          points: increment(5),
+        });
+
+        const favoritesCount = userDoc.data().favoritesCount || 0;
+        const badges = userDoc.data().badges || [];
+        const hasCollectorBadge = badges.some(
+          (badge) => badge.id === "collector"
+        );
+
+        if (favoritesCount + 1 >= 10 && !hasCollectorBadge) {
+          badges.push({
+            id: "collector",
+            name: "Collector",
+            description: "Added 10 games to favorites!",
+            icon: "/path-to-icons/collector.png",
+          });
+
+          await updateDoc(userDocRef, { badges });
+        }
+
+        // Increment favorites count
+        await updateDoc(userDocRef, {
+          favoritesCount: increment(1),
+        });
+
         setIsFollowing(true);
       }
     }

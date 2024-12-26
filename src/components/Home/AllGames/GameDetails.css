@@ -1,0 +1,52 @@
+/* Override styles for GameDetails page */
+.game-details-page .game-entry {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+}
+
+.game-details-page .game-image {
+  width: 400px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.game-details-page .game-info {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.game-details-page .game-title {
+  font-size: 32px;
+  color: #d4a6ff;
+}
+
+.game-details-page .game-developer {
+  font-size: 18px;
+  color: #76abae;
+}
+
+.game-details-page .game-description {
+  font-size: 16px;
+  color: #d0d0d0;
+}
+
+.game-details-page .btn-favorite {
+  margin-top: 20px;
+  padding: 12px 20px;
+}
+
+.game-details-page .rating-system {
+  margin-top: 30px;
+}
+
+.game-details-page .review-section {
+  margin-top: 30px;
+  background-color: #31363f;
+  padding: 20px;
+  border-radius: 10px;
+}

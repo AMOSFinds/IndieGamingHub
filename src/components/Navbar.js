@@ -14,6 +14,7 @@ import { useAuth } from "./Authentication/AuthContext";
 import SignOut from "./Authentication/SignOut";
 import SignInButton from "./Authentication/SignInButton";
 import { FaBars, FaTimes } from "react-icons/fa";
+import "./Navbar.css";
 
 function Navbar() {
   const { currentUser } = useAuth();
@@ -65,31 +66,31 @@ function Navbar() {
 
   return (
     <div className="navbar-container">
-      <button className="nav-btn" onClick={showNavbar}>
-        <FaBars />
-      </button>
-      <nav className="navbar" ref={navRef}>
-        <button className="nav-btn nav-close-btn" onClick={showNavbar}>
-          <FaTimes />
-        </button>
-        <Link to="/" className="navbar-home" onClick={closeNavbar}>
+      <div className="navbar-left">
+        <Link to="/" className="navbar-logo">
+          DevIndie
+        </Link>
+      </div>
+
+      <nav className="navbar-center">
+        <Link to="/" className="navbar-link">
           Home
         </Link>
-        <Link to="/all-devs" className="navbar-profile" onClick={closeNavbar}>
+        <Link to="/all-devs" className="navbar-link">
           Developers
         </Link>
-        <Link to="/contact" className="navbar-profile" onClick={closeNavbar}>
+        <Link to="/contact" className="navbar-link">
           Feedback
         </Link>
+        <Link to="/leaderboard" className="navbar-link">
+          Leaderboard
+        </Link>
+      </nav>
+
+      <div className="navbar-right">
         {currentUser ? (
           <div className="navbar-user">
-            <Link
-              to="/profile"
-              className={`navbar-profile ${
-                hasUnreadNotifications ? "highlight" : ""
-              }`}
-              onClick={closeNavbar}
-            >
+            <Link to="/profile" className="navbar-link highlight">
               {username}
             </Link>
             <SignOut />
@@ -97,10 +98,8 @@ function Navbar() {
         ) : (
           <SignInButton />
         )}
-      </nav>
-      <Link to="/" className="navbar-logo">
-        DevIndie
-      </Link>
+        {/* <button className="navbar-button">Contact us</button> */}
+      </div>
     </div>
   );
 }

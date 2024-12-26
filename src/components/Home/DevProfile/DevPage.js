@@ -14,6 +14,7 @@ import {
   query,
   onSnapshot,
   arrayUnion,
+  increment,
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -72,6 +73,11 @@ function DevPage() {
 
     // Function to fetch developer profile
     const fetchDeveloperProfile = async () => {
+      if (!developerId) {
+        setLoading(false);
+        return;
+      }
+
       try {
         const devDocRef = doc(db, "developers", developerId);
         const devDoc = await getDoc(devDocRef);
@@ -107,6 +113,8 @@ function DevPage() {
         }
       } catch (error) {
         console.error("Error fetching developer profile:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -259,33 +267,53 @@ function DevPage() {
     const db = getFirestore();
     const pollRef = doc(db, "developers", devProfile.userId, "polls", pollId);
     const pollDoc = await getDoc(pollRef);
-    const pollData = pollDoc.data();
 
-    // Check if the user has voted before
-    const previousVoteIndex = userVotes[pollId];
-
-    // If user has voted before on this poll, decrease the vote count of the previous option
-    if (previousVoteIndex !== undefined && previousVoteIndex !== optionIndex) {
-      pollData.options[previousVoteIndex].votes -= 1;
+    if (!pollDoc.exists()) {
+      console.error("Poll does not exist.");
+      return;
     }
 
-    // Increase the vote count of the selected option
+    const pollData = pollDoc.data();
+    const previousVoteIndex = userVotes[pollId]; // Get the user's previous vote for this poll
+
+    // Check if the user is changing their vote
+    if (previousVoteIndex === optionIndex) {
+      console.warn("You have already voted for this option.");
+      return;
+    }
+
+    // Update the votes in the poll data
+    if (previousVoteIndex !== undefined) {
+      // Decrease the previous option's vote count, but ensure it doesn't go below 0
+      pollData.options[previousVoteIndex].votes = Math.max(
+        pollData.options[previousVoteIndex].votes - 1,
+        0
+      );
+    }
+
+    // Increment the selected option's vote count
     pollData.options[optionIndex].votes += 1;
 
+    // Update the poll document in Firestore
     await updateDoc(pollRef, { options: pollData.options });
 
-    // Update the user's vote in state
+    await updateDoc(doc(db, "users", user.uid), {
+      points: increment(5), // Award 5 points for following a developer
+    });
+
+    // Update the local state for user votes and polls
     setUserVotes((prevVotes) => ({
       ...prevVotes,
-      [pollId]: optionIndex,
+      [pollId]: optionIndex, // Save the user's selected option for this poll
     }));
 
-    // Update the poll in the UI
     setPolls((prevPolls) =>
       prevPolls.map((poll) =>
         poll.id === pollId ? { ...poll, options: pollData.options } : poll
       )
     );
+
+    console.log("Vote successfully recorded.");
   };
 
   const handleDeletePoll = async (pollId) => {
@@ -316,24 +344,45 @@ function DevPage() {
     if (!user || !newUpdateTitle || !newUpdateContent) return;
 
     const db = getFirestore();
-    const newUpdate = {
-      title: newUpdateTitle,
-      content: newUpdateContent,
-      timestamp: new Date(),
-    };
+    const updatesRef = collection(
+      db,
+      "developers",
+      user.uid,
+      "developerUpdates"
+    );
 
     try {
-      const updateRef = await addDoc(
-        collection(db, "developers", user.uid, "developerUpdates"),
-        newUpdate
+      // Fetch existing updates
+      const updatesSnapshot = await getDocs(
+        query(updatesRef, orderBy("timestamp", "asc"))
       );
+      const updates = updatesSnapshot.docs;
 
-      setUpdates([{ id: updateRef.id, ...newUpdate }, ...updates]);
+      // If the limit (e.g., 3 updates) is reached, delete the oldest update
+      if (updates.length >= 3) {
+        const oldestUpdate = updates[0];
+        await deleteDoc(doc(updatesRef, oldestUpdate.id));
+      }
+
+      // Add the new update
+      const newUpdate = {
+        title: newUpdateTitle,
+        content: newUpdateContent,
+        timestamp: new Date(),
+      };
+
+      const newUpdateRef = await addDoc(updatesRef, newUpdate);
+
+      // Update the local state
+      // setUpdates([{ id: newUpdateRef.id, ...newUpdate }, ...updates.slice(1)]);
+      setUpdates((prevUpdates) => [
+        { id: newUpdateRef.id, ...newUpdate },
+        ...prevUpdates.slice(0, 2),
+      ]);
       setNewUpdateTitle("");
       setNewUpdateContent("");
     } catch (error) {
       console.error("Error adding update:", error);
-      console.log("Current user UID:", user.uid);
     }
   };
 
@@ -367,11 +416,14 @@ function DevPage() {
     }
 
     const db = getFirestore();
+    const userDocRef = doc(db, "users", user.uid);
+    const userDoc = await getDoc(userDocRef);
+
     const commentData = {
       text: newComment,
       userId: user.uid,
-      username: user.displayName,
-      profilePicUrl: user.photoURL || "default-profile-pic-url",
+      username: userDoc.data().username,
+      profilePicUrl: userDoc.data().profilePicUrl || "default-profile-pic-url",
       timestamp: new Date(),
     };
 
@@ -379,6 +431,10 @@ function DevPage() {
       collection(db, `developers/${developerId}/comments`),
       commentData
     );
+
+    await updateDoc(doc(db, "users", user.uid), {
+      points: increment(5),
+    });
 
     setComments((prevComments) => [commentData, ...prevComments]);
     setNewComment(""); // Clear the input field
@@ -408,14 +464,24 @@ function DevPage() {
 
   const isOwner = user?.uid === devProfile?.userId;
 
-  if (loading) return <LoadingIndicator />;
+  if (loading) {
+    return <LoadingIndicator />;
+  }
+
+  if (!devProfile) {
+    return (
+      <div className="dev-page">
+        <p className="nodevprofile">No developer profile found.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="dev-page">
       {devProfile ? (
         <div className="dev-profile">
           <div className="devprofile-header">
-            <h3 className="all-devs-title">Developer Profile</h3>
+            <h3 className="devpage-title">Developer Profile</h3>
             {isOwner && (
               <>
                 <button onClick={handleEditClick} className="devedit-button">
@@ -563,6 +629,10 @@ function DevPage() {
                 <button onClick={handleAddUpdate} className="add-update-button">
                   Add Update
                 </button>
+                <p className="update-note">
+                  Note: Only the last 3 updates will be retained. Older updates
+                  are automatically removed.
+                </p>
               </div>
             )}
             <div className="updates-list">
@@ -586,7 +656,7 @@ function DevPage() {
               )}
             </div>
           </div>
-          <div className="developer-comments-section">
+          {/* <div className="developer-comments-section">
             <h3 className="comments-title">Comments</h3>
             {user ? (
               <div className="comment-input-container">
@@ -638,7 +708,7 @@ function DevPage() {
                 </p>
               )}
             </div>
-          </div>
+          </div> */}
         </div>
       ) : (
         <p className="nodevprofile">No developer profile found.</p>

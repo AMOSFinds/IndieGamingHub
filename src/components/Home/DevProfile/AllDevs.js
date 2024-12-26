@@ -16,15 +16,16 @@ import LoadingIndicator from "../../LoadingIndicator";
 import { Link } from "react-router-dom";
 import "./AllDevs.css";
 
-const itemsPerPage = 5;
+const itemsPerPage = 6;
 
-function AllDevs(dev) {
+function AllDevs() {
   const [devProfiles, setDevProfiles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+  const [currentUserDevId, setCurrentUserDevId] = useState(null);
 
   const auth = getAuth();
   const user = auth.currentUser;
@@ -43,6 +44,16 @@ function AllDevs(dev) {
           ...doc.data(),
         }));
         setDevProfiles(devs);
+
+        // Find the developer profile of the currently logged-in user
+        if (user) {
+          const currentUserProfile = devs.find(
+            (dev) => dev.userId === user.uid
+          );
+          if (currentUserProfile) {
+            setCurrentUserDevId(currentUserProfile.id);
+          }
+        }
       } catch (err) {
         console.error("Error fetching developer profiles: ", err);
         setError(err);
@@ -68,8 +79,7 @@ function AllDevs(dev) {
         <Link to="/devprofile-form">
           <button className="action-btn">Create Dev Profile</button>
         </Link>
-        {/* <Link to="/devpage"> */}
-        <Link to={`/devpage/${dev.id}`}>
+        <Link to={`/devpage/${currentUserDevId}`}>
           <button className="action-btn">View Dev Profile</button>
         </Link>
       </div>

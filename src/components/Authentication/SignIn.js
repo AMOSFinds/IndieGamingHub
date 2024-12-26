@@ -1,5 +1,12 @@
 import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getFirestore,
+  updateDoc,
+  doc,
+  increment,
+  getDoc,
+} from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import CustomAlert from "../CustomAlert";
 import LoadingIndicator from "../LoadingIndicator";
@@ -12,13 +19,47 @@ function SignIn() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
+  const auth = getAuth();
+  const db = getFirestore();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
     const auth = getAuth();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      setAlertMessage("Signed in successfully");
+
+      const user = auth.currentUser;
+
+      const userRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userRef);
+
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // Today's date without time
+
+      // Check if the user has already earned points today
+      if (userDoc.exists()) {
+        const lastSignIn = userDoc.data().lastSignInPoints || null;
+        const lastSignInDate = lastSignIn
+          ? new Date(lastSignIn.seconds * 1000)
+          : null;
+
+        if (!lastSignInDate || lastSignInDate < today) {
+          // Award points if this is the first login of the day
+          await updateDoc(userRef, {
+            points: increment(10), // Award points
+            lastSignInPoints: now, // Update last points date
+          });
+
+          setAlertMessage(
+            "Signed in successfully. You've earned 10 points for logging in!"
+          );
+        } else {
+          setAlertMessage(
+            "Welcome back! Points can only be earned once per day."
+          );
+        }
+      }
       setShowAlert(true);
       setTimeout(() => {
         setShowAlert(false);

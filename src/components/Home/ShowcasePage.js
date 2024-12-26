@@ -4,9 +4,6 @@ function ShowcasePage() {
   return (
     <div className="showcase-page">
       <div>
-        <h1 className="tagline">
-          Discover Hidden Gems in the World of Indie Gaming
-        </h1>
         <p className="description">
           Explore a hand-picked selection of indie games from across the globe
           with DevIndie. Dive into unique worlds crafted with passion and

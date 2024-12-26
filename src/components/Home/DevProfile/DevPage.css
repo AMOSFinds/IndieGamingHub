@@ -1,400 +1,177 @@
+/* Overall Page Container */
 .dev-page {
-  max-width: 800px;
+  max-width: 900px; /* Reduce width for better focus */
   margin: 0 auto;
   padding: 20px;
-  min-height: 100vh; /* Ensure the page always fills the viewport */
-  overflow: auto; /* Prevent content overflow */
-  background-color: #1a1a2e; /* Ensure a consistent background color */
+  min-height: 100vh;
+  background-color: #121212; /* Darker background for a minimalist feel */
+  color: #e0e0e0; /* Light grey text for better contrast */
+  font-family: "Roboto", sans-serif; /* Clean, modern font */
 }
 
-.all-devs-title {
-  font-size: 2rem;
-  margin: 1.5rem 0;
-  color: #d4a6ff;
+/* Page Title */
+.devpage-title {
+  font-size: 2.4rem;
+  margin: 2rem 0;
+  color: #8c75ff; /* Subtle purple for a minimalist accent */
+  text-align: center;
+  font-weight: 600;
 }
 
+/* Developer Profile */
 .dev-profile {
-  background-color: #2b2e3d;
-  border-radius: 10px;
   padding: 20px;
-  text-align: left;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for card */
-  max-width: 600px;
-  margin: 20px auto;
+  text-align: center;
+  background-color: #1c1c1e; /* Slightly lighter background for contrast */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.devprofile-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Profile Picture */
+.devprofile-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #8c75ff; /* Accent border */
   margin-bottom: 15px;
 }
 
-.devprofile-pic {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  margin: 0 auto 15px;
-}
-
+/* Developer Name and Bio */
 .dev-name {
-  font-size: 1.5em;
-  color: #d4a6ff;
-  text-align: center;
-  margin-top: 10px;
-}
-
-.dev-bio,
-.dev-games {
-  text-align: center;
+  font-size: 1.8rem;
   color: #ffffff;
-  font-size: 1em;
-  margin-top: 8px;
+  margin-bottom: 10px;
 }
 
-/* Style for the editing input fields */
-.editing-input {
-  width: 100%;
-  padding: 8px;
-  margin: 8px 0;
-  border: 1px solid #d4a6ff; /* Match this to your accent color */
-  border-radius: 5px;
-  background-color: #1f1f2e; /* Dark background to blend in */
-  color: #fff; /* White text for visibility */
+.dev-bio {
+  font-size: 1rem;
+  color: #b3b3b3; /* Softer color for secondary text */
+  line-height: 1.6;
+  margin-bottom: 20px;
 }
 
-/* Style for the Save button in edit mode */
-.editing-save-button {
-  background-color: #d4a6ff; /* Accent color */
-  border: none;
-  border-radius: 5px;
-  padding: 8px 16px;
-  cursor: pointer;
-  font-size: 14px;
-  color: #1a1a2e; /* Darker text color to contrast with button */
-  transition: background-color 0.3s ease;
-}
-
-.editing-save-button:hover {
-  background-color: #b392ff; /* Slightly darker shade on hover */
-  color: #ffffff;
-}
-
+/* Polls Section */
 .devpoll-title {
-  color: #d4a6ff;
-}
-
-.devpoll-create {
-  margin-top: 20px;
-  padding: 15px;
-  /* background-color: #222; */
-  border-radius: 8px;
+  font-size: 1.6rem;
+  margin-bottom: 15px;
+  color: #8c75ff;
+  font-weight: 500;
 }
 
 .devpoll-create input {
   width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid #d4a6ff;
-  border-radius: 5px;
-  color: #ffffff;
-  background-color: #333344;
-}
-
-.devpoll-create ::placeholder {
-  color: #888899;
-  font-size: 14px;
-}
-
-.devpoll-create button {
-  background-color: #d4a6ff;
-  border: none;
-  border-radius: 4px;
-  color: #1a1a2e;
-  padding: 8px 15px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.3s;
-}
-
-.devpoll-create button:hover {
-  background-color: #b392ff;
-  color: #ffffff;
-}
-
-.devpoll-list .devpoll-item {
-  margin-top: 15px;
-  padding: 10px;
-  background-color: #333344;
+  padding: 12px;
+  border: 1px solid #333;
   border-radius: 8px;
-}
-
-.devpoll-question {
+  background-color: #202024;
   color: #ffffff;
+  font-size: 1rem;
+  outline: none;
 }
 
-.devpoll-option {
-  background-color: #76abae;
-  /* color: #ffffff; */
-  color: #1a1a2e;
-  border: none;
-  padding: 8px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 5px;
-  transition: background-color 0.3s;
-  margin-right: 10px;
+.devpoll-create input:focus {
+  border-color: #8c75ff;
+  box-shadow: 0 0 4px rgba(140, 117, 255, 0.5);
 }
 
-.devpoll-option:hover {
-  background-color: #5c8a99;
-  color: #ffffff;
-}
-
-.devedit-button,
-.devdelete-button {
-  background-color: #d4a6ff;
-  color: #1a1a2e;
-  padding: 6px 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.devedit-button {
-  margin-left: 240px;
-}
-
-.devedit-button:hover,
-.devdelete-button:hover {
-  background-color: #b392ff;
-  color: #ffffff;
-}
-
-.polldelete2-button {
-  background-color: #f44336;
-  color: white;
-  padding: 5px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
-  font-size: 15px;
-}
-
-.polldelete2-button:hover {
-  background-color: #d32f2f;
-}
-
-.no-polls {
-  color: #ffffff;
-}
-
-.nodevprofile {
-  font-size: large;
-  color: #d4a6ff;
-  text-align: center;
-}
-
-.profile-title {
-  color: #ffffff;
-  margin: 5px;
-}
-
-.custom-file-upload {
-  display: inline-block;
-  padding: 6px 12px;
-  cursor: pointer;
-  color: #d4a6ff;
-  font-size: 14px;
-  border: 1px solid #d4a6ff;
-  border-radius: 5px;
-  margin-bottom: 8px;
-}
-
-.file-input {
-  display: none; /* Hide the default file input */
-}
-
-.createpoll-button {
-  margin-left: 10px;
-}
-
-.developer-updates-section {
+.devpoll-list {
   margin-top: 20px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
 }
 
-.update-form {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-}
-
-.update-input {
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.add-update-button {
-  background-color: #4caf50;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.add-update-button:hover {
-  background-color: #45a049;
-}
-
-.updates-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.updatelist-title {
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #1a1a2e;
-  font-size: larger;
-}
-
-.update-item {
-  margin-bottom: 15px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  /* background-color: #f9f9f9; */
-  background-color: #76abae;
+/* Updates Section */
+.developer-updates-section {
+  margin-top: 30px;
 }
 
 .update-title {
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #d4a6ff;
-  font-size: larger;
+  font-size: 1.6rem;
+  color: #8c75ff;
+  margin-bottom: 15px;
 }
 
-.update-content {
-  margin-bottom: 10px;
+.update-item {
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #25252a; /* Neutral card background */
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
-.delete-update-button {
-  background-color: #f44336;
-  color: white;
-  padding: 5px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 15px;
-}
-
-.delete-update-button:hover {
-  background-color: #d32f2f;
-}
-
-.no-updates {
-  color: white;
-}
-
+/* Comments Section */
 .developer-comments-section {
-  margin-top: 2rem;
-  padding: 1rem;
-  border-top: 1px solid #ccc;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #333;
 }
 
 .comments-title {
   font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #d4a6ff;
-}
-
-.comment-input-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.comment-input {
-  width: 100%;
-  min-height: 80px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 0.5rem;
-}
-
-.comment-submit-button {
-  align-self: flex-end;
-  /* background-color: #007bff; */
-  background-color: #d4a6ff;
-  color: #1a1a2e;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.comment-submit-button:hover {
-  background-color: #b392ff;
-  color: white;
-}
-
-.comments-list {
-  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  color: #8c75ff;
+  font-weight: 500;
 }
 
 .comment-item {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  background-color: #76abae;
+  gap: 15px;
+  padding: 15px;
+  background-color: #1e1e22; /* Slightly lighter than page background */
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .comment-profile-pic {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  background-color: #333; /* Placeholder background for missing images */
 }
 
 .comment-details {
-  display: flex;
-  flex-direction: column;
+  flex-grow: 1;
 }
 
 .comment-username {
-  font-weight: bold;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 5px;
 }
 
 .comment-text {
-  margin-top: 0.5rem;
+  color: #b3b3b3;
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 .no-comments-message {
-  color: white;
+  text-align: center;
+  font-size: 1rem;
+  color: #777;
 }
 
-.delete-comment-button {
-  background-color: #ff4d4f;
-  color: white;
+/* Minimalist Buttons */
+button {
+  padding: 10px 20px;
+  background-color: #8c75ff;
   border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
+  border-radius: 6px;
+  /* color: #ffffff; */
+  color: #1e1e22;
+  font-weight: 600;
   cursor: pointer;
-  margin-top: 5px;
-  width: 70px;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease;
+  margin: 5px;
 }
 
-.delete-comment-button:hover {
-  background-color: #e60000;
+button:hover {
+  background-color: #a58aff;
 }
 
-.comments-login-message {
-  color: white;
+.nodevprofile {
+  text-align: center;
 }

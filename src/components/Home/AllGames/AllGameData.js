@@ -2,7 +2,7 @@ const allgames = [
   {
     id: 1,
     title: "ViewFinder",
-    imageUrl: "images/viewfinder.jpg",
+    imageUrl: "/images/viewfinder.jpg",
     ratings: {
       verygood: 0,
       good: 0,
@@ -19,7 +19,7 @@ const allgames = [
   {
     id: 2,
     title: "Chants of Sennaar",
-    imageUrl: "images/chants.jfif",
+    imageUrl: "/images/chants.jfif",
     ratings: {
       verygood: 0,
       good: 0,
@@ -36,7 +36,7 @@ const allgames = [
   {
     id: 3,
     title: "Wall World",
-    imageUrl: "images/wallworld2.jpg",
+    imageUrl: "/images/wallworld2.jpg",
     ratings: {
       verygood: 0,
       good: 0,
@@ -53,7 +53,7 @@ const allgames = [
   {
     id: 4,
     title: "Isles of Sea and Sky",
-    imageUrl: "images/seasky.jpg",
+    imageUrl: "/images/seasky.jpg",
     ratings: {
       verygood: 0,
       good: 0,
@@ -70,7 +70,7 @@ const allgames = [
   {
     id: 5,
     title: "Against the Storm",
-    imageUrl: "images/storm.jpg",
+    imageUrl: "/images/storm.jpg",
     ratings: {
       veryGood: 0,
       good: 0,
@@ -87,7 +87,7 @@ const allgames = [
   {
     id: 6,
     title: "Final Profit: A Shop",
-    imageUrl: "images/finalprofit.jpg",
+    imageUrl: "/images/finalprofit.jpg",
     ratings: {
       verygood: 0,
       good: 0,
@@ -104,7 +104,7 @@ const allgames = [
   {
     id: 7,
     title: "Darkest Dungeon 2",
-    imageUrl: "images/darkest.jpg",
+    imageUrl: "/images/darkest.jpg",
     ratings: {
       verygood: 0,
       good: 0,
@@ -121,7 +121,7 @@ const allgames = [
   {
     id: 8,
     title: "Spaceflux",
-    imageUrl: "images/spaceflux.jfif",
+    imageUrl: "/images/spaceflux.jfif",
     ratings: {
       verygood: 0,
       good: 0,
@@ -138,7 +138,7 @@ const allgames = [
   {
     id: 9,
     title: "Hollow Knight",
-    imageUrl: "images/hollowknight.jpg",
+    imageUrl: "/images/hollowknight.jpg",
     ratings: {
       verygood: 0,
       good: 0,
@@ -155,7 +155,7 @@ const allgames = [
   {
     id: 10,
     title: "Celeste",
-    imageUrl: "images/celeste.PNG",
+    imageUrl: "/images/celeste.PNG",
     ratings: {
       verygood: 0,
       good: 0,
@@ -173,7 +173,7 @@ const allgames = [
   {
     id: 11,
     title: "Stardew Valley",
-    imageUrl: "images/stardew.PNG",
+    imageUrl: "/images/stardew.PNG",
     ratings: {
       verygood: 0,
       good: 0,
@@ -191,7 +191,7 @@ const allgames = [
   {
     id: 12,
     title: "Dead Cells",
-    imageUrl: "images/deadcells.PNG",
+    imageUrl: "/images/deadcells.PNG",
     ratings: {
       verygood: 0,
       good: 0,
@@ -209,7 +209,7 @@ const allgames = [
   {
     id: 13,
     title: "Gris",
-    imageUrl: "images/gris.PNG",
+    imageUrl: "/images/gris.PNG",
     ratings: {
       verygood: 0,
       good: 0,
@@ -227,7 +227,7 @@ const allgames = [
   {
     id: 14,
     title: "Cuphead",
-    imageUrl: "images/cuphead.PNG",
+    imageUrl: "/images/cuphead.PNG",
     ratings: {
       verygood: 0,
       good: 0,
@@ -244,7 +244,7 @@ const allgames = [
   {
     id: 15,
     title: "The Witness",
-    imageUrl: "images/witness.PNG",
+    imageUrl: "/images/witness.PNG",
     ratings: {
       verygood: 0,
       good: 0,
@@ -262,7 +262,7 @@ const allgames = [
   {
     id: 16,
     title: "Undertale",
-    imageUrl: "images/undertale.PNG",
+    imageUrl: "/images/undertale.PNG",
     ratings: {
       verygood: 0,
       good: 0,
@@ -279,7 +279,7 @@ const allgames = [
   {
     id: 17,
     title: "Slay the Spire",
-    imageUrl: "images/spire.PNG",
+    imageUrl: "/images/spire.PNG",
     ratings: {
       verygood: 0,
       good: 0,
@@ -297,7 +297,7 @@ const allgames = [
   {
     id: 18,
     title: "Inside",
-    imageUrl: "images/inside.PNG",
+    imageUrl: "/images/inside.PNG",
     ratings: {
       verygood: 0,
       good: 0,
@@ -314,7 +314,7 @@ const allgames = [
   {
     id: 19,
     title: "Hades",
-    imageUrl: "images/hades.PNG",
+    imageUrl: "/images/hades.PNG",
     ratings: {
       verygood: 0,
       good: 0,
@@ -332,7 +332,7 @@ const allgames = [
   {
     id: 20,
     title: "Oxenfree",
-    imageUrl: "images/oxenfree.PNG",
+    imageUrl: "/images/oxenfree.PNG",
     ratings: {
       verygood: 0,
       good: 0,

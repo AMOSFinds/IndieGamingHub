@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import AllGamesCard from "./AllGamesCard";
 import allgames from "./AllGameData"; // Import the games data
 import "./AllGames.css";
+import SimpleAllGamesCard from "./SimpleAllGamesCard";
 
-const itemsPerPage = 5; // Number of games per page
+const itemsPerPage = 6; // Number of games per page
 
 function AllGames() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,46 +30,48 @@ function AllGames() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="allgames-page">
-      <div className="search-box">
-        <div className="allgames-search-filter">
-          <input
-            type="text"
-            placeholder="Search"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            autoComplete="off"
-            className="search-bar"
-          />
-          <div className="filters">
-            <button onClick={() => setSelectedGenre("Puzzle")}>Puzzle</button>
-            <button onClick={() => setSelectedGenre("Adventure")}>
-              Adventure
-            </button>
-            <button onClick={() => setSelectedGenre("Simulation")}>
-              Simulation
-            </button>
-            <button onClick={() => setSelectedGenre("Horror")}>Horror</button>
-            <button onClick={() => setSelectedGenre("")}>Clear Filter</button>
+    <div className="allgames-container">
+      <div className="allgames-page">
+        <div className="search-box">
+          <div className="allgames-search-filter">
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              autoComplete="off"
+              className="search-bar"
+            />
+            <div className="filters">
+              <button onClick={() => setSelectedGenre("Puzzle")}>Puzzle</button>
+              <button onClick={() => setSelectedGenre("Adventure")}>
+                Adventure
+              </button>
+              <button onClick={() => setSelectedGenre("Simulation")}>
+                Simulation
+              </button>
+              <button onClick={() => setSelectedGenre("Horror")}>Horror</button>
+              <button onClick={() => setSelectedGenre("")}>Clear Filter</button>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="currentItems">
-        {currentItems.map((game) => (
-          <AllGamesCard key={game.id} allgame={game} />
-        ))}
-      </div>
+        <div className="currentItems">
+          {currentItems.map((game) => (
+            <SimpleAllGamesCard key={game.id} allgame={game} />
+          ))}
+        </div>
 
-      <div className="pagination">
-        {[...Array(pageCount)].map((x, i) => (
-          <button
-            key={i}
-            onClick={() => paginate(i + 1)}
-            className="pagination-button"
-          >
-            {i + 1}
-          </button>
-        ))}
+        <div className="pagination">
+          {[...Array(pageCount)].map((x, i) => (
+            <button
+              key={i}
+              onClick={() => paginate(i + 1)}
+              className="pagination-button"
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

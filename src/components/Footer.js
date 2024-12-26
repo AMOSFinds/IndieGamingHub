@@ -25,7 +25,7 @@ const Footer = () => {
         </div> */}
 
         {/* Navigation Links */}
-        <div className="footer-column">
+        {/* <div className="footer-column">
           <h4>Navigation</h4>
           <ul>
             <li>
@@ -37,17 +37,17 @@ const Footer = () => {
             <li>
               <a href="/contact">Feedback</a>
             </li>
-            {/* <li>
+            <li>
               <a href="/contact">Contact</a>
-            </li> */}
+            </li>
           </ul>
-        </div>
+        </div> */}
 
         {/* Social Links */}
-        <div className="footer-column">
+        {/* <div className="footer-column">
           <h4>Social</h4>
           <div className="footer-social-icons">
-            {/* <a href="https://discord.com">
+            <a href="https://discord.com">
               <FaDiscord />
             </a>
             <a href="https://twitch.tv">
@@ -58,15 +58,15 @@ const Footer = () => {
             </a>
             <a href="https://youtube.com">
               <FaYoutube />
-            </a> */}
+            </a>
             <a href="https://twitter.com">
               <BsTwitterX />
             </a>
-            {/* <a href="https://linkedin.com">
+            <a href="https://linkedin.com">
               <FaLinkedin />
-            </a> */}
+            </a>
           </div>
-        </div>
+        </div> */}
 
         {/* Store Links */}
         {/* <div className="footer-column">
