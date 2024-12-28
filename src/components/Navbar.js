@@ -76,6 +76,9 @@ function Navbar() {
         <Link to="/" className="navbar-link">
           Home
         </Link>
+        <Link to="/allgames" className="navbar-link">
+          Games
+        </Link>
         <Link to="/all-devs" className="navbar-link">
           Developers
         </Link>

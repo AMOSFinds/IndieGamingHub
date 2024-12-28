@@ -32,3 +32,10 @@
 .simplegame-info p {
   color: #8c8c8c;
 }
+
+.game-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block; /* Ensure it wraps the card */
+  width: 100%;
+}

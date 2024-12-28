@@ -66,7 +66,9 @@ function AllGames() {
             <button
               key={i}
               onClick={() => paginate(i + 1)}
-              className="pagination-button"
+              className={`pagination-button ${
+                currentPage === i + 1 ? "active" : ""
+              }`}
             >
               {i + 1}
             </button>
