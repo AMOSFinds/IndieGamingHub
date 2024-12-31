@@ -46,6 +46,8 @@
 
 /* Game Card */
 .game-card {
+  position: relative;
+
   flex: 0 0 240px;
   background: #31363f;
   border: 1px solid #ddd;
@@ -61,7 +63,7 @@
 }
 
 .game-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-20px);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -103,6 +105,22 @@
 
 .see-all-games:hover {
   background-color: #c495e8;
+}
+
+.hover-text {
+  position: absolute;
+  top: 100%; /* Position the text just below the card */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.9rem;
+  color: #d4a6ff;
+  margin-top: 5px;
+  background-color: rgba(0, 0, 0, 0.7); /* Optional: add a subtle background */
+  padding: 5px 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none; /* Prevent interactions with the hover text */
 }
 
 /* Responsive Design */

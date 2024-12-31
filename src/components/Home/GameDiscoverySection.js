@@ -12,6 +12,10 @@ import "./GameDiscoverySection.css";
 
 const GameDiscoverySection = (allgame) => {
   const navigate = useNavigate();
+  const [hoveredGameId, setHoveredGameId] = useState(null);
+
+  const handleMouseEnter = (gameId) => setHoveredGameId(gameId);
+  const handleMouseLeave = () => setHoveredGameId(null);
 
   const handleExploreAllClick = () => {
     navigate("/allgames");
@@ -35,6 +39,8 @@ const GameDiscoverySection = (allgame) => {
               to={`/games/${game.id}`}
               key={game.id}
               className="carousel-item-link"
+              onMouseEnter={() => handleMouseEnter(game.id)}
+              onMouseLeave={handleMouseLeave}
             >
               <div className="game-card">
                 <img
@@ -44,6 +50,11 @@ const GameDiscoverySection = (allgame) => {
                 />
                 <h4 className="game-title">{game.title}</h4>
                 <p className="game-subtitle">{game.genre}</p>
+                {hoveredGameId === game.id && (
+                  <p className="hover-text">
+                    Click to rate, review, or get more information
+                  </p>
+                )}
               </div>
             </Link>
           ))}
