@@ -27,6 +27,14 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.devprofile-edit {
+  margin-top: 20px;
+}
+
+.devedit-button {
+  margin-bottom: 20px;
+}
+
 /* Profile Picture */
 .devprofile-pic {
   width: 100px;
@@ -50,6 +58,17 @@
   margin-bottom: 20px;
 }
 
+.editing-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background-color: #202024;
+  color: #ffffff;
+  font-size: 1rem;
+  outline: none;
+}
+
 /* Polls Section */
 .devpoll-title {
   font-size: 1.6rem;
@@ -69,6 +88,10 @@
   outline: none;
 }
 
+.devpoll-create ::placeholder {
+  color: #777;
+}
+
 .devpoll-create input:focus {
   border-color: #8c75ff;
   box-shadow: 0 0 4px rgba(140, 117, 255, 0.5);
@@ -76,6 +99,18 @@
 
 .devpoll-list {
   margin-top: 20px;
+}
+
+.polldelete2-button {
+  margin-top: 10px;
+}
+
+.addoption-button {
+  margin-top: 20px;
+}
+
+.add-update-button {
+  margin-top: 10px;
 }
 
 /* Updates Section */
@@ -98,6 +133,21 @@
   font-size: 0.95rem;
   line-height: 1.5;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.update-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background-color: #202024;
+  color: #ffffff;
+  font-size: 1rem;
+  outline: none;
+}
+
+.update-form ::placeholder {
+  color: #777;
 }
 
 /* Comments Section */

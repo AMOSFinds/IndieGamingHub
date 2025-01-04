@@ -9,18 +9,24 @@ import {
   query,
   where,
   getDocs,
+  updateDoc,
+  orderBy,
+  addDoc,
+  onSnapshot,
 } from "firebase/firestore";
 import { useAuth } from "./Authentication/AuthContext";
 import SignOut from "./Authentication/SignOut";
 import SignInButton from "./Authentication/SignInButton";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaBell } from "react-icons/fa";
 import "./Navbar.css";
 
 function Navbar() {
   const { currentUser } = useAuth();
   const navRef = useRef();
   const [username, setUsername] = useState("");
+  const [notifications, setNotifications] = useState([]);
   const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   const showNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
@@ -47,10 +53,24 @@ function Navbar() {
         user.uid,
         "notifications"
       );
-      const q = query(notificationsRef, where("hasUnread", "==", true));
-      const querySnapshot = await getDocs(q);
+      const q = query(notificationsRef, orderBy("timestamp", "desc")); // Fetch in descending order
 
-      setHasUnreadNotifications(!querySnapshot.empty);
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        const fetchedNotifications = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        console.log("Notifications snapshot size:", snapshot.size);
+        console.log("Fetched notifications:", fetchedNotifications);
+
+        setNotifications(fetchedNotifications); // Set full list of notifications
+        setHasUnreadNotifications(fetchedNotifications.some((n) => !n.read)); // Check if any are unread
+      });
+
+      console.log("Fetched notifications and set state");
+
+      return () => unsubscribe();
     };
 
     const auth = getAuth();
@@ -63,6 +83,39 @@ function Navbar() {
 
     return () => unsubscribe();
   }, [currentUser]);
+
+  const markNotificationsAsRead = async () => {
+    if (currentUser && notifications.length > 0) {
+      const db = getFirestore();
+
+      notifications.forEach(async (notification) => {
+        if (!notification.read) {
+          const notificationRef = doc(
+            db,
+            "users",
+            currentUser.uid,
+            "notifications",
+            notification.id
+          );
+          await updateDoc(notificationRef, { read: true });
+        }
+      });
+
+      console.log("Marking notifications as read:", notifications);
+
+      setHasUnreadNotifications(false); // Clear red bubble
+    }
+  };
+
+  const toggleNotifications = () => {
+    setShowNotifications((prevState) => !prevState);
+
+    console.log("Toggled notifications. Show:", showNotifications);
+
+    if (!showNotifications && notifications.length > 0) {
+      markNotificationsAsRead(); // Only mark as read when notifications exist
+    }
+  };
 
   return (
     <div className="navbar-container">
@@ -91,6 +144,33 @@ function Navbar() {
       </nav>
 
       <div className="navbar-right">
+        <div className="notifications-container">
+          <FaBell className="bell-icon" onClick={toggleNotifications} />
+          {hasUnreadNotifications && <div className="notification-bubble" />}
+          {showNotifications && (
+            <div className="notifications-dropdown">
+              {notifications.length > 0 ? (
+                notifications.map((notification) => (
+                  <div key={notification.id} className="notification-item">
+                    <p className="notification-title">{notification.title}</p>
+                    <p className="notification-message">
+                      {notification.message}
+                    </p>
+                    <p className="notification-timestamp">
+                      {new Date(
+                        notification.timestamp.seconds * 1000
+                      ).toLocaleString()}{" "}
+                      {/* Convert Firestore timestamp */}
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <p className="no-notifications">No new notifications</p>
+              )}
+            </div>
+          )}
+        </div>
+
         {currentUser ? (
           <div className="navbar-user">
             <Link to="/profile" className="navbar-link highlight">

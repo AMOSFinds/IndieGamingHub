@@ -102,6 +102,74 @@
   background-color: #ff4081;
 }
 
+/* Bell Icon and Red Bubble */
+.notifications-container {
+  position: relative;
+  display: inline-block;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+.bell-icon {
+  font-size: 1.5rem;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.notification-bubble {
+  position: absolute;
+  top: 0;
+  right: -5px;
+  background-color: red;
+  color: white;
+  font-size: 0.8rem;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Notifications Dropdown */
+.notifications-dropdown {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background-color: #1a1a2e;
+  color: white;
+  width: 300px;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+.notification-item {
+  padding: 10px;
+  border-bottom: 1px solid #31363f;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notification-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.notification-message {
+  font-size: 0.9rem;
+}
+
+.no-notifications {
+  text-align: center;
+  padding: 20px;
+  color: #d4a6ff;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .navbar-center {

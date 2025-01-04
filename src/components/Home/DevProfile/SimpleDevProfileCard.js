@@ -60,6 +60,8 @@ function SimpleDevProfileCard({ dev }) {
     navigate(`/devpage/${dev.id}`);
   };
 
+  const isOwner = user?.uid === dev?.id;
+
   return (
     <div className="profile-card">
       <img
@@ -71,9 +73,11 @@ function SimpleDevProfileCard({ dev }) {
         <h3 className="developer-name">{dev.name}</h3>
         <h4 className="dev-job">{dev.job}</h4>
         <p className="developer-bio">{dev.bio}</p>
-        <button onClick={handleFollow} className="follow-button">
-          {isFollowing ? "Unfollow" : "Follow"}
-        </button>
+        {!isOwner && (
+          <button onClick={handleFollow} className="follow-button">
+            {isFollowing ? "Unfollow" : "Follow"}
+          </button>
+        )}
         <button onClick={handleViewDev} className="view-dev-button">
           View Profile
         </button>

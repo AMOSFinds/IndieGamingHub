@@ -18,6 +18,8 @@ function Profile() {
   const [following, setFollowing] = useState([]);
   const [badges, setBadges] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [followersCount, setFollowersCount] = useState(0);
+  const [isDeveloper, setIsDeveloper] = useState(false);
   const db = getFirestore();
 
   useEffect(() => {
@@ -32,6 +34,14 @@ function Profile() {
       const followingSnapshot = await getDocs(followingCollection);
       const followingList = followingSnapshot.docs.map((doc) => doc.data());
       setFollowing(followingList);
+
+      // Fetch the followers count for the developer's profile
+      const devProfileRef = doc(db, "developers", user.uid);
+      const devProfileDoc = await getDoc(devProfileRef);
+      if (devProfileDoc.exists()) {
+        setIsDeveloper(true);
+        setFollowersCount(devProfileDoc.data().followersCount || 0);
+      }
     };
 
     const auth = getAuth();
@@ -71,6 +81,14 @@ function Profile() {
           />
           <h1 className="profile-username">{userData.username}</h1>
           <h2 className="profile-email">{userData.email}</h2>
+
+          {/* Followers count section */}
+          {isDeveloper && (
+            <div className="followers-count">
+              <h3>Followers</h3>
+              <p>{followersCount} users following your developer profile</p>
+            </div>
+          )}
 
           <div className="profile-row">
             <h3 className="section-title">Following Developers</h3>

@@ -17,7 +17,7 @@ import {
   increment,
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-
+import { sendNotificationToFollowers } from "../../Notifications/sendNotificationToFollowers";
 import LoadingIndicator from "../../LoadingIndicator";
 import AllGamesData from "../AllGames/AllGameData";
 import { FaUpload } from "react-icons/fa";
@@ -260,6 +260,15 @@ function DevPage() {
       ]);
       setNewPollQuestion("");
       setNewPollOptions([""]);
+
+      // Send notification to followers
+      console.log("About to call sendNotificationToFollowers...");
+      await sendNotificationToFollowers(
+        devProfile.userId,
+        "New Poll Posted",
+        `${devProfile.name} has posted a new poll: "${newPollQuestion}".`
+      );
+      console.log("Notification function called successfully.");
     }
   };
 
@@ -381,6 +390,14 @@ function DevPage() {
       ]);
       setNewUpdateTitle("");
       setNewUpdateContent("");
+
+      console.log("About to call sendNotificationToFollowers...");
+      await sendNotificationToFollowers(
+        devProfile.userId,
+        "New Developer Update",
+        `${devProfile.name} has posted a new update: "${newUpdate.title}".`
+      );
+      console.log("Notification function called successfully.");
     } catch (error) {
       console.error("Error adding update:", error);
     }

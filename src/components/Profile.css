@@ -162,6 +162,25 @@
   color: #d4a6ff;
 }
 
+.followers-count {
+  margin-top: 20px;
+  background-color: #3c3f47;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.followers-count h3 {
+  font-size: 1.5rem;
+  color: #d4a6ff;
+}
+
+.followers-count p {
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .profilecarousel {

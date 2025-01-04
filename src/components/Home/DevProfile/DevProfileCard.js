@@ -104,6 +104,8 @@ function DevProfileCard({ dev }) {
     games = [dev.games];
   }
 
+  const isOwner = user?.uid === dev?.id;
+
   return (
     <div className="dev-profile-card">
       <img
@@ -140,9 +142,11 @@ function DevProfileCard({ dev }) {
         </ul>
       </div>
       <div className="dev-actions">
-        <button onClick={handleFollow} className="follow-button">
-          {isFollowing ? "Unfollow" : "Follow"}
-        </button>
+        {!isOwner && (
+          <button onClick={handleFollow} className="follow-button">
+            {isFollowing ? "Unfollow" : "Follow"}
+          </button>
+        )}
         <button onClick={handleViewDev} className="view-dev-button">
           View Dev
         </button>
