@@ -75,7 +75,7 @@
   .game-details-page .game-info {
     text-align: center; /* Center-align text content */
     width: 100%; /* Ensure the info box doesn't overflow */
-    margin-inline-end: 50px;
+    margin-inline-end: 40px;
   }
 
   .game-details-page .review-section {
