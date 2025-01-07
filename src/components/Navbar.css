@@ -48,7 +48,7 @@
 .navbar-right {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 }
 
 .navbar-button {
@@ -65,6 +65,10 @@
 
 .navbar-button:hover {
   background-color: #ff4081;
+}
+
+.navbar-link {
+  margin-right: 10px;
 }
 
 .hamburger-icon {
@@ -119,7 +123,8 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-decoration: none;
-  margin-left: 20px;
+  /* margin-left: 20px; */
+  margin-left: 0;
 }
 
 .signout-btn2:hover {
@@ -196,50 +201,49 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .navbar-center {
-    display: none;
-  }
-
-  .navbar-button {
-    padding: 8px 16px;
-  }
-
-  .hamburger-icon {
-    display: block;
-  }
-
-  .navbar-link {
-    top: 35px;
-    margin-left: 0;
-  }
-
-  .signout-btn2 {
-    margin-left: 110px;
-  }
-
-  .icon {
-    margin-left: 15px;
-    margin-top: 12px;
-  }
-
-  .bell-icon {
-    margin-left: 15px;
-    margin-top: 10px;
-  }
-
-  .notifications-dropdown {
-    right: -70px;
-    top: 50px;
-  }
-}
-
-@media (max-width: 480px) {
   .navbar-container {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .navbar-logo {
+  .navbar-center {
+    width: 100%;
+    display: none;
+    margin-top: 32px;
+  }
+
+  .navbar-right {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .hamburger-icon,
+  .bell-icon {
+    margin-top: 0;
+  }
+
+  .hamburger-icon {
+    display: block;
     margin-bottom: 10px;
+  }
+
+  .notifications-dropdown {
+    left: 20px; /* Align with the edge of the screen */
+    top: 45px;
+  }
+
+  .navbar-link {
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-right {
+    flex-wrap: wrap; /* Prevent items from overflowing */
+  }
+
+  .signout-btn2 {
+    width: 100%; /* Button takes full width on small screens */
+    text-align: center;
   }
 }

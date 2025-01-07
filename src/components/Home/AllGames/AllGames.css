@@ -315,7 +315,12 @@
   .game-entry {
     flex-direction: column;
     align-items: center;
-    margin: 10px auto;
+    /* margin: 10px auto; */
+    margin-right: 100px;
+  }
+
+  .currentItems {
+    flex: 0 0 100%; /* One card per row */
   }
 
   .game-info {
@@ -333,6 +338,10 @@
 
   .rating-button {
     width: 100%;
+  }
+
+  .currentItems {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row for tablets */
   }
 }
 
@@ -367,5 +376,8 @@
 
   .rating-button {
     width: 100%;
+  }
+  .currentItems {
+    grid-template-columns: 1fr; /* 1 card per row for mobile */
   }
 }

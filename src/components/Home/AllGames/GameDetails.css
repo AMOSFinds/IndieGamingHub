@@ -50,3 +50,62 @@
   padding: 20px;
   border-radius: 10px;
 }
+
+/* Responsive Styling for Mobile Screens */
+@media (max-width: 768px) {
+  .game-details-page {
+    padding: 0 10px; /* Add some padding for better spacing */
+  }
+
+  .game-details-page .game-entry {
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center content */
+    margin: 0 auto; /* Prevent horizontal overflow */
+    width: 100%; /* Ensure full width on mobile */
+    max-width: 1000px;
+  }
+
+  .game-details-page .game-image {
+    width: 100%; /* Make the game image take full width */
+    max-width: 300px; /* Prevent it from becoming too large */
+    height: auto;
+    margin-bottom: 15px; /* Add some spacing below the image */
+  }
+
+  .game-details-page .game-info {
+    text-align: center; /* Center-align text content */
+    width: 100%; /* Ensure the info box doesn't overflow */
+    margin-inline-end: 50px;
+  }
+
+  .game-details-page .review-section {
+    width: 100%; /* Full width for the review section */
+    align-items: start; /* Add padding for better readability */
+  }
+
+  .game-details-page .review-entries {
+    width: 100%; /* Prevent horizontal overflow */
+  }
+
+  .game-details-page .add-review textarea {
+    width: 100%; /* Ensure text area fits within the screen */
+  }
+}
+
+@media (max-width: 480px) {
+  .game-details-page {
+    padding: 0 5px; /* Reduce padding further on smaller screens */
+  }
+
+  .game-details-page .game-entry {
+    padding: 10px;
+  }
+
+  .game-details-page .btn-favorite {
+    width: 100%; /* Make the button take full width for better UX */
+  }
+
+  .game-details-page.rating-button {
+    width: 100%; /* Rating buttons full width for touch accessibility */
+  }
+}
