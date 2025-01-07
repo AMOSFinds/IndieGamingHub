@@ -22,18 +22,14 @@ import "./Navbar.css";
 
 function Navbar() {
   const { currentUser } = useAuth();
-  const navRef = useRef();
+  const [menuOpen, setMenuOpen] = useState(false);
   const [username, setUsername] = useState("");
   const [notifications, setNotifications] = useState([]);
   const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
 
-  const showNavbar = () => {
-    navRef.current.classList.toggle("responsive_nav");
-  };
-
-  const closeNavbar = () => {
-    navRef.current.classList.remove("responsive_nav");
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
   };
 
   useEffect(() => {
@@ -125,20 +121,40 @@ function Navbar() {
         </Link>
       </div>
 
-      <nav className="navbar-center">
-        <Link to="/" className="navbar-link">
+      <div className="hamburger-icon" onClick={toggleMenu}>
+        {menuOpen ? <FaTimes className="icon" /> : <FaBars className="icon" />}
+      </div>
+
+      <nav className={`navbar-center ${menuOpen ? "open" : ""}`}>
+        <Link to="/" className="navbar-link" onClick={() => setMenuOpen(false)}>
           Home
         </Link>
-        <Link to="/allgames" className="navbar-link">
+        <Link
+          to="/allgames"
+          className="navbar-link"
+          onClick={() => setMenuOpen(false)}
+        >
           Games
         </Link>
-        <Link to="/all-devs" className="navbar-link">
+        <Link
+          to="/all-devs"
+          className="navbar-link"
+          onClick={() => setMenuOpen(false)}
+        >
           Developers
         </Link>
-        <Link to="/contact" className="navbar-link">
+        <Link
+          to="/contact"
+          className="navbar-link"
+          onClick={() => setMenuOpen(false)}
+        >
           Feedback
         </Link>
-        <Link to="/leaderboard" className="navbar-link">
+        <Link
+          to="/leaderboard"
+          className="navbar-link"
+          onClick={() => setMenuOpen(false)}
+        >
           Leaderboard
         </Link>
       </nav>
@@ -173,7 +189,11 @@ function Navbar() {
 
         {currentUser ? (
           <div className="navbar-user">
-            <Link to="/profile" className="navbar-link highlight">
+            <Link
+              to="/profile"
+              className="navbar-link highlight"
+              onClick={() => setMenuOpen(false)}
+            >
               {username}
             </Link>
             <SignOut />

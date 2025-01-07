@@ -92,6 +92,9 @@
   position: absolute;
   bottom: -5px;
   right: 850px;
+  /* display: block;
+  margin: 20px auto 0;
+  text-align: center; */
   background-color: #d4a6ff;
   color: #31363f;
   font-size: 1.3rem;
@@ -133,8 +136,17 @@
     font-size: 1.5rem;
   }
 
+  .carousel {
+    flex-wrap: wrap;
+    justify-content: center; /* Center game cards */
+    overflow-x: hidden;
+    gap: 10px;
+  }
+
   .game-card {
-    padding: 0.8rem;
+    flex: 0 0 45%; /* Two cards per row */
+    height: auto;
+    padding: 1rem;
   }
 
   .game-image {
@@ -150,7 +162,22 @@
   }
 
   .see-all-games {
-    bottom: -10px;
-    font-size: 0.9rem;
+    position: static; /* Remove absolute positioning */
+    margin: 20px auto;
+    font-size: 1rem; /* Slightly smaller text for mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .game-card {
+    flex: 0 0 100%; /* One card per row */
+  }
+
+  .game-title {
+    font-size: 1rem;
+  }
+
+  .game-subtitle {
+    font-size: 0.8rem;
   }
 }

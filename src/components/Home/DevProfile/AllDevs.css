@@ -63,3 +63,33 @@
   background-color: #007bff;
   color: #ffffff;
 }
+
+@media (max-width: 1024px) {
+  .dev-cards-list {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .dev-cards-list {
+    grid-template-columns: repeat(1, 1fr); /* 1 column on mobile */
+  }
+
+  .action-btn {
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .all-devs-title {
+    font-size: 1.5rem;
+  }
+
+  .action-btn {
+    font-size: 0.9rem;
+  }
+
+  .pagination-button {
+    padding: 8px 12px; /* Smaller pagination buttons on mobile */
+  }
+}

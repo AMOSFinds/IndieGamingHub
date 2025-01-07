@@ -67,6 +67,29 @@
   background-color: #ff4081;
 }
 
+.hamburger-icon {
+  display: none;
+  cursor: pointer;
+}
+
+.hamburger-icon .icon {
+  font-size: 24px;
+  color: white;
+}
+
+.navbar-center.open {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  background-color: #1a1a2e;
+  padding: 20px;
+  z-index: 999;
+  height: 250px;
+}
+
 .signout-btn {
   font-size: 14px;
   font-weight: 600;
@@ -78,6 +101,7 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-decoration: none;
+  margin-left: 200px;
 }
 
 .signout-btn:hover {
@@ -178,6 +202,34 @@
 
   .navbar-button {
     padding: 8px 16px;
+  }
+
+  .hamburger-icon {
+    display: block;
+  }
+
+  .navbar-link {
+    top: 35px;
+    margin-left: 0;
+  }
+
+  .signout-btn2 {
+    margin-left: 110px;
+  }
+
+  .icon {
+    margin-left: 15px;
+    margin-top: 12px;
+  }
+
+  .bell-icon {
+    margin-left: 15px;
+    margin-top: 10px;
+  }
+
+  .notifications-dropdown {
+    right: -70px;
+    top: 50px;
   }
 }
 

@@ -90,3 +90,17 @@
   font-size: 1.3rem;
   color: #d4a6ff;
 }
+
+@media (max-width: 768px) {
+  .dev-profile-card {
+    flex: 0 0 45%; /* Two cards per row */
+    height: auto;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dev-profile-card {
+    flex: 0 0 100%; /* One card per row */
+  }
+}
