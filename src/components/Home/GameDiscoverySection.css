@@ -89,7 +89,7 @@
 
 /* Explore All Card */
 .see-all-games {
-  position: absolute;
+  /* position: absolute; */
   bottom: -5px;
   right: 850px;
   /* display: block;

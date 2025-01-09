@@ -26,9 +26,9 @@ const GameDiscoverySection = (allgame) => {
 
   return (
     <section id="game-discovery-section" className="game-discovery-section">
-      <div className="game-discovery-header">
+      {/* <div className="game-discovery-header">
         <h2 className="gamesection-title">Discover Indie Gems</h2>
-      </div>
+      </div> */}
 
       <div className="game-carousel-section">
         <h3 className="carousel-title">Featured Games of the Week</h3>

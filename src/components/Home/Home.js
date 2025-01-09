@@ -8,6 +8,7 @@ import BlogSection from "../BlogPosts/BlogSection";
 function Home() {
   return (
     <div>
+      <Header />
       <GameDiscoverySection />
       <DeveloperProfileSection />
     </div>
