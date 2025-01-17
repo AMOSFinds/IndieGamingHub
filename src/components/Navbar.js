@@ -129,7 +129,7 @@ function Navbar() {
         <Link to="/" className="navbar-link" onClick={() => setMenuOpen(false)}>
           Home
         </Link>
-        <Link
+        {/* <Link
           to="/allgames"
           className="navbar-link"
           onClick={() => setMenuOpen(false)}
@@ -142,7 +142,7 @@ function Navbar() {
           onClick={() => setMenuOpen(false)}
         >
           Developers
-        </Link>
+        </Link> */}
         <Link
           to="/contact"
           className="navbar-link"
@@ -150,17 +150,17 @@ function Navbar() {
         >
           Feedback
         </Link>
-        <Link
+        {/* <Link
           to="/leaderboard"
           className="navbar-link"
           onClick={() => setMenuOpen(false)}
         >
           Leaderboard
-        </Link>
+        </Link> */}
       </nav>
 
       <div className="navbar-right">
-        <div className="notifications-container">
+        {/* <div className="notifications-container">
           <FaBell className="bell-icon" onClick={toggleNotifications} />
           {hasUnreadNotifications && <div className="notification-bubble" />}
           {showNotifications && (
@@ -176,7 +176,6 @@ function Navbar() {
                       {new Date(
                         notification.timestamp.seconds * 1000
                       ).toLocaleString()}{" "}
-                      {/* Convert Firestore timestamp */}
                     </p>
                   </div>
                 ))
@@ -185,7 +184,7 @@ function Navbar() {
               )}
             </div>
           )}
-        </div>
+        </div> */}
 
         {currentUser ? (
           <div className="navbar-user">

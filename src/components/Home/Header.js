@@ -6,21 +6,17 @@ function Header() {
   return (
     <header className="header-container">
       <div className="header-overlay">
-        <h1 className="header-title">Discover Hidden Gems in Indie Gaming</h1>
+        <h1 className="header-title">Discover Hidden Indie Gems</h1>
         <p className="header-subtitle">
-          Explore curated collections of the most creative and unique indie
-          games. Start your adventure now!
+          Curated weekly collections of the most unique indie games.
         </p>
         <div className="header-buttons">
           <a href="#game-discovery-section" className="explore-now-button">
-            Explore Now
+            See This Week's Gems
           </a>
-          {/* <a href="#about-section" className="learn-more-button"> */}
           <Link to="/signin" className="learn-more-button">
-            Join the community
+            Join the Community
           </Link>
-
-          {/* </a> */}
         </div>
       </div>
     </header>

@@ -1,0 +1,68 @@
+.email-signup-container {
+  padding: 3rem 2rem;
+  text-align: center;
+  background-color: #1a1a2e;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(212, 166, 255, 0.2);
+}
+
+.email-signup-title {
+  font-size: 2.5rem;
+  color: #d4a6ff;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.email-signup-subtext {
+  font-size: 1.2rem;
+  color: #f5f5f5;
+  margin-bottom: 2rem;
+}
+
+.email-signup-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.email-input {
+  padding: 12px 20px;
+  font-size: 1rem;
+  border: 2px solid #d4a6ff;
+  border-radius: 30px;
+  background-color: #31363f;
+  color: #ffffff;
+  outline: none;
+  width: 250px;
+}
+
+.email-input::placeholder {
+  color: #a0a0a0;
+}
+
+.signup-button {
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #ff69b4, #9b49e8);
+  color: #ffffff;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.signup-button:hover {
+  background: linear-gradient(135deg, #ff4081, #6d23b6);
+  transform: translateY(-5px);
+}
+
+.success-message {
+  font-size: 1.2rem;
+  color: #00ffcc;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  margin-top: 1rem;
+}

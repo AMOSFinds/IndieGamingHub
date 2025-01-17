@@ -2,6 +2,7 @@
 .game-discovery-section {
   padding: 3rem 2rem;
   text-align: center;
+  display: block;
 }
 
 .game-discovery-header {
@@ -9,15 +10,16 @@
 }
 
 .gamesection-title {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   font-weight: bold;
   color: #d4a6ff;
+  margin-bottom: 2rem;
 }
 
 .carousel-item-link {
   text-decoration: none;
   color: inherit;
-  display: block; /* Ensure it wraps the card */
+  display: block;
   width: 100%;
 }
 
@@ -32,12 +34,11 @@
   color: #d4a6ff;
 }
 
-.carousel {
-  display: flex;
-  overflow-x: auto;
+.discovery-game-carousel {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 1.5rem;
   padding: 1rem 0;
-  scroll-behavior: smooth;
 }
 
 .carousel::-webkit-scrollbar {
@@ -45,88 +46,66 @@
 }
 
 /* Game Card */
-.game-card {
-  position: relative;
-
-  flex: 0 0 240px;
-  background: #31363f;
-  border: 1px solid #ddd;
+.discovery-game-card {
+  background-color: #1a1a2e;
   border-radius: 10px;
-  padding: 1rem;
+  padding: 1.5rem;
+  /* width: 300px; */
+  width: 90%;
+  height: 410px;
   text-align: center;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-  justify-content: space-between; /* Ensures content is spaced evenly */
-  align-items: center; /* Center-aligns content */
-  height: 450px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.game-card:hover {
-  transform: translateY(-20px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+.discovery-game-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 20px rgba(212, 166, 255, 0.8);
 }
 
-.game-image {
+.discovery-game-image {
   width: 100%;
-  height: 150px;
+  height: 180px;
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 1rem;
 }
 
-.game-title {
-  font-size: 1.5rem;
+.discovery-game-title {
+  font-size: 1.6rem;
   font-weight: bold;
-  color: #fff;
-  margin-bottom: 0.5rem;
+  color: #ffffff;
 }
 
-.game-subtitle {
+.discovery-game-genre {
   font-size: 1rem;
-  color: #bbb;
+  color: #a0a0a0;
 }
 
-/* Explore All Card */
-.see-all-games {
-  /* position: absolute; */
-  bottom: -5px;
-  right: 850px;
-  /* display: block;
-  margin: 20px auto 0;
-  text-align: center; */
-  background-color: #d4a6ff;
-  color: #31363f;
-  font-size: 1.3rem;
-  /* font-weight: bold; */
-  border: none;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.discovery-hover-description {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  color: #ff69b4;
 }
 
-.see-all-games:hover {
-  background-color: #c495e8;
+.discovery-platform-icons {
+  margin-top: 1rem;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
 }
 
-.hover-text {
-  position: absolute;
-  top: 100%; /* Position the text just below the card */
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.9rem;
-  color: #d4a6ff;
-  margin-top: 5px;
-  background-color: rgba(0, 0, 0, 0.7); /* Optional: add a subtle background */
-  padding: 5px 10px;
-  border-radius: 5px;
-  white-space: nowrap;
-  z-index: 1000;
-  pointer-events: none; /* Prevent interactions with the hover text */
+.discovery-game-link {
+  text-decoration: none;
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .discovery-game-carousel {
+    display: grid; /* Ensure display: grid for the responsive layout */
+    grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+  }
+}
+
 @media (max-width: 768px) {
   .gamesection-title {
     font-size: 2rem;
@@ -136,48 +115,41 @@
     font-size: 1.5rem;
   }
 
-  .carousel {
-    flex-wrap: wrap;
-    justify-content: center; /* Center game cards */
-    overflow-x: hidden;
-    gap: 10px;
+  .discovery-game-carousel {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
   }
 
-  .game-card {
-    flex: 0 0 45%; /* Two cards per row */
-    height: auto;
-    padding: 1rem;
+  .discovery-game-card {
+    padding: 1rem; /* No flexbox properties here */
   }
 
-  .game-image {
+  .discovery-game-image {
     height: 120px;
   }
 
-  .game-title {
+  .discovery-game-title {
     font-size: 1.2rem;
   }
 
-  .game-subtitle {
+  .discovery-game-subtitle {
     font-size: 0.9rem;
-  }
-
-  .see-all-games {
-    position: static; /* Remove absolute positioning */
-    margin: 20px auto;
-    font-size: 1rem; /* Slightly smaller text for mobile */
   }
 }
 
 @media (max-width: 480px) {
-  .game-card {
-    flex: 0 0 100%; /* One card per row */
+  .discovery-game-carousel {
+    grid-template-columns: 1fr;
   }
 
-  .game-title {
+  .discovery-game-card {
+    padding: 1rem;
+  }
+
+  .discovery-game-title {
     font-size: 1rem;
   }
 
-  .game-subtitle {
+  .discovery-game-subtitle {
     font-size: 0.8rem;
   }
 }

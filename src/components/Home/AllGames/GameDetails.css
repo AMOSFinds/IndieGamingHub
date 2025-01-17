@@ -1,54 +1,129 @@
-/* Override styles for GameDetails page */
-.game-details-page .game-entry {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  border: none;
-  box-shadow: none;
-  background-color: transparent;
+.game-detail-container {
+  padding: 2rem;
+  color: #ffffff;
 }
 
-.game-details-page .game-image {
-  width: 400px;
-  height: auto;
-  margin-right: 20px;
+.game-banner {
+  background-size: cover;
+  background-position: center;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 8px;
+  margin-bottom: 2rem;
 }
 
-.game-details-page .game-info {
-  flex-grow: 1;
-  padding: 20px;
+.game-title {
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px #ff69b4, 0 0 20px #9b49e8;
+  text-align: center;
 }
 
-.game-details-page .game-title {
-  font-size: 32px;
+.section-heading {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #d4a6ff;
+  font-weight: bold;
+}
+
+.game-description {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.game-stats {
+  /* display: flex; */
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.platform-section {
+  display: flex;
+  margin-top: 0;
+}
+
+.platform-icons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.platform-icon {
+  font-size: 1.2rem;
   color: #d4a6ff;
 }
 
-.game-details-page .game-developer {
-  font-size: 18px;
-  color: #76abae;
-}
-
-.game-details-page .game-description {
-  font-size: 16px;
-  color: #d0d0d0;
-}
-
-.game-details-page .btn-favorite {
-  margin-top: 20px;
-  padding: 12px 20px;
-}
-
-.game-details-page .rating-system {
-  margin-top: 30px;
-}
-
-.game-details-page .review-section {
-  margin-top: 30px;
+.platform-text {
+  display: inline-block; /* Ensures each platform is treated as a block */
+  margin: 0 5px; /* Adds spacing between platform names */
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
   background-color: #31363f;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-transform: capitalize; /* Capitalizes the first letter */
+}
+
+.game-screenshots {
+  margin-top: 2rem;
+}
+
+.screenshot-gallery {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+}
+
+.screenshot {
+  height: 200px;
+  width: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+.screenshot:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(212, 166, 255, 0.8);
+}
+
+.game-cta {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.play-button,
+.back-button {
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #ff69b4, #9b49e8);
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.play-button:hover {
+  background: linear-gradient(135deg, #ff4081, #6d23b6);
+  transform: translateY(-5px);
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #d4a6ff;
+}
+
+.release-date {
+  display: block;
+  margin-top: 15px;
 }
 
 /* Responsive Styling for Mobile Screens */
