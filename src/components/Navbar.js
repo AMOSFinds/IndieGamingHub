@@ -186,7 +186,7 @@ function Navbar() {
           )}
         </div> */}
 
-        {currentUser ? (
+        {/* {currentUser ? (
           <div className="navbar-user">
             <Link
               to="/profile"
@@ -199,7 +199,7 @@ function Navbar() {
           </div>
         ) : (
           <SignInButton />
-        )}
+        )} */}
         {/* <button className="navbar-button">Contact us</button> */}
       </div>
     </div>

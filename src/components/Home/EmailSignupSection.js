@@ -36,10 +36,6 @@ const EmailSignUpSection = () => {
       const placeholderUserId = `placeholder-${Date.now()}`;
       await setDoc(doc(db, "users", placeholderUserId), {
         email,
-        points: 0, // Default points for sign-up
-        badges: [], // Empty badges initially
-        username: null, // Placeholder for future username
-        profilePicUrl: null, // Placeholder for future profile picture
       });
 
       setIsSubmitted(true);
