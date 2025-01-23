@@ -7,20 +7,47 @@ import {
   collection,
   getDocs,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
+import { deleteUser, updateProfile } from "firebase/auth";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 import { Link } from "react-router-dom";
 import LoadingIndicator from "./LoadingIndicator";
 import "./Profile.css";
+import { FaUpload } from "react-icons/fa";
+import CustomAlert from "./CustomAlert";
 
 function Profile() {
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState({});
   const [following, setFollowing] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const [badges, setBadges] = useState([]);
   const [loading, setLoading] = useState(true);
   const [followersCount, setFollowersCount] = useState(0);
   const [isDeveloper, setIsDeveloper] = useState(false);
+  const [editing, setEditing] = useState(false); // To toggle the edit form
+  const [updatedUsername, setUpdatedUsername] = useState("");
+  const [updatedProfilePic, setUpdatedProfilePic] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null); // For image upload
+  const [uploading, setUploading] = useState(false);
+
   const db = getFirestore();
+
+  const storage = getStorage(); // Initialize Firebase Storage
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedImage(file);
+    }
+  };
 
   useEffect(() => {
     const fetchUserData = async (user) => {
@@ -68,10 +95,134 @@ function Profile() {
       .scrollBy({ left: 300, behavior: "smooth" });
   };
 
+  const handleEdit = async () => {
+    try {
+      let profilePicUrl = userData.profilePicUrl;
+
+      // Upload the new profile picture if selected
+      if (selectedImage) {
+        setUploading(true);
+        const storageRef = ref(
+          storage,
+          `profileImages/${user.uid}/${selectedImage.name}`
+        );
+        const uploadTask = uploadBytesResumable(storageRef, selectedImage);
+
+        await new Promise((resolve, reject) => {
+          uploadTask.on(
+            "state_changed",
+            null,
+            (error) => {
+              console.error("Upload failed:", error);
+              setUploading(false);
+              reject(error);
+            },
+            async () => {
+              profilePicUrl = await getDownloadURL(uploadTask.snapshot.ref);
+              setUploading(false);
+              resolve();
+            }
+          );
+        });
+      }
+
+      const userRef = doc(db, "users", user.uid);
+
+      await updateDoc(userRef, {
+        username: updatedUsername || userData.username,
+        profilePicUrl,
+      });
+
+      // Optionally update Firebase Auth profile
+      await updateProfile(user, {
+        displayName: updatedUsername || userData.username,
+        photoURL: profilePicUrl,
+      });
+
+      setUserData((prev) => ({
+        ...prev,
+        username: updatedUsername || prev.username,
+        profilePicUrl,
+      }));
+
+      setEditing(false); // Close the edit form
+      setAlertMessage("Profile updated successfully");
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+        setLoading(false);
+      }, 3000); // Hide alert after 3 seconds
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      setAlertMessage("Failed to update profile. Please try again later.");
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+        setLoading(false);
+      }, 3000); // Hide alert after 3 seconds
+    }
+  };
+
+  const handleDelete = async () => {
+    if (
+      window.confirm(
+        "Are you sure you want to delete your profile? This action cannot be undone."
+      )
+    ) {
+      try {
+        // Delete from Firestore
+        await deleteDoc(doc(db, "users", user.uid));
+        if (isDeveloper) {
+          await deleteDoc(doc(db, "developers", user.uid));
+        }
+
+        // Delete user from Firebase Auth
+        await deleteUser(user);
+
+        alert("Profile deleted successfully!");
+        window.location.href = "/"; // Redirect after deletion
+      } catch (error) {
+        console.error("Error deleting profile:", error);
+        alert("Failed to delete profile. Please try again.");
+      }
+    }
+  };
+
   if (loading) return <LoadingIndicator />;
 
   return (
     <div className="profile-container">
+      {editing ? (
+        <div className="edit-profile-form">
+          <h3 className="edit-title">Edit Profile</h3>
+          <input
+            type="text"
+            placeholder="New Username"
+            value={updatedUsername}
+            onChange={(e) => setUpdatedUsername(e.target.value)}
+          />
+          <label htmlFor="file-upload" className="profilepicedit">
+            <FaUpload /> Choose Image
+          </label>
+          <input
+            id="file-upload"
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="file-input"
+          />
+          {uploading && <p className="upload-loading">Uploading image...</p>}
+          <button onClick={handleEdit}>Save Changes</button>
+          <button onClick={() => setEditing(false)}>Cancel</button>
+        </div>
+      ) : (
+        <div className="profile-buttons">
+          <button onClick={() => setEditing(true)}>Edit Profile</button>
+          <button onClick={handleDelete} className="delete-profile-button">
+            Delete Profile
+          </button>
+        </div>
+      )}
       {user ? (
         <div className="profile-info">
           <img
@@ -83,7 +234,7 @@ function Profile() {
           <h2 className="profile-email">{userData.email}</h2>
 
           {/* Followers count section */}
-          {isDeveloper && (
+          {/* {isDeveloper && (
             <div className="followers-count">
               <h3>Followers</h3>
               <p>{followersCount} users following your developer profile</p>
@@ -124,9 +275,9 @@ function Profile() {
                 ❯
               </button>
             </div>
-          </div>
+          </div> */}
 
-          <div className="profile-row">
+          {/* <div className="profile-row">
             <h3 className="section-title">Badges</h3>
             <div className="profilecarousel-wrapper">
               <button
@@ -158,10 +309,16 @@ function Profile() {
                 ❯
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       ) : (
         <LoadingIndicator />
+      )}
+      {showAlert && (
+        <CustomAlert
+          message={alertMessage}
+          onClose={() => setShowAlert(false)}
+        />
       )}
     </div>
   );

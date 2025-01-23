@@ -11,10 +11,25 @@
   margin-bottom: 30px;
 }
 
+.profilepicedit {
+  display: inline-block;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #d4a6ff;
+  color: #1a1a2e;
+  transition: background-color 0.3s ease;
+}
+
+.edit-title {
+  color: #d4a6ff;
+}
+
 .profile-pic {
   width: 150px;
   height: 150px;
   border-radius: 50%;
+  margin-top: 20px;
   margin-bottom: 15px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
 }
@@ -30,6 +45,41 @@
   font-size: 18px;
   color: #8c8c8c;
   margin-bottom: 25px;
+}
+
+.profile-buttons {
+  gap: 20px;
+}
+
+.edit-profile-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.upload-loading {
+  color: #ffffff;
+}
+
+.edit-profile-form input {
+  padding: 10px;
+  font-size: 16px;
+  width: 90%;
+}
+
+.edit-profile-form button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.delete-profile-button {
+  background-color: red;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
 }
 
 /* Profile Row */
