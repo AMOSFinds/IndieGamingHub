@@ -13,6 +13,7 @@ import {
   setDoc,
   updateDoc,
   addDoc,
+  deleteDoc,
   increment,
 } from "firebase/firestore";
 
@@ -73,6 +74,20 @@ const GameDetails = () => {
         // Step 5: Fetch ratings
         setRatingCounts(combinedGameData.ratings || {});
 
+        if (auth.currentUser) {
+          const userRatingsRef = doc(
+            db,
+            "users",
+            auth.currentUser.uid,
+            "ratings",
+            gameId
+          );
+          const userRatingDoc = await getDoc(userRatingsRef);
+          if (userRatingDoc.exists()) {
+            setUserRating(userRatingDoc.data().rating);
+          }
+        }
+
         setLoading(false);
       } catch (error) {
         console.error("Error fetching game details:", error);
@@ -83,44 +98,77 @@ const GameDetails = () => {
     fetchGameDetails();
   }, [gameId]);
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      if (currentUser) {
+        setUser(currentUser); // Set the user if authenticated
+      } else {
+        setUser(null); // Reset user to null if not authenticated
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup subscription on component unmount
+  }, []);
+
   const handleRating = async (rating) => {
     try {
       if (user) {
         const userRatingsRef = doc(db, "users", user.uid, "ratings", gameId);
-
         const gameRef = doc(db, "games", gameId);
+
+        // Optimistically update local state
+        const previousRating = userRating;
+        const newRating = userRating === rating ? null : rating;
+
+        setUserRating(newRating);
+        setRatingCounts((prevCounts) => {
+          const updatedCounts = { ...prevCounts };
+
+          if (previousRating) {
+            const previousKey = previousRating.toLowerCase().replace(" ", "");
+            if (updatedCounts[previousKey] > 0) {
+              updatedCounts[previousKey] -= 1;
+            }
+          }
+
+          if (newRating) {
+            const newKey = newRating.toLowerCase().replace(" ", "");
+            updatedCounts[newKey] = (updatedCounts[newKey] || 0) + 1;
+          }
+
+          return updatedCounts;
+        });
+
+        // Firestore operations
         const gameDoc = await getDoc(gameRef);
 
-        const currentRatings = gameDoc.data()?.ratings || {
-          verygood: 0,
-          good: 0,
-          decent: 0,
-          bad: 0,
-        };
-
-        // Adjust previous rating
-        if (userRating) {
-          const previousRatingKey = userRating.toLowerCase().replace(" ", "");
-          if (currentRatings[previousRatingKey] > 0) {
+        // Decrement previous rating in Firestore
+        if (previousRating) {
+          const previousKey = previousRating.toLowerCase().replace(" ", "");
+          if (gameDoc.data()?.ratings?.[previousKey] > 0) {
             await updateDoc(gameRef, {
-              [`ratings.${previousRatingKey}`]: increment(-1),
+              [`ratings.${previousKey}`]: increment(-1),
             });
           }
         }
 
-        // Add new rating
-        const newRating = userRating === rating ? null : rating;
-        setUserRating(newRating);
+        // Increment new rating in Firestore
         if (newRating) {
-          const newRatingKey = newRating.toLowerCase().replace(" ", "");
+          const newKey = newRating.toLowerCase().replace(" ", "");
           await updateDoc(gameRef, {
-            [`ratings.${newRatingKey}`]: increment(1),
+            [`ratings.${newKey}`]: increment(1),
           });
           await setDoc(userRatingsRef, { rating: newRating }, { merge: true });
+        } else {
+          // Delete user's rating if unselected
+          await deleteDoc(userRatingsRef);
         }
       }
     } catch (error) {
       console.error("Error rating game:", error);
+
+      // Roll back optimistic update if an error occurs
+      setUserRating((prev) => prev); // Restore previous state
     }
   };
 
@@ -132,6 +180,7 @@ const GameDetails = () => {
           username: userDoc.data().username,
           profilePicUrl: userDoc.data().profilePicUrl,
           comment: newReview,
+          userId: user.uid,
           timestamp: new Date(),
         };
 
@@ -140,6 +189,19 @@ const GameDetails = () => {
       }
     } catch (error) {
       console.error("Error adding review:", error);
+    }
+  };
+
+  const handleDeleteReview = async (reviewId) => {
+    try {
+      const reviewRef = doc(db, "games", gameId, "reviews", reviewId);
+      await deleteDoc(reviewRef);
+      setReviews((prevReviews) =>
+        prevReviews.filter((review) => review.id !== reviewId)
+      );
+      console.log("Review deleted successfully");
+    } catch (error) {
+      console.error("Error deleting review:", error);
     }
   };
 
@@ -210,7 +272,7 @@ const GameDetails = () => {
         </div>
 
         {/* Ratings Section */}
-        {/* <div className="rating-system">
+        <div className="rating-system">
           <h3>Rate this Game:</h3>
           {["Very Good", "Good", "Decent", "Bad"].map((rating) => (
             <button
@@ -224,10 +286,10 @@ const GameDetails = () => {
               {ratingCounts[rating.toLowerCase().replace(" ", "")] || 0})
             </button>
           ))}
-        </div> */}
+        </div>
 
         {/* Reviews Section */}
-        {/* <div className="review-section">
+        <div className="review-section">
           <h3>Reviews:</h3>
           {user && (
             <div className="add-review">
@@ -235,6 +297,7 @@ const GameDetails = () => {
                 value={newReview}
                 onChange={(e) => setNewReview(e.target.value)}
                 placeholder="Write your review..."
+                className="review-textarea"
               ></textarea>
               <button onClick={handleAddReview}>Add Review</button>
             </div>
@@ -246,12 +309,20 @@ const GameDetails = () => {
                 alt="Profile"
                 className="review-profile-pic"
               />
-              <p>
+              <p className="review-talks">
                 <strong>{review.username}</strong>: {review.comment}
               </p>
+              {user?.uid === review.userId && ( // Show delete button only for the review author
+                <button
+                  className="delete-review-button"
+                  onClick={() => handleDeleteReview(review.id)}
+                >
+                  Delete
+                </button>
+              )}
             </div>
           ))}
-        </div> */}
+        </div>
 
         {/* Call-to-Action Section */}
         <div className="game-cta">

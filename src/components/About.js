@@ -1,18 +1,18 @@
 import React from "react";
 import "./About.css";
 
-const About = () => {
+const AboutSection = () => {
   return (
-    <section id="about-section" className="about-section">
+    <section className="about-section">
       <div className="about-content">
         <div className="about-images">
           <img
-            src="./images/abou1.png"
+            src="/images/gaming-pic-1.jpg"
             alt="Gaming Setup"
             className="about-image"
           />
           <img
-            src="./images/abou2.png"
+            src="/images/gaming-pic-2.jpg"
             alt="Excited Gamer"
             className="about-image"
           />
@@ -27,11 +27,11 @@ const About = () => {
             players and inspire developers. Join us on this journey to
             experience the heart of indie gaming.
           </p>
-          {/* <button className="about-button">Read More</button> */}
+          <button className="about-button">Read More</button>
         </div>
       </div>
     </section>
   );
 };
 
-export default About;
+export default AboutSection;
