@@ -57,14 +57,14 @@ function Navbar() {
           ...doc.data(),
         }));
 
-        console.log("Notifications snapshot size:", snapshot.size);
-        console.log("Fetched notifications:", fetchedNotifications);
+        // console.log("Notifications snapshot size:", snapshot.size);
+        // console.log("Fetched notifications:", fetchedNotifications);
 
         setNotifications(fetchedNotifications); // Set full list of notifications
         setHasUnreadNotifications(fetchedNotifications.some((n) => !n.read)); // Check if any are unread
       });
 
-      console.log("Fetched notifications and set state");
+      // console.log("Fetched notifications and set state");
 
       return () => unsubscribe();
     };

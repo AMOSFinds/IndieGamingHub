@@ -98,6 +98,17 @@
   text-decoration: none;
 }
 
+.section-divider {
+  border: none;
+  border-top: 1px solid #d4a6ff; /* Subtle divider */
+  margin: 1rem 0;
+}
+
+.past-title {
+  color: #ffffff;
+  font-size: large;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .discovery-game-carousel {

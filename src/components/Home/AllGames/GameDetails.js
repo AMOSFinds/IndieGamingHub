@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import allgames from "../AllGames/AllGameData"; // Import game data
+import archives from "../AllGames/ArchiveData";
 import "./GameDetails.css";
 import { db, auth } from "../../firebase/firebase-config";
 import {
@@ -16,6 +17,7 @@ import {
   deleteDoc,
   increment,
 } from "firebase/firestore";
+import LoadingIndicator from "../../LoadingIndicator";
 
 const GameDetails = () => {
   const { gameId } = useParams(); // Get game ID from URL
@@ -38,9 +40,9 @@ const GameDetails = () => {
     const fetchGameDetails = async () => {
       try {
         // Step 1: Get static data from AllGameData
-        const staticGameData = allgames.find(
-          (game) => game.id.toString() === gameId
-        );
+        const staticGameData =
+          allgames.find((game) => game.id.toString() === gameId) ||
+          archives.find((game) => game.id.toString() === gameId);
 
         if (!staticGameData) {
           throw new Error("Game not found in AllGameData");
@@ -210,7 +212,7 @@ const GameDetails = () => {
   // }, [gameId]);
 
   if (loading) {
-    return <div>Loading game details...</div>;
+    return <LoadingIndicator />;
   }
 
   if (!game) {
@@ -270,6 +272,25 @@ const GameDetails = () => {
             )}
           </div>
         </div>
+
+        {/* YouTube Video Review Section */}
+        {game.youtubeReview && (
+          <div className="youtube-review">
+            <h3 className="section-heading">🎥 Video Review</h3>
+            <iframe
+              width="60%"
+              height="400"
+              src={`https://www.youtube.com/embed/${game.youtubeReview}`}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+            {game.reviewer && (
+              <p className="review-credit">Review by {game.reviewer}</p>
+            )}
+          </div>
+        )}
 
         {/* Ratings Section */}
         <div className="rating-system">

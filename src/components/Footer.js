@@ -25,23 +25,36 @@ const Footer = () => {
         </div> */}
 
         {/* Navigation Links */}
-        {/* <div className="footer-column">
+        <div className="footer-column">
           <h4>Navigation</h4>
           <ul>
             <li>
               <a href="/">Home</a>
             </li>
-            <li>
+            {/* <li>
               <a href="/all-devs">Developers</a>
-            </li>
+            </li> */}
             <li>
               <a href="/contact">Feedback</a>
             </li>
-            <li>
+            {/* <li>
               <a href="/contact">Contact</a>
+            </li> */}
+          </ul>
+        </div>
+
+        {/* Terms and Privacy */}
+        <div className="footer-column">
+          <h4>Terms and Conditions</h4>
+          <ul>
+            <li>
+              <a href="/terms">Terms</a>
+            </li>
+            <li>
+              <a href="/privacy">Privacy</a>
             </li>
           </ul>
-        </div> */}
+        </div>
 
         {/* Social Links */}
         {/* <div className="footer-column">

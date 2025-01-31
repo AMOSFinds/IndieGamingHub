@@ -149,6 +149,10 @@
   font-size: 15px;
 }
 
+.reviewer-link {
+  color: #d4a6ff;
+}
+
 .delete-review-button {
   background-color: red;
   color: white;

@@ -78,3 +78,19 @@
 .footer .footer-bottom a:hover {
   color: #b392ff;
 }
+
+.terms-container {
+  margin-left: 10px;
+}
+
+.privacy-container {
+  margin-left: 10px;
+}
+
+.footer-titles {
+  color: #d4a6ff;
+}
+
+.footer-paragraphs {
+  color: #f0f0f0;
+}
