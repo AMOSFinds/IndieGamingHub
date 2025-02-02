@@ -21,6 +21,7 @@ import LoadingIndicator from "./LoadingIndicator";
 import "./Profile.css";
 import { FaUpload } from "react-icons/fa";
 import CustomAlert from "./CustomAlert";
+import Favorites from "./Home/AllGames/Favorites";
 
 function Profile() {
   const [user, setUser] = useState(null);
@@ -232,6 +233,8 @@ function Profile() {
           />
           <h1 className="profile-username">{userData.username}</h1>
           <h2 className="profile-email">{userData.email}</h2>
+
+          <Favorites />
 
           {/* Followers count section */}
           {/* {isDeveloper && (

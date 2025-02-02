@@ -30,10 +30,12 @@ const Leaderboard = () => {
 
       try {
         const querySnapshot = await getDocs(q);
-        const leaderboardData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        const leaderboardData = querySnapshot.docs
+          .map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }))
+          .filter((user) => user.points > 0); // Filter out zero points
         setLeaders(leaderboardData);
 
         // Fetch Top 10 Reviewers
@@ -76,6 +78,9 @@ const Leaderboard = () => {
   return (
     <div className="leaderboard-container">
       <h2 className="leaderboard-title">Leaderboard</h2>
+      <p className="leaderboard-text">
+        Earn points for daily sign-ins, rating games, writing reviews, and more!
+      </p>
       {loading ? (
         <LoadingIndicator />
       ) : (
@@ -96,6 +101,7 @@ const Leaderboard = () => {
           ))}
         </ul>
       )}
+      <hr className="section-divider" />
       <h3 className="leaderboard-subtitle">Top Reviewers</h3>
       {loading ? (
         <LoadingIndicator />
@@ -119,7 +125,7 @@ const Leaderboard = () => {
           ))}
         </ul>
       )}
-      <h3 className="leaderboard-subtitle">Most Followed Developers</h3>
+      {/* <h3 className="leaderboard-subtitle">Most Followed Developers</h3>
       {loading ? (
         <LoadingIndicator />
       ) : (
@@ -141,7 +147,7 @@ const Leaderboard = () => {
             </li>
           ))}
         </ul>
-      )}
+      )} */}
     </div>
   );
 };

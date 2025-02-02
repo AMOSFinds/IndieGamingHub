@@ -14,6 +14,11 @@
   color: #ffd700;
 }
 
+.leaderboard-text {
+  color: #fff;
+  text-align: center;
+}
+
 .leaderboard-list {
   list-style: none;
   padding: 0;
@@ -54,4 +59,8 @@
 .leaderboard-points {
   font-size: 1rem;
   color: #ffd700;
+}
+
+.leaderboard-subtitle {
+  color: #d4a6ff;
 }

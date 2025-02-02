@@ -18,12 +18,15 @@ import {
   increment,
 } from "firebase/firestore";
 import LoadingIndicator from "../../LoadingIndicator";
+import CustomAlert from "../../CustomAlert";
 
-const GameDetails = () => {
+const GameDetails = (allgame) => {
   const { gameId } = useParams(); // Get game ID from URL
   // const game = allgames.find((g) => g.id === gameId); // Find the selected game
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
 
   const [userRating, setUserRating] = useState(null);
   const [ratingCounts, setRatingCounts] = useState({
@@ -129,13 +132,14 @@ const GameDetails = () => {
           if (previousRating) {
             const previousKey = previousRating.toLowerCase().replace(" ", "");
             if (updatedCounts[previousKey] > 0) {
-              updatedCounts[previousKey] -= 1;
+              updatedCounts[previousKey] =
+                Number(updatedCounts[previousKey] || 0) - 1;
             }
           }
 
           if (newRating) {
             const newKey = newRating.toLowerCase().replace(" ", "");
-            updatedCounts[newKey] = (updatedCounts[newKey] || 0) + 1;
+            updatedCounts[newKey] = Number(updatedCounts[newKey] || 0) + 1;
           }
 
           return updatedCounts;
@@ -165,6 +169,34 @@ const GameDetails = () => {
           // Delete user's rating if unselected
           await deleteDoc(userRatingsRef);
         }
+
+        const userDocRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        const now = new Date();
+        const today = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate()
+        );
+
+        const lastRatingPoints = userDoc.data()?.lastRatingPoints || null;
+        const lastRatingDate = lastRatingPoints
+          ? new Date(lastRatingPoints.seconds * 1000)
+          : null;
+
+        if (!lastRatingDate || lastRatingDate < today) {
+          await updateDoc(userDocRef, {
+            points: increment(5), // Award points for rating a game
+            lastRatingPoints: now, // Update timestamp
+          });
+
+          setAlertMessage("Rating submitted! You've earned 5 points.");
+        } else {
+          setAlertMessage(
+            "Rating submitted, but no points awarded (daily limit reached)."
+          );
+        }
       }
     } catch (error) {
       console.error("Error rating game:", error);
@@ -177,20 +209,68 @@ const GameDetails = () => {
   const handleAddReview = async () => {
     try {
       if (user) {
-        const userDoc = await getDoc(doc(db, "users", user.uid));
+        const userDocRef = doc(db, "users", user.uid);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (!userDocSnap.exists()) {
+          throw new Error("User document not found");
+        }
+
+        const userData = userDocSnap.data();
+
         const reviewData = {
-          username: userDoc.data().username,
-          profilePicUrl: userDoc.data().profilePicUrl,
+          username: userData.username,
+          profilePicUrl: userData.profilePicUrl,
           comment: newReview,
           userId: user.uid,
           timestamp: new Date(),
         };
 
+        // Add the review once to the reviews subcollection of the game
         await addDoc(collection(db, "games", gameId, "reviews"), reviewData);
+
+        // Set up date checks for awarding points
+        const now = new Date();
+        const today = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate()
+        );
+        const lastReviewPoints = userData.lastReviewPoints || null;
+        const lastReviewDate = lastReviewPoints
+          ? new Date(lastReviewPoints.seconds * 1000)
+          : null;
+
+        if (!lastReviewDate || lastReviewDate < today) {
+          await updateDoc(userDocRef, {
+            points: increment(10), // Award points for writing a review
+            lastReviewPoints: now, // Update timestamp
+          });
+          setAlertMessage("Review added! You've earned 10 points.");
+        } else {
+          setAlertMessage(
+            "Review added, but no points awarded (daily limit reached)."
+          );
+        }
+
+        // Increment reviewsCount in the user document
+        await updateDoc(userDocRef, {
+          reviewsCount: increment(1),
+        });
+
         setNewReview("");
+        setShowAlert(true);
+        setTimeout(() => setShowAlert(false), 3000);
+      } else {
+        setAlertMessage("You need to be signed in to add a review.");
+        setShowAlert(true);
+        setTimeout(() => setShowAlert(false), 3000);
       }
     } catch (error) {
       console.error("Error adding review:", error);
+      setAlertMessage("Error adding review.");
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 3000);
     }
   };
 
@@ -207,6 +287,77 @@ const GameDetails = () => {
     }
   };
 
+  const addToFavorites = async () => {
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        // Use 'game' (or whatever your game state variable is) instead of 'allgame'
+        if (!game || !game.id) {
+          throw new Error("Game data is not available.");
+        }
+
+        const userFavoritesRef = doc(
+          db,
+          `users/${user.uid}/favorites`,
+          game.id.toString()
+        );
+
+        await setDoc(userFavoritesRef, { ...game, userId: user.uid });
+        const userRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userRef);
+
+        const now = new Date();
+        const today = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate()
+        );
+
+        const lastFavoritePoints = userDoc.data()?.lastFavoritePoints || null;
+        const lastFavoriteDate = lastFavoritePoints
+          ? new Date(lastFavoritePoints.seconds * 1000)
+          : null;
+
+        if (!lastFavoriteDate || lastFavoriteDate < today) {
+          await setDoc(
+            doc(db, `users/${user.uid}/favorites`, game.id.toString()),
+            { ...game, userId: user.uid }
+          );
+
+          await updateDoc(userRef, {
+            points: increment(3), // Award points for adding a favorite
+            lastFavoritePoints: now, // Update timestamp
+          });
+
+          setAlertMessage(
+            "Added to favorites! You've earned 3 points. Check your Profile!"
+          );
+        } else {
+          setAlertMessage(
+            "Added to favorites, but no points awarded (daily limit reached). Check your Profile!"
+          );
+        }
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 3000);
+      } else {
+        setAlertMessage("You need to be signed in to add favorites.");
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 3000);
+      }
+    } catch (error) {
+      console.error("Error adding to favorites:", error);
+      setAlertMessage("Error adding to favorites.");
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 3000);
+    }
+  };
+
   // useEffect(() => {
 
   // }, [gameId]);
@@ -218,6 +369,13 @@ const GameDetails = () => {
   if (!game) {
     return <div className="error-message">Game not found!</div>;
   }
+
+  const starRatings = [
+    { label: "★★★★★", value: "Very Good" },
+    { label: "★★★★", value: "Good" },
+    { label: "★★★", value: "Decent" },
+    { label: "★★", value: "Bad" },
+  ];
 
   return (
     <div className="game-detail-container">
@@ -236,6 +394,10 @@ const GameDetails = () => {
         <p className="game-description">
           {game.description || "A hidden indie gem that stands out!"}
         </p>
+
+        <button className="btn-favorite" onClick={addToFavorites}>
+          Add to Favorites
+        </button>
 
         {/* Game Stats Section */}
         <div className="game-stats">
@@ -295,16 +457,16 @@ const GameDetails = () => {
         {/* Ratings Section */}
         <div className="rating-system">
           <h3>Rate this Game:</h3>
-          {["Very Good", "Good", "Decent", "Bad"].map((rating) => (
+          {starRatings.map((star) => (
             <button
-              key={rating}
+              key={star.value}
               className={`rating-button ${
-                userRating === rating ? "selected" : ""
+                userRating === star.value ? "selected" : ""
               }`}
-              onClick={() => handleRating(rating)}
+              onClick={() => handleRating(star.value)}
             >
-              {rating} (
-              {ratingCounts[rating.toLowerCase().replace(" ", "")] || 0})
+              {star.label} (
+              {ratingCounts[star.value.toLowerCase().replace(" ", "")] || 0})
             </button>
           ))}
         </div>
@@ -360,6 +522,12 @@ const GameDetails = () => {
           </Link>
         </div>
       </div>
+      {showAlert && (
+        <CustomAlert
+          message={alertMessage}
+          onClose={() => setShowAlert(false)}
+        />
+      )}
     </div>
   );
 };

@@ -150,13 +150,13 @@ function Navbar() {
         >
           Feedback
         </Link>
-        {/* <Link
+        <Link
           to="/leaderboard"
           className="navbar-link"
           onClick={() => setMenuOpen(false)}
         >
           Leaderboard
-        </Link> */}
+        </Link>
       </nav>
 
       <div className="navbar-right">
