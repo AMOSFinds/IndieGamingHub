@@ -10,6 +10,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import CustomAlert from "../CustomAlert";
 import LoadingIndicator from "../LoadingIndicator";
+import { BADGES } from "../Home/Badges";
 
 function SignIn() {
   const [alertMessage, setAlertMessage] = useState("");
@@ -21,6 +22,65 @@ function SignIn() {
 
   const auth = getAuth();
   const db = getFirestore();
+
+  /**
+   * Award a badge to a user if they haven't already received it.
+   * @param {DocumentReference} userDocRef - Firestore document reference for the user.
+   * @param {Object} badge - Badge object with properties: id, name, description, icon.
+   */
+  const awardBadge = async (userDocRef, badge) => {
+    const userDocSnap = await getDoc(userDocRef);
+    const currentBadges = userDocSnap.data()?.badges || [];
+    const alreadyAwarded = currentBadges.some((b) => b.id === badge.id);
+    if (!alreadyAwarded) {
+      const updatedBadges = [...currentBadges, badge];
+      await updateDoc(userDocRef, { badges: updatedBadges });
+    }
+  };
+
+  const checkDailyStreak = async (userDocRef, now, today) => {
+    const userDocSnap = await getDoc(userDocRef);
+    const userData = userDocSnap.data() || {};
+    const lastLogin = userData.lastLoginDate || null;
+    let currentStreak = userData.loginStreak || 0;
+
+    if (lastLogin) {
+      const lastLoginDate = new Date(lastLogin.seconds * 1000);
+      // Calculate yesterday's date based on 'today'
+      const yesterday = new Date(today);
+      yesterday.setDate(today.getDate() - 1);
+
+      // Check if last login was yesterday
+      if (
+        lastLoginDate.getFullYear() === yesterday.getFullYear() &&
+        lastLoginDate.getMonth() === yesterday.getMonth() &&
+        lastLoginDate.getDate() === yesterday.getDate()
+      ) {
+        // Continue the streak
+        currentStreak += 1;
+      } else if (
+        lastLoginDate.getFullYear() === today.getFullYear() &&
+        lastLoginDate.getMonth() === today.getMonth() &&
+        lastLoginDate.getDate() === today.getDate()
+      ) {
+        // Already logged in today; do nothing extra.
+      } else {
+        // Streak broken; reset to 1 (today is the new start)
+        currentStreak = 1;
+      }
+    } else {
+      // First time login
+      currentStreak = 1;
+    }
+
+    // Update user document with the new streak and the current login timestamp
+    await updateDoc(userDocRef, {
+      loginStreak: currentStreak,
+      lastLoginDate: now,
+    });
+
+    return currentStreak;
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -57,6 +117,19 @@ function SignIn() {
         } else {
           setAlertMessage(
             "Welcome back! Points can only be earned once per day."
+          );
+        }
+
+        // Now, check and update the daily login streak
+        const streak = await checkDailyStreak(userRef, now, today);
+
+        // If the streak reaches 7 days, award the "Community Champ" badge
+        if (streak >= 7) {
+          // Assume you have defined BADGES.COMMUNITY_CHAMP as described earlier
+          await awardBadge(userRef, BADGES.COMMUNITY_CHAMP);
+          // Optionally, update the alert message
+          setAlertMessage(
+            (prev) => prev + " You've earned the Community Champ badge!"
           );
         }
       }

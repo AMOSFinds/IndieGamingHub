@@ -133,11 +133,11 @@
 }
 
 .profilecarousel-arrow.left {
-  margin-right: -20px;
+  margin-right: 10px;
 }
 
 .profilecarousel-arrow.right {
-  margin-left: -20px;
+  margin-left: 10px;
 }
 
 .profilecarousel-arrow:hover {
@@ -229,6 +229,24 @@
 .followers-count p {
   font-size: 1.2rem;
   color: #ffffff;
+}
+
+.no-badges {
+  color: #ffffff;
+  font-size: large;
+}
+
+.referral-title {
+  color: #ffffff;
+}
+
+.referral-text {
+  color: #d4a6ff;
+  font-size: large;
+}
+
+.referral-code {
+  color: #d4a6ff;
 }
 
 /* Responsive Design */

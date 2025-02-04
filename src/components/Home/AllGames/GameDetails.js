@@ -19,6 +19,7 @@ import {
 } from "firebase/firestore";
 import LoadingIndicator from "../../LoadingIndicator";
 import CustomAlert from "../../CustomAlert";
+import { BADGES } from "../Badges";
 
 const GameDetails = (allgame) => {
   const { gameId } = useParams(); // Get game ID from URL
@@ -38,6 +39,21 @@ const GameDetails = (allgame) => {
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState("");
   const [user, setUser] = useState(null);
+
+  /**
+   * Award a badge to a user if they haven't already received it.
+   * @param {DocumentReference} userDocRef - Firestore document reference for the user.
+   * @param {Object} badge - Badge object with properties: id, name, description, icon.
+   */
+  const awardBadge = async (userDocRef, badge) => {
+    const userDocSnap = await getDoc(userDocRef);
+    const currentBadges = userDocSnap.data()?.badges || [];
+    const alreadyAwarded = currentBadges.some((b) => b.id === badge.id);
+    if (!alreadyAwarded) {
+      const updatedBadges = [...currentBadges, badge];
+      await updateDoc(userDocRef, { badges: updatedBadges });
+    }
+  };
 
   useEffect(() => {
     const fetchGameDetails = async () => {
@@ -120,6 +136,7 @@ const GameDetails = (allgame) => {
       if (user) {
         const userRatingsRef = doc(db, "users", user.uid, "ratings", gameId);
         const gameRef = doc(db, "games", gameId);
+        const ratingsCountForUser = userRatingsRef.ratingCounts || 0;
 
         // Optimistically update local state
         const previousRating = userRating;
@@ -191,6 +208,20 @@ const GameDetails = (allgame) => {
             lastRatingPoints: now, // Update timestamp
           });
 
+          if (!previousRating && newRating) {
+            await updateDoc(userDocRef, {
+              ratingsCount: increment(1),
+            });
+          }
+
+          // Award the "First Rating" badge if this is the first rating
+          await awardBadge(userDocRef, BADGES.FIRST_RATING);
+          // Optionally, if you track number of ratings, check if ratingsCount reaches 10:
+          if (ratingsCountForUser >= 10) {
+            // You need to track this value
+            await awardBadge(userDocRef, BADGES.ACTIVE_GAMER);
+          }
+
           setAlertMessage("Rating submitted! You've earned 5 points.");
         } else {
           setAlertMessage(
@@ -211,6 +242,7 @@ const GameDetails = (allgame) => {
       if (user) {
         const userDocRef = doc(db, "users", user.uid);
         const userDocSnap = await getDoc(userDocRef);
+        const currentReviewsCount = userDocSnap.data()?.reviewsCount || 0;
 
         if (!userDocSnap.exists()) {
           throw new Error("User document not found");
@@ -246,17 +278,29 @@ const GameDetails = (allgame) => {
             points: increment(10), // Award points for writing a review
             lastReviewPoints: now, // Update timestamp
           });
+
+          // Increment reviewsCount in the user document
+          await updateDoc(userDocRef, {
+            reviewsCount: increment(1),
+          });
+
+          // Award "First Review" badge
+          await awardBadge(userDocRef, BADGES.FIRST_REVIEW);
+          // Check if reviewsCount is now 5 for "Reviewer Novice"
+          if (currentReviewsCount + 1 >= 5) {
+            // Assume you track currentReviewsCount from userData.reviewsCount
+            await awardBadge(userDocRef, BADGES.REVIEWER_NOVICE);
+          }
+          // Similarly, if reviewsCount reaches 10, award "Reviewer Extraordinaire"
+          if (currentReviewsCount + 1 >= 10) {
+            await awardBadge(userDocRef, BADGES.REVIEWER_EXTRAORDINAIRE);
+          }
           setAlertMessage("Review added! You've earned 10 points.");
         } else {
           setAlertMessage(
             "Review added, but no points awarded (daily limit reached)."
           );
         }
-
-        // Increment reviewsCount in the user document
-        await updateDoc(userDocRef, {
-          reviewsCount: increment(1),
-        });
 
         setNewReview("");
         setShowAlert(true);
@@ -328,6 +372,9 @@ const GameDetails = (allgame) => {
             points: increment(3), // Award points for adding a favorite
             lastFavoritePoints: now, // Update timestamp
           });
+
+          // Award the "First Favorite" badge
+          await awardBadge(userRef, BADGES.FIRST_FAVORITE);
 
           setAlertMessage(
             "Added to favorites! You've earned 3 points. Check your Profile!"

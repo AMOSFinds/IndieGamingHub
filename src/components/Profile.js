@@ -189,6 +189,29 @@ function Profile() {
     }
   };
 
+  // Function to copy referral link to clipboard
+  const copyReferralLink = () => {
+    // Assume the referral code is stored in userData.referralCode.
+    // Construct a referral URL – adjust the URL to your domain.
+    const referralURL = `${window.location.origin}/?ref=${userData.referralCode}`;
+    navigator.clipboard.writeText(referralURL).then(
+      () => {
+        setAlertMessage("Referral link copied to clipboard!");
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 3000);
+      },
+      () => {
+        setAlertMessage("Failed to copy referral link.");
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 3000);
+      }
+    );
+  };
+
   if (loading) return <LoadingIndicator />;
 
   return (
@@ -233,6 +256,22 @@ function Profile() {
           />
           <h1 className="profile-username">{userData.username}</h1>
           <h2 className="profile-email">{userData.email}</h2>
+
+          {/* Referral Section */}
+          {userData.referralCode && (
+            <div className="referral-section">
+              <h4 className="referral-text">
+                Share this site with your friends! If they enter your code upon
+                signing up, gain points and exclusive badges!
+              </h4>
+              <h3 className="referral-title">Your Referral Code:</h3>
+
+              <p className="referral-code">{userData.referralCode}</p>
+              <button onClick={copyReferralLink} className="btn-referral">
+                Copy Referral Link
+              </button>
+            </div>
+          )}
 
           <Favorites />
 
@@ -280,7 +319,7 @@ function Profile() {
             </div>
           </div> */}
 
-          {/* <div className="profile-row">
+          <div className="profile-row">
             <h3 className="section-title">Badges</h3>
             <div className="profilecarousel-wrapper">
               <button
@@ -290,8 +329,8 @@ function Profile() {
                 ❮
               </button>
               <div id="badges-carousel" className="profilecarousel">
-                {badges.length > 0 ? (
-                  badges.map((badge) => (
+                {userData.badges && userData.badges.length > 0 ? (
+                  userData.badges.map((badge) => (
                     <div key={badge.id} className="badge-card">
                       <img
                         src={badge.icon}
@@ -302,7 +341,7 @@ function Profile() {
                     </div>
                   ))
                 ) : (
-                  <p>No badges earned yet.</p>
+                  <p className="no-badges">No badges earned yet.</p>
                 )}
               </div>
               <button
@@ -312,7 +351,7 @@ function Profile() {
                 ❯
               </button>
             </div>
-          </div> */}
+          </div>
         </div>
       ) : (
         <LoadingIndicator />

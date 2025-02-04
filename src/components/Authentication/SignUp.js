@@ -15,12 +15,14 @@ import {
   increment,
   query,
   collection,
+  getDoc,
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import CustomAlert from "../CustomAlert";
 import { FaUpload } from "react-icons/fa";
 import LoadingIndicator from "../LoadingIndicator";
 import { v4 as uuidv4 } from "uuid";
+import { BADGES } from "../Home/Badges";
 
 function SignUp() {
   const [alertMessage, setAlertMessage] = useState("");
@@ -31,6 +33,22 @@ function SignUp() {
   const [profilePicture, setProfilePicture] = useState(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [referralInput, setReferralInput] = useState("");
+
+  /**
+   * Award a badge to a user if they haven't already received it.
+   * @param {DocumentReference} userDocRef - Firestore document reference for the user.
+   * @param {Object} badge - Badge object with properties: id, name, description, icon.
+   */
+  const awardBadge = async (userDocRef, badge) => {
+    const userDocSnap = await getDoc(userDocRef);
+    const currentBadges = userDocSnap.data()?.badges || [];
+    const alreadyAwarded = currentBadges.some((b) => b.id === badge.id);
+    if (!alreadyAwarded) {
+      const updatedBadges = [...currentBadges, badge];
+      await updateDoc(userDocRef, { badges: updatedBadges });
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -61,7 +79,9 @@ function SignUp() {
       }
 
       const referralCode = uuidv4().slice(0, 6).toUpperCase(); // Generate a 6-character code
-      const referredBy = null; // Referral code entered by the new user
+      // Instead of hardcoding null, get the referral code from the form input.
+      // For example, if you have a state variable referralInput:
+      const referredBy = referralInput.trim() || null; // referralInput should be captured from a form field
 
       await updateProfile(user, {
         displayName: username,
@@ -78,10 +98,12 @@ function SignUp() {
         referralCode,
         referredBy,
         referralCount: 0,
+        reviewsCount: 0,
       });
 
+      // If a referral code was entered, process the referral logic
       if (referredBy) {
-        // Update referrer's referral count and points
+        // Query for a user with the matching referral code
         const referrerQuery = query(
           collection(db, "users"),
           where("referralCode", "==", referredBy)
@@ -92,10 +114,16 @@ function SignUp() {
           const referrerDoc = referrerSnapshot.docs[0];
           const referrerRef = referrerDoc.ref;
 
-          await updateDoc(referrerRef, {
-            referralCount: increment(1),
-            points: increment(100), // Reward points for referrer
-          });
+          // Avoid self-referral check (if by any chance the referral code is the same as user's own)
+          if (referrerDoc.id !== user.uid) {
+            await updateDoc(referrerRef, {
+              referralCount: increment(1),
+              points: increment(100), // Reward points for referrer
+            });
+
+            // Award the "Connector" badge if not already awarded
+            await awardBadge(referrerRef, BADGES.CONNECTOR);
+          }
 
           // Optional: Send notification to referrer
           // await addDoc(collection(db, "users", referrerDoc.id, "notifications"), {
@@ -103,6 +131,13 @@ function SignUp() {
           //   timestamp: serverTimestamp(),
           //   hasUnread: true,
           // });
+        } else {
+          // Optionally, you might want to notify the new user that the referral code was invalid.
+          setAlertMessage("Referral code not found");
+          setShowAlert(true);
+          setTimeout(() => {
+            setShowAlert(false);
+          }, 3000);
         }
       }
 
@@ -173,6 +208,12 @@ function SignUp() {
             placeholder="Password"
             required
             className="signin-input"
+          />
+          <input
+            type="text"
+            placeholder="Referral Code (optional)"
+            value={referralInput}
+            onChange={(e) => setReferralInput(e.target.value)}
           />
 
           <button type="submit" className="signin-button">
