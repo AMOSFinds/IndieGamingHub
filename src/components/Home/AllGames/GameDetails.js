@@ -450,6 +450,7 @@ const GameDetails = (allgame) => {
         <div className="game-stats">
           <span className="game-genre">🎮 {game.genre}</span>
           <span className="release-date">🗓️ {game.release || "Unknown"}</span>
+          <p>Developer: {game.developer}</p>
         </div>
 
         {/* Platform Icons */}
