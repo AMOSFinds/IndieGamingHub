@@ -9,7 +9,7 @@ const GameDiscoverySection = () => {
   const [hoveredGameId, setHoveredGameId] = useState(null);
 
   const featuredGames = allgames.slice(0, 10);
-  const archivedGames = archives.slice(0, 10);
+  const archivedGames = archives.slice(0, 20);
 
   return (
     <section id="game-discovery-section" className="game-discovery-section">
