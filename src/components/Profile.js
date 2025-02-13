@@ -338,6 +338,7 @@ function Profile() {
                         className="badge-icon"
                       />
                       <p className="badge-name">{badge.name}</p>
+                      <p className="badge-name">{badge.description}</p>
                     </div>
                   ))
                 ) : (
