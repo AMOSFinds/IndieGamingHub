@@ -45,10 +45,12 @@ const Leaderboard = () => {
           limit(10)
         );
         const reviewersSnapshot = await getDocs(qReviews);
-        const reviewersData = reviewersSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        const reviewersData = reviewersSnapshot.docs
+          .map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }))
+          .filter((reviewer) => reviewer.reviewsCount > 0);
         setTopReviewers(reviewersData);
 
         // Fetch Most Followed Developers

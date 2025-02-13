@@ -134,9 +134,26 @@ const GameDetails = (allgame) => {
   const handleRating = async (rating) => {
     try {
       if (user) {
+        const userDocRef = doc(db, "users", user.uid);
+        // Fetch the user's current document to get ratingsCount
+        const userDocSnap = await getDoc(userDocRef);
+        const ratingsCountForUser = userDocSnap.data()?.ratingsCount || 0;
+
         const userRatingsRef = doc(db, "users", user.uid, "ratings", gameId);
         const gameRef = doc(db, "games", gameId);
-        const ratingsCountForUser = userRatingsRef.ratingCounts || 0;
+
+        // Ensure the game document exists; if not, create it with initial ratings
+        const gameDoc = await getDoc(gameRef);
+        if (!gameDoc.exists()) {
+          await setDoc(gameRef, {
+            ratings: {
+              verygood: 0,
+              good: 0,
+              decent: 0,
+              bad: 0,
+            },
+          });
+        }
 
         // Optimistically update local state
         const previousRating = userRating;
@@ -162,20 +179,19 @@ const GameDetails = (allgame) => {
           return updatedCounts;
         });
 
-        // Firestore operations
-        const gameDoc = await getDoc(gameRef);
-
-        // Decrement previous rating in Firestore
+        // Firestore operations on game ratings
+        // Decrement previous rating if applicable
         if (previousRating) {
           const previousKey = previousRating.toLowerCase().replace(" ", "");
-          if (gameDoc.data()?.ratings?.[previousKey] > 0) {
+          const currentGameDoc = await getDoc(gameRef);
+          if (currentGameDoc.data()?.ratings?.[previousKey] > 0) {
             await updateDoc(gameRef, {
               [`ratings.${previousKey}`]: increment(-1),
             });
           }
         }
 
-        // Increment new rating in Firestore
+        // Increment new rating if one is provided
         if (newRating) {
           const newKey = newRating.toLowerCase().replace(" ", "");
           await updateDoc(gameRef, {
@@ -187,9 +203,8 @@ const GameDetails = (allgame) => {
           await deleteDoc(userRatingsRef);
         }
 
-        const userDocRef = doc(db, "users", user.uid);
-        const userDoc = await getDoc(userDocRef);
-
+        // Award points logic for rating
+        const userDocAfter = await getDoc(userDocRef);
         const now = new Date();
         const today = new Date(
           now.getFullYear(),
@@ -197,7 +212,7 @@ const GameDetails = (allgame) => {
           now.getDate()
         );
 
-        const lastRatingPoints = userDoc.data()?.lastRatingPoints || null;
+        const lastRatingPoints = userDocAfter.data()?.lastRatingPoints || null;
         const lastRatingDate = lastRatingPoints
           ? new Date(lastRatingPoints.seconds * 1000)
           : null;
@@ -208,17 +223,18 @@ const GameDetails = (allgame) => {
             lastRatingPoints: now, // Update timestamp
           });
 
+          // If this is the user's first rating for this game, increment ratingsCount
           if (!previousRating && newRating) {
             await updateDoc(userDocRef, {
               ratingsCount: increment(1),
             });
           }
 
-          // Award the "First Rating" badge if this is the first rating
+          // Award the "First Rating" badge
           await awardBadge(userDocRef, BADGES.FIRST_RATING);
-          // Optionally, if you track number of ratings, check if ratingsCount reaches 10:
-          if (ratingsCountForUser >= 10) {
-            // You need to track this value
+
+          // If ratingsCount for user (fetched earlier) plus one meets threshold, award badge
+          if (ratingsCountForUser + 1 >= 10) {
             await awardBadge(userDocRef, BADGES.ACTIVE_GAMER);
           }
 
@@ -231,8 +247,7 @@ const GameDetails = (allgame) => {
       }
     } catch (error) {
       console.error("Error rating game:", error);
-
-      // Roll back optimistic update if an error occurs
+      // Optionally rollback state if an error occurs.
       setUserRating((prev) => prev); // Restore previous state
     }
   };

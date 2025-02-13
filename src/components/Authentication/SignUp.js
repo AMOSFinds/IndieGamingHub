@@ -214,6 +214,7 @@ function SignUp() {
             placeholder="Referral Code (optional)"
             value={referralInput}
             onChange={(e) => setReferralInput(e.target.value)}
+            className="signin-input"
           />
 
           <button type="submit" className="signin-button">
