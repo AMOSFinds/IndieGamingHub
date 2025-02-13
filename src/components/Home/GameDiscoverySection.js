@@ -14,6 +14,9 @@ const GameDiscoverySection = () => {
   return (
     <section id="game-discovery-section" className="game-discovery-section">
       <h2 className="gamesection-title">Featured Indie Gems of the Week</h2>
+      <p className="past-title">
+        Explore a curated list of indie games that changes every friday.
+      </p>
       <div className="discovery-game-carousel">
         {featuredGames.map((game) => (
           <div

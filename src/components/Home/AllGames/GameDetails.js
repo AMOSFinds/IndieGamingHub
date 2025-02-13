@@ -535,6 +535,7 @@ const GameDetails = (allgame) => {
         </div>
 
         {/* Reviews Section */}
+        <h2 className="review-header">Share Your Thoughts!</h2>
         <div className="review-section">
           <h3>Reviews:</h3>
           {user && (

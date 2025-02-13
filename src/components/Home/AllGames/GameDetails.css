@@ -131,15 +131,32 @@
   margin-top: 50px;
 }
 
+.rating-button:hover {
+  color: gold;
+  background-color: #060709;
+}
+
+.rating-button {
+  color: gold;
+  background-color: #31363f;
+}
+
 .rating-button:active {
   transform: scale(0.95);
   transition: transform 0.1s ease-in-out;
 }
 
 .rating-button.selected {
-  background-color: #4caf50;
-  color: white;
+  /* background-color: #4caf50; */
+  background-color: #6d23b6;
+  /* color: white; */
+  color: gold;
   border: 2px solid #3e8e41;
+}
+
+.review-header {
+  text-align: center;
+  color: #d4a6ff;
 }
 
 .review-talks {
