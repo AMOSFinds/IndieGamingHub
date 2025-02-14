@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AllGamesCard from "./AllGamesCard";
 import allgames from "./AllGameData"; // Import the games data
+import archives from "./ArchiveData";
 import "./AllGames.css";
 import SimpleAllGamesCard from "./SimpleAllGamesCard";
 
@@ -12,7 +13,7 @@ function AllGames() {
   const [selectedGenre, setSelectedGenre] = useState("");
 
   // Filter games based on search term and selected genre
-  const filteredGames = allgames.filter(
+  const filteredGames = archives.filter(
     (game) =>
       game.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (selectedGenre ? game.genre.includes(selectedGenre) : true)

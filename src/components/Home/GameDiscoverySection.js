@@ -96,6 +96,9 @@ const GameDiscoverySection = () => {
           </div>
         ))}
       </div>
+      <Link to="/allgames">
+        <button className="see-button">See All Games</button>
+      </Link>
     </section>
   );
 };

@@ -109,6 +109,21 @@
   font-size: large;
 }
 
+.see-button {
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #ff69b4, #9b49e8);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: background-color 0.3s ease-in-out, transform 0.2s;
+}
+
+.see-button:hover {
+  background: linear-gradient(135deg, #ff4081, #6d23b6);
+  transform: translateY(-5px);
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .discovery-game-carousel {

@@ -20,6 +20,10 @@ import {
 import LoadingIndicator from "../../LoadingIndicator";
 import CustomAlert from "../../CustomAlert";
 import { BADGES } from "../Badges";
+import Modal from "react-modal";
+
+// Set the app element for accessibility (adjust "#root" as needed)
+Modal.setAppElement("#root");
 
 const GameDetails = (allgame) => {
   const { gameId } = useParams(); // Get game ID from URL
@@ -28,6 +32,8 @@ const GameDetails = (allgame) => {
   const [loading, setLoading] = useState(true);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
 
   const [userRating, setUserRating] = useState(null);
   const [ratingCounts, setRatingCounts] = useState({
@@ -39,6 +45,16 @@ const GameDetails = (allgame) => {
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState("");
   const [user, setUser] = useState(null);
+
+  const openModal = (imageUrl) => {
+    setSelectedImage(imageUrl);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setSelectedImage("");
+  };
 
   /**
    * Award a badge to a user if they haven't already received it.
@@ -244,6 +260,13 @@ const GameDetails = (allgame) => {
             "Rating submitted, but no points awarded (daily limit reached)."
           );
         }
+      } else {
+        // User is not signed in: show an alert message
+        setAlertMessage("You need to sign in to rate this game.");
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 3000);
       }
     } catch (error) {
       console.error("Error rating game:", error);
@@ -490,6 +513,8 @@ const GameDetails = (allgame) => {
                   src={screenshot}
                   alt={`Screenshot ${index + 1}`}
                   className="screenshot"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => openModal(screenshot)}
                 />
               ))
             ) : (
@@ -497,6 +522,63 @@ const GameDetails = (allgame) => {
             )}
           </div>
         </div>
+
+        {/* Modal for Enlarged Screenshot */}
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          contentLabel="Screenshot Modal"
+          style={{
+            overlay: {
+              backgroundColor: "rgba(0, 0, 0, 0.8)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 9999,
+            },
+            content: {
+              position: "relative",
+              background: "transparent", // Ensures no white background
+              border: "none",
+              outline: "none",
+              maxWidth: "80%",
+              maxHeight: "80%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "20px",
+            },
+          }}
+        >
+          <button
+            onClick={closeModal}
+            style={{
+              position: "absolute",
+              top: "5px",
+              right: "5px",
+              background: "purple",
+              border: "none",
+              padding: "8px 12px",
+              fontWeight: "bold",
+              cursor: "pointer",
+              borderRadius: "4px",
+              color: "white",
+            }}
+          >
+            Close
+          </button>
+          <img
+            src={selectedImage}
+            alt="Enlarged screenshot"
+            style={{
+              width: "100%",
+              height: "auto",
+              borderRadius: "5px",
+              boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
+            }}
+          />
+        </Modal>
 
         {/* YouTube Video Review Section */}
         {game.youtubeReview && (
@@ -536,6 +618,24 @@ const GameDetails = (allgame) => {
 
         {/* Reviews Section */}
         <h2 className="review-header">Share Your Thoughts!</h2>
+        {!user && (
+          <div
+            className="login-prompt"
+            style={{
+              padding: "10px",
+              // background: "#f9f9f9",
+              marginBottom: "10px",
+              textAlign: "center",
+            }}
+          >
+            <p className="login-text-prompt">
+              Sign in to join the conversation and share your review!
+            </p>
+            <Link to="/login" className="login-review-button">
+              Sign In
+            </Link>
+          </div>
+        )}
         <div className="review-section">
           <h3>Reviews:</h3>
           {user && (
