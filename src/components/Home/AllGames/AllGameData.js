@@ -13,7 +13,7 @@ const allgames = [
     screenshots: [
       "/screenshots2/gori1.jpg",
       "/screenshots2/gori2.jpg",
-      "/screenshots2/gor3.jpg",
+      "/screenshots2/gori3.jpg",
     ],
     playLink: "https://store.steampowered.com/app/1299690/Gori_Cuddly_Carnage/",
   },
@@ -82,7 +82,7 @@ const allgames = [
     genre: "Genre: Action, Multiplayer",
     release: "Release Date: September 22, 2022",
     platform: ["PC, PlayStation, Xbox, Nintendo Switch"],
-    bannerImage: "/screenshots2/spiderbanner.jpg",
+    bannerImage: "/screenshots2/spidderbanner.jpg",
     screenshots: [
       "/screenshots2/spider1.jpg",
       "/screenshots2/spider2.jpg",
