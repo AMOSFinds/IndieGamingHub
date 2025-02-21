@@ -60,10 +60,10 @@ const Footer = () => {
         <div className="footer-column">
           <h4>Social</h4>
           <div className="footer-social-icons">
-            {/* <a href="https://discord.com">
+            <a href="https://discord.gg/bj6A9BMu">
               <FaDiscord />
             </a>
-            <a href="https://twitch.tv">
+            {/* <a href="https://twitch.tv">
               <FaTwitch />
             </a>
             <a href="https://facebook.com">

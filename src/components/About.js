@@ -5,7 +5,7 @@ const AboutSection = () => {
   return (
     <section className="about-section">
       <div className="about-content">
-        <div className="about-images">
+        {/* <div className="about-images">
           <img
             src="/images/gaming-pic-1.jpg"
             alt="Gaming Setup"
@@ -16,7 +16,7 @@ const AboutSection = () => {
             alt="Excited Gamer"
             className="about-image"
           />
-        </div>
+        </div> */}
         <div className="about-text">
           <h3 className="about-title">About Us</h3>
           <h2 className="about-heading">Welcome to DevIndie</h2>
@@ -27,7 +27,7 @@ const AboutSection = () => {
             players and inspire developers. Join us on this journey to
             experience the heart of indie gaming.
           </p>
-          <button className="about-button">Read More</button>
+          {/* <button className="about-button">Read More</button> */}
         </div>
       </div>
     </section>

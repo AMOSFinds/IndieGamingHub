@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./GameDiscoverySection.css";
 import allgames from "./AllGames/AllGameData";
 import archives from "./AllGames/ArchiveData";
+import AboutSection from "../About";
 
 const GameDiscoverySection = () => {
   const navigate = useNavigate();
