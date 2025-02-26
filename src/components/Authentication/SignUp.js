@@ -192,7 +192,7 @@ function SignUp() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
+            placeholder="Password-Should be at least 6 characters"
             required
           />
           {/* <input
