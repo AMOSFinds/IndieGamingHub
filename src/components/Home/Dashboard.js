@@ -20,7 +20,7 @@ export default function Dashboard() {
       return;
     }
 
-    fetch("http://localhost:3000/api/aiPlaytest", {
+    fetch("/api/aiPlaytest", {
       method: "POST",
       body: JSON.stringify({
         demoUrl:
