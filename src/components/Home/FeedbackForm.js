@@ -44,8 +44,8 @@ export default function FeedbackForm({ demoId, onSubmit }) {
     <div className="feedback-form">
       <h3>Submit Feedback</h3>
       <p className="tooltip">
-        Rate & comment on your uploaded game demo for better insights—we use
-        this to compare to the AI tool and refine for the alpha version.
+        Rate & comment on your uploaded game demo for better insights—helps
+        refine our AI tool for the final version.
       </p>
       <input
         type="number"
