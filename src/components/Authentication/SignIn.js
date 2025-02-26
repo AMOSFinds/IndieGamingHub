@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CustomAlert from "../CustomAlert";
 import LoadingIndicator from "../LoadingIndicator";
 import { BADGES } from "../Home/Badges";
+import "./SignIn.css";
 
 function SignIn() {
   const [alertMessage, setAlertMessage] = useState("");
@@ -151,18 +152,19 @@ function SignIn() {
   };
 
   return (
-    <div className="signin-container">
+    <div className="auth-form">
       {loading ? (
         <LoadingIndicator />
       ) : (
-        <form onSubmit={handleSubmit} className="signin-form">
+        <form onSubmit={handleSubmit}>
+          <h2>Sign In</h2>
+          {alertMessage && <p className="error">{alertMessage}</p>}
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             required
-            className="signin-input"
           />
           <input
             type="password"
@@ -170,21 +172,18 @@ function SignIn() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
             required
-            className="signin-input"
           />
-          <button type="submit" className="signin-button">
-            Sign In
-          </button>
+          <button type="submit">Sign In</button>
           <p className="signup-link">
             Don't have an account? <Link to="/signup">Sign Up</Link>
           </p>
         </form>
       )}
       {showAlert && (
-        <CustomAlert
-          message={alertMessage}
-          onClose={() => setShowAlert(false)}
-        />
+        <div className="alert">
+          {alertMessage}
+          <button onClick={() => setShowAlert(false)}>OK</button>
+        </div>
       )}
     </div>
   );

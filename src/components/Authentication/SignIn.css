@@ -1,0 +1,99 @@
+/* src/components/SignIn.css and src/components/SignUp.css */
+.auth-form {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form h2 {
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.auth-form input::placeholder {
+  color: #666; /* Darker placeholder for readability */
+}
+
+.auth-form button {
+  background: #00c4b4; /* Teal for consistency */
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%;
+}
+
+.auth-form button:hover {
+  background: #00a89a;
+}
+
+.auth-form button:active {
+  transform: scale(0.98);
+}
+
+.auth-form p {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-top: 10px;
+}
+
+.auth-form a {
+  color: #00c4b4;
+  text-decoration: none;
+}
+
+.auth-form a:hover {
+  text-decoration: underline;
+}
+
+.auth-form .error {
+  color: #d32f2f;
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .auth-form {
+    margin: 20px 10px;
+    padding: 15px;
+  }
+
+  .auth-form h2 {
+    font-size: 20px;
+  }
+
+  .auth-form input {
+    font-size: 14px;
+  }
+
+  .auth-form button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .auth-form p {
+    font-size: 12px;
+  }
+}

@@ -23,6 +23,7 @@ import { FaUpload } from "react-icons/fa";
 import LoadingIndicator from "../LoadingIndicator";
 import { v4 as uuidv4 } from "uuid";
 import { BADGES } from "../Home/Badges";
+import "./SignUp.css";
 
 function SignUp() {
   const [alertMessage, setAlertMessage] = useState("");
@@ -166,32 +167,19 @@ function SignUp() {
   };
 
   return (
-    <div className="signin-container">
+    <div className="auth-form">
       {loading ? (
         <LoadingIndicator />
       ) : (
-        <form onSubmit={handleSubmit} className="signin-form">
-          <div className="form-group">
-            <label className="profile-title">Profile Picture:</label>
-            <label htmlFor="file-upload" className="custom-file-upload">
-              <FaUpload /> Choose Image
-            </label>
-            <input
-              id="file-upload"
-              type="file"
-              accept="image/*"
-              onChange={handleProfilePictureChange}
-              className="file-input"
-            />
-          </div>
-
+        <form onSubmit={handleSubmit}>
+          <h2>Sign Up</h2>
+          {alertMessage && <p className="error">{alertMessage}</p>}
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Username"
             required
-            className="signin-input"
           />
           <input
             type="email"
@@ -199,7 +187,6 @@ function SignUp() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             required
-            className="signin-input"
           />
           <input
             type="password"
@@ -207,26 +194,21 @@ function SignUp() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
             required
-            className="signin-input"
           />
-          <input
+          {/* <input
             type="text"
             placeholder="Referral Code (optional)"
             value={referralInput}
             onChange={(e) => setReferralInput(e.target.value)}
-            className="signin-input"
-          />
-
-          <button type="submit" className="signin-button">
-            Sign Up
-          </button>
+          /> */}
+          <button type="submit">Sign Up</button>
         </form>
       )}
       {showAlert && (
-        <CustomAlert
-          message={alertMessage}
-          onClose={() => setShowAlert(false)}
-        />
+        <div className="alert">
+          {alertMessage}
+          <button onClick={() => setShowAlert(false)}>OK</button>
+        </div>
       )}
     </div>
   );

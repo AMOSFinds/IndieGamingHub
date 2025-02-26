@@ -143,20 +143,20 @@ function Navbar() {
         >
           Developers
         </Link> */}
-        <Link
+        {/* <Link
           to="/contact"
           className="navbar-link"
           onClick={() => setMenuOpen(false)}
         >
           Feedback
-        </Link>
-        <Link
+        </Link> */}
+        {/* <Link
           to="/leaderboard"
           className="navbar-link"
           onClick={() => setMenuOpen(false)}
         >
           Leaderboard
-        </Link>
+        </Link> */}
       </nav>
 
       <div className="navbar-right">
