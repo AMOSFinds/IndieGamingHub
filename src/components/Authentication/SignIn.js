@@ -112,26 +112,9 @@ function SignIn() {
             lastSignInPoints: now, // Update last points date
           });
 
-          setAlertMessage(
-            "Signed in successfully. You've earned 10 points for logging in!"
-          );
+          setAlertMessage("Signed in successfully. ");
         } else {
-          setAlertMessage(
-            "Welcome back! Points can only be earned once per day."
-          );
-        }
-
-        // Now, check and update the daily login streak
-        const streak = await checkDailyStreak(userRef, now, today);
-
-        // If the streak reaches 7 days, award the "Community Champ" badge
-        if (streak >= 7) {
-          // Assume you have defined BADGES.COMMUNITY_CHAMP as described earlier
-          await awardBadge(userRef, BADGES.COMMUNITY_CHAMP);
-          // Optionally, update the alert message
-          setAlertMessage(
-            (prev) => prev + " You've earned the Community Champ badge!"
-          );
+          setAlertMessage("Welcome back! ");
         }
       }
       setShowAlert(true);
