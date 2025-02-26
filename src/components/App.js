@@ -13,6 +13,7 @@ import Footer from "./Footer";
 import Leaderboard from "./Home/Leaderboard";
 import Dashboard from "./Home/Dashboard";
 import NavHeader from "./Home/NavHeader";
+import AuthGuard from "./AuthGuard";
 
 function App() {
   return (
@@ -21,7 +22,14 @@ function App() {
         {/* <Navbar /> */}
         <NavHeader />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={
+              <AuthGuard>
+                <Home />
+              </AuthGuard>
+            }
+          />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/:demoId" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />

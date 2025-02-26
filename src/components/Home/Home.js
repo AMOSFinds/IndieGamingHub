@@ -42,6 +42,10 @@ function Home() {
       ) : (
         <p>No demo selected yet</p>
       )}
+      <p>
+        View your mock AI report in the dashboard. Make sure to submit your demo
+        and feedback first.
+      </p>
       <button
         onClick={navigateToDashboard}
         disabled={!demoId || !feedbackSubmitted}
