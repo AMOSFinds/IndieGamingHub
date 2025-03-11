@@ -1,4 +1,4 @@
-/* src/components/Header.css */
+/* 
 .header {
   background: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -58,7 +58,7 @@
 .navheader-container:hover {
   background: #00a89a;
 }
-/* Hamburger Menu for Mobile */
+
 .header .hamburger {
   display: none;
   font-size: 24px;
@@ -79,15 +79,15 @@
   gap: 10px;
 }
 
-/* Truncate Long Emails */
+
 .header .user-email {
-  max-width: 150px; /* Limit email width */
+  max-width: 150px; 
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* Responsive Design */
+
 @media (max-width: 600px) {
   .header {
     padding: 5px 10px;
@@ -131,6 +131,6 @@
   }
 
   .header .user-email {
-    max-width: 120px; /* Smaller email width on mobile */
+    max-width: 120px; 
   }
-}
+} */

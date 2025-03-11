@@ -22,8 +22,9 @@ import CustomAlert from "../CustomAlert";
 import { FaUpload } from "react-icons/fa";
 import LoadingIndicator from "../LoadingIndicator";
 import { v4 as uuidv4 } from "uuid";
-import { BADGES } from "../Home/Badges";
-import "./SignUp.css";
+import { auth, db } from "../firebase/firebase-config";
+import { motion } from "framer-motion";
+import PaystackPop from "@paystack/inline-js";
 
 function SignUp() {
   const [alertMessage, setAlertMessage] = useState("");
@@ -31,25 +32,10 @@ function SignUp() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [profilePicture, setProfilePicture] = useState(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [referralInput, setReferralInput] = useState("");
-
-  /**
-   * Award a badge to a user if they haven't already received it.
-   * @param {DocumentReference} userDocRef - Firestore document reference for the user.
-   * @param {Object} badge - Badge object with properties: id, name, description, icon.
-   */
-  const awardBadge = async (userDocRef, badge) => {
-    const userDocSnap = await getDoc(userDocRef);
-    const currentBadges = userDocSnap.data()?.badges || [];
-    const alreadyAwarded = currentBadges.some((b) => b.id === badge.id);
-    if (!alreadyAwarded) {
-      const updatedBadges = [...currentBadges, badge];
-      await updateDoc(userDocRef, { badges: updatedBadges });
-    }
-  };
+  const [isTester, setIsTester] = useState(false);
+  const [pricingTier, setPricingTier] = useState("free");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -65,83 +51,31 @@ function SignUp() {
       );
       const user = userCredential.user;
 
-      let profilePicUrl = "";
-
-      if (profilePicture) {
-        // Upload the selected profile picture
-        const profilePicRef = ref(storage, `profilePictures/${user.uid}`);
-        await uploadBytes(profilePicRef, profilePicture);
-        profilePicUrl = await getDownloadURL(profilePicRef);
-      } else {
-        // Generate a default profile picture with the first letter of the username
-        profilePicUrl = `https://ui-avatars.com/api/?name=${username.charAt(
-          0
-        )}&background=random&color=ffffff&bold=true`;
-      }
-
-      const referralCode = uuidv4().slice(0, 6).toUpperCase(); // Generate a 6-character code
-      // Instead of hardcoding null, get the referral code from the form input.
-      // For example, if you have a state variable referralInput:
-      const referredBy = referralInput.trim() || null; // referralInput should be captured from a form field
-
       await updateProfile(user, {
         displayName: username,
-        photoURL: profilePicUrl,
       });
 
-      // Save user info to database
-      await setDoc(doc(db, "users", user.uid), {
-        username,
-        email,
-        profilePicUrl,
-        points: 0, // Initialize points
-        badges: [], // Initialize badges
-        referralCode,
-        referredBy,
-        referralCount: 0,
-        reviewsCount: 0,
-      });
-
-      // If a referral code was entered, process the referral logic
-      if (referredBy) {
-        // Query for a user with the matching referral code
-        const referrerQuery = query(
-          collection(db, "users"),
-          where("referralCode", "==", referredBy)
-        );
-        const referrerSnapshot = await getDocs(referrerQuery);
-
-        if (!referrerSnapshot.empty) {
-          const referrerDoc = referrerSnapshot.docs[0];
-          const referrerRef = referrerDoc.ref;
-
-          // Avoid self-referral check (if by any chance the referral code is the same as user's own)
-          if (referrerDoc.id !== user.uid) {
-            await updateDoc(referrerRef, {
-              referralCount: increment(1),
-              points: increment(100), // Reward points for referrer
-            });
-
-            // Award the "Connector" badge if not already awarded
-            await awardBadge(referrerRef, BADGES.CONNECTOR);
-          }
-
-          // Optional: Send notification to referrer
-          // await addDoc(collection(db, "users", referrerDoc.id, "notifications"), {
-          //   message: `You earned 100 points for referring ${username}!`,
-          //   timestamp: serverTimestamp(),
-          //   hasUnread: true,
-          // });
-        } else {
-          // Optionally, you might want to notify the new user that the referral code was invalid.
-          setAlertMessage("Referral code not found");
-          setShowAlert(true);
-          setTimeout(() => {
-            setShowAlert(false);
-          }, 3000);
-        }
+      if (isTester) {
+        await setDoc(doc(db, "testers", user.uid), {
+          isActive: true,
+          email: user.email,
+          createdAt: new Date(),
+        });
       }
 
+      if (pricingTier === "free") {
+        await setDoc(doc(db, "users", user.uid), {
+          username,
+          email,
+          pricingTier,
+          isTester,
+          createdAt: new Date(),
+        });
+        setAlertMessage("Signed up successfully on Free tier!");
+        setShowAlert(true);
+      } else {
+        handlePaystackPayment();
+      }
       setAlertMessage("Account created successfully");
       setShowAlert(true);
       setTimeout(() => {
@@ -160,55 +94,144 @@ function SignUp() {
     }
   };
 
-  const handleProfilePictureChange = (e) => {
-    if (e.target.files[0]) {
-      setProfilePicture(e.target.files[0]);
-    }
+  const handlePaystackPayment = () => {
+    const paystack = new PaystackPop();
+    const amount = pricingTier === "pro" ? 150000 : 250000; // In kobo: $15 = 1,500,000 kobo, $25 = 2,500,000 kobo
+    paystack.newTransaction({
+      key: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
+      email: email,
+      amount: amount,
+      currency: "USD", // Use USD for international pricing
+      reference: `DEVINDIE_SUB_${new Date().getTime()}`, // Unique reference
+      onSuccess: async (transaction) => {
+        await setDoc(doc(db, "users", auth.currentUser.uid), {
+          username,
+          email,
+          pricingTier,
+          isTester,
+          paymentReference: transaction.reference,
+          createdAt: new Date(),
+        });
+        setAlertMessage(
+          `Payment successful! Subscribed to ${pricingTier} tier.`
+        );
+        setShowAlert(true);
+      },
+      onCancel: () => {
+        setAlertMessage("Payment cancelled. Please try again.");
+        setShowAlert(true);
+      },
+      onError: () => {
+        setAlertMessage("Payment error. Please contact support.");
+        setShowAlert(true);
+      },
+    });
   };
 
   return (
-    <div className="auth-form">
-      {loading ? (
-        <LoadingIndicator />
-      ) : (
-        <form onSubmit={handleSubmit}>
-          <h2>Sign Up</h2>
-          {alertMessage && <p className="error">{alertMessage}</p>}
-          <input
-            type="text"
+    <div className="bg-dark-bg text-white min-h-screen flex flex-col items-center justify-center p-4">
+      <motion.div
+        className="bg-dark-bg p-6 rounded-lg shadow-lg w-full max-w-md md:max-w-lg"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="text-center mb-4">
+          <h1 className="text-xl font-light text-white">
+            Join the Beta—Free Playtesting for Indie Devs
+          </h1>
+          <p className="text-sm text-gray-400">
+            Devindie connects indie devs with human playtesters—launch with
+            confidence.{" "}
+            {/* <a href="/about" className="text-teal">
+              Learn More
+            </a> */}
+          </p>
+        </div>
+        <h2 className="text-2xl text-center mb-4">Sign Up</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <motion.input
+            className="w-full p-3 mb-4 rounded-lg bg-dark-bg/50 text-white border border-gray-600 focus:border-teal focus:outline-none"
+            type="email"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Username"
             required
+            initial={{ x: -10, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.3 }}
           />
-          <input
+          <motion.input
+            className="w-full p-3 mb-4 rounded-lg bg-dark-bg/50 text-white border border-gray-600 focus:border-teal focus:outline-none"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             required
+            initial={{ x: -10, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.3 }}
           />
-          <input
+          <motion.input
+            className="w-full p-3 mb-4 rounded-lg bg-dark-bg/50 text-white border border-gray-600 focus:border-teal focus:outline-none"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password-Should be at least 6 characters"
+            placeholder="Password"
             required
+            initial={{ x: -10, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.3 }}
           />
-          {/* <input
-            type="text"
-            placeholder="Referral Code (optional)"
-            value={referralInput}
-            onChange={(e) => setReferralInput(e.target.value)}
-          /> */}
-          <button type="submit">Sign Up</button>
+          <select
+            value={pricingTier}
+            onChange={(e) => setPricingTier(e.target.value)}
+            className="w-full p-2 mb-4 rounded-lg bg-gray-700 text-white border border-gray-600 focus:border-teal-400 outline-none appearance-none transition-colors duration-200 pr-8"
+          >
+            <option value="free">Free ($0/month)</option>
+            <option value="pro">Pro ($15/month)</option>
+            <option value="premium">Premium ($25/month)</option>
+          </select>
+          <label className="flex items-center space-x-2 mb-4">
+            <input
+              type="checkbox"
+              name="isTester"
+              checked={isTester}
+              onChange={(e) => setIsTester(e.target.checked)}
+              className="w-4 h-4 text-teal-400 bg-gray-700 border-gray-600 rounded focus:ring-teal-400 focus:ring-2 transition-colors duration-200"
+            />
+            <span className="text-gray-300 text-sm">
+              Become a Tester (Provide Feedback on Others’ Demos)
+            </span>
+          </label>
+          <motion.button
+            type="submit"
+            className="bg-teal-500 text-white w-full px-4 py-2 rounded-lg hover:bg-teal-600 active:scale-95 transition-transform duration-100 flex items-center justify-center"
+            initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.2 }}
+          >
+            Sign Up
+          </motion.button>
         </form>
-      )}
+      </motion.div>
       {showAlert && (
-        <div className="alert">
+        <motion.div
+          className="fixed top-4 right-4 bg-dark-bg/90 text-white p-4 rounded-lg shadow-lg border-l-4 border-teal"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 20 }}
+          transition={{ duration: 0.3 }}
+        >
           {alertMessage}
-          <button onClick={() => setShowAlert(false)}>OK</button>
-        </div>
+          <button
+            onClick={() => setShowAlert(false)}
+            className="ml-4 text-teal hover:text-teal-hover"
+          >
+            Close
+          </button>
+        </motion.div>
       )}
     </div>
   );

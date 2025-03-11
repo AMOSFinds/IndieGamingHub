@@ -14,6 +14,8 @@ import Leaderboard from "./Home/Leaderboard";
 import Dashboard from "./Home/Dashboard";
 import NavHeader from "./Home/NavHeader";
 import AuthGuard from "./AuthGuard";
+import TesterDashboard from "./Home/TesterDashboard";
+import Pricing from "./Home/Pricing";
 
 function App() {
   return (
@@ -22,16 +24,11 @@ function App() {
         {/* <Navbar /> */}
         <NavHeader />
         <Routes>
-          <Route
-            path="/"
-            element={
-              <AuthGuard>
-                <Home />
-              </AuthGuard>
-            }
-          />
+          <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/:demoId" element={<Dashboard />} />
+          <Route path="/tester/:demoId" element={<TesterDashboard />} />
+          <Route path="/pricing" element={<Pricing />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/signup" element={<SignUp />} />
