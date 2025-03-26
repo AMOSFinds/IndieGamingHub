@@ -34,7 +34,6 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [isTester, setIsTester] = useState(false);
   const [pricingTier, setPricingTier] = useState("free");
 
   const handleSubmit = async (event) => {
@@ -55,20 +54,11 @@ function SignUp() {
         displayName: username,
       });
 
-      if (isTester) {
-        await setDoc(doc(db, "testers", user.uid), {
-          isActive: true,
-          email: user.email,
-          createdAt: new Date(),
-        });
-      }
-
       if (pricingTier === "free") {
         await setDoc(doc(db, "users", user.uid), {
           username,
           email,
           pricingTier,
-          isTester,
           createdAt: new Date(),
         });
         setAlertMessage("Signed up successfully on Free tier!");
@@ -108,7 +98,6 @@ function SignUp() {
           username,
           email,
           pricingTier,
-          isTester,
           paymentReference: transaction.reference,
           createdAt: new Date(),
         });
@@ -143,9 +132,6 @@ function SignUp() {
           <p className="text-sm text-gray-400">
             Devindie connects indie devs with human playtesters—launch with
             confidence.{" "}
-            {/* <a href="/about" className="text-teal">
-              Learn More
-            </a> */}
           </p>
         </div>
         <h2 className="text-2xl text-center mb-4">Sign Up</h2>
@@ -188,22 +174,10 @@ function SignUp() {
             onChange={(e) => setPricingTier(e.target.value)}
             className="w-full p-2 mb-4 rounded-lg bg-gray-700 text-white border border-gray-600 focus:border-teal-400 outline-none appearance-none transition-colors duration-200 pr-8"
           >
-            <option value="free">Free ($0/month)</option>
-            <option value="pro">Pro ($15/month)</option>
-            <option value="premium">Premium ($25/month)</option>
+            <option value="free">Basic ($29/month)</option>
+            <option value="pro">Pro ($79/month)</option>
+            <option value="premium">Premium ($299/month)</option>
           </select>
-          <label className="flex items-center space-x-2 mb-4">
-            <input
-              type="checkbox"
-              name="isTester"
-              checked={isTester}
-              onChange={(e) => setIsTester(e.target.checked)}
-              className="w-4 h-4 text-teal-400 bg-gray-700 border-gray-600 rounded focus:ring-teal-400 focus:ring-2 transition-colors duration-200"
-            />
-            <span className="text-gray-300 text-sm">
-              Become a Tester (Provide Feedback on Others’ Demos)
-            </span>
-          </label>
           <motion.button
             type="submit"
             className="bg-teal-500 text-white w-full px-4 py-2 rounded-lg hover:bg-teal-600 active:scale-95 transition-transform duration-100 flex items-center justify-center"

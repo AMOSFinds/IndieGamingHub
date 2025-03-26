@@ -1,323 +1,240 @@
-// Dashboard.js (updated for pricing options)
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { db, auth, storage } from "../firebase/firebase-config"; // Adjust path
+import { auth, db } from "../firebase/firebase-config";
 import {
-  collection,
-  query,
-  where,
-  onSnapshot,
-  addDoc,
   getDocs,
-  getDoc,
-  doc,
-  updateDoc,
+  addDoc,
+  collection,
+  serverTimestamp,
 } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import UploadDemo from "./UploadDemo";
+import PaystackCheckout from "./PaystackCheckout";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-} from "chart.js";
-
-ChartJS.register(CategoryScale, LinearScale, BarElement);
+import useSubscriptionTier from "./hooks/useSubscriptionTier";
 
 export default function Dashboard() {
-  const { demoId } = useParams();
-  const navigate = useNavigate();
-  const [feedback, setFeedback] = useState([]);
-  const [demoUploaded, setDemoUploaded] = useState(false);
-  const [pricingTier, setPricingTier] = useState("free"); // Default to free
-  const [alertMessage, setAlertMessage] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
+  const { tier, loading: tierLoading } = useSubscriptionTier(); // Subscription hook
+  const [gameName, setGameName] = useState("");
+  const [pricingData, setPricingData] = useState(null);
+  const [isPricingLoading, setIsPricingLoading] = useState(false); // Renamed to avoid conflict
+  const [history, setHistory] = useState([]);
 
   useEffect(() => {
-    if (!auth.currentUser) {
-      navigate("/signin");
-      return;
-    }
+    const fetchHistory = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const historyRef = collection(db, "games");
+        const snapshot = await getDocs(historyRef);
+        const userGames = snapshot.docs
+          .map((doc) => doc.data())
+          .filter((entry) => entry.userId === user.uid);
 
-    // Fetch user's pricing tier from Firestore
-    const userDocRef = doc(db, "users", auth.currentUser.uid);
-    const unsubscribe = onSnapshot(
-      userDocRef,
-      (doc) => {
-        if (doc.exists()) {
-          setPricingTier(doc.data().pricingTier || "free");
-        }
-      },
-      (error) => console.error("Pricing tier fetch error:", error)
-    );
+        setHistory(userGames);
+      }
+    };
 
-    if (demoId) {
-      const q = query(
-        collection(db, "feedback"),
-        where("demoId", "==", demoId)
-      );
-      const feedbackUnsubscribe = onSnapshot(
-        q,
-        (snapshot) => {
-          const data = snapshot.docs.map((doc) => doc.data());
-          setFeedback(data);
-        },
-        (error) => console.error("Feedback listener error:", error)
-      );
+    fetchHistory();
+  }, []);
 
-      return () => {
-        unsubscribe();
-        feedbackUnsubscribe();
-      };
-    }
-
-    return () => unsubscribe();
-  }, [demoId, navigate]);
-
-  const handleUpload = async (file) => {
-    if (!file) {
-      setAlertMessage("Please select a valid file!");
-      setShowAlert(true);
-      return;
-    }
-
-    const userId = auth.currentUser.uid;
-    const demosQuery = query(
-      collection(db, "demos"),
-      where("userId", "==", userId),
-      where("pricingTier", "==", pricingTier)
-    );
-    const demosSnapshot = await getDocs(demosQuery);
-    const currentMonth = new Date().getMonth();
-    const freeDemosThisMonth = demosSnapshot.docs.filter(
-      (doc) => new Date(doc.data().uploadedAt).getMonth() === currentMonth
-    ).length;
-
-    if (pricingTier === "free" && freeDemosThisMonth >= 1) {
-      setAlertMessage(
-        "Free tier allows only 1 demo per month. Upgrade to Pro or Premium for more!"
-      );
-      setShowAlert(true);
-      return;
-    }
-    if (pricingTier === "pro" && freeDemosThisMonth >= 5) {
-      setAlertMessage(
-        "Pro tier allows only 5 demos per month. Upgrade to Premium for unlimited demos!"
-      );
-      setShowAlert(true);
-      return;
-    }
-
-    const demoId = `${userId}-${file.name}-${Date.now()}`;
-    const storageRef = ref(storage, `demos/${demoId}`);
-
+  const fetchSteamPricing = async (gameName) => {
     try {
-      await uploadBytes(storageRef, file);
-      const url = await getDownloadURL(storageRef);
-      await addDoc(collection(db, "demos"), {
-        demoId,
-        userId,
-        fileURL: url,
-        uploadedAt: new Date(),
-        pricingTier,
-      });
+      const response = await fetch(
+        `https://us-central1-my-gaming-platform.cloudfunctions.net/fetchSteamPricing?name=${encodeURIComponent(
+          gameName
+        )}`
+      );
+      const data = await response.json();
 
-      // Assign testers based on pricing tier
-      await assignTesters(demoId, pricingTier);
+      if (!data || !data.items) {
+        return [];
+      }
 
-      setDemoUploaded(true);
-      setAlertMessage("Demo uploaded successfully!");
-      setShowAlert(true);
-      navigate(`/dashboard/${demoId}`);
+      return data.items.map((item) => ({
+        gameId: item.id,
+        name: item.name,
+        price: item.price ? `$${(item.price.final / 100).toFixed(2)}` : "N/A",
+      }));
     } catch (error) {
-      console.error("Upload error:", error);
-      setAlertMessage("Upload failed: " + error.message);
-      setShowAlert(true);
+      console.error("Error fetching Steam pricing:", error);
+      return [];
     }
   };
 
-  const assignTesters = async (demoId, tier) => {
-    const testersQuery = query(
-      collection(db, "testers"),
-      where("isActive", "==", true)
-    );
-    const testersSnapshot = await getDocs(testersQuery);
-    let assignedTesters = [];
+  const handleCheckPricing = async () => {
+    setIsPricingLoading(true);
 
-    if (tier === "free") {
-      assignedTesters = testersSnapshot.docs.slice(0, 3).map((doc) => doc.id); // 1-3 testers
-    } else if (tier === "pro") {
-      assignedTesters = testersSnapshot.docs.slice(0, 5).map((doc) => doc.id); // 3-5 testers
-    } else if (tier === "premium") {
-      assignedTesters = testersSnapshot.docs.slice(0, 7).map((doc) => doc.id); // 5+ testers
+    const competitorGames = await fetchSteamPricing(gameName);
+
+    if (competitorGames.length > 0) {
+      const suggestedPrice = (
+        competitorGames
+          .map((game) => parseFloat(game.price.replace("$", "")) || 0)
+          .reduce((sum, price) => sum + price, 0) / competitorGames.length
+      ).toFixed(2);
+
+      const user = auth.currentUser;
+      if (user) {
+        await addDoc(collection(db, "games"), {
+          userId: user.uid,
+          gameName,
+          suggestedPrice,
+          competitorGames,
+          createdAt: serverTimestamp(),
+        });
+      }
+
+      setPricingData({
+        suggestedPrice,
+        competitorGames,
+      });
+    } else {
+      setPricingData(null);
+      alert("No competitor pricing data found for this game.");
     }
 
-    await updateDoc(doc(db, "demos", demoId), { assignedTesters });
-    await notifyTesters(demoId, assignedTesters);
+    setIsPricingLoading(false);
   };
 
-  const notifyTesters = async (demoId, assignedTesters) => {
-    const testerEmails = assignedTesters.map((id) => {
-      const testerDoc = doc(db, "testers", id);
-      return getDoc(testerDoc).then((doc) => doc.data().email);
+  const exportHistoryToCSV = () => {
+    const headers = [
+      "Game",
+      "Suggested Price",
+      "Competitor Game",
+      "Competitor Price",
+      "Date",
+    ];
+    const rows = history.map((entry) => {
+      const comp = entry.competitorGames?.[0] || {};
+      const date = entry.createdAt?.toDate
+        ? entry.createdAt.toDate().toLocaleDateString()
+        : "N/A";
+      return [
+        entry.gameName,
+        `$${entry.suggestedPrice}`,
+        comp.name || "N/A",
+        `$${comp.price || "N/A"}`,
+        date,
+      ];
     });
-    const emails = await Promise.all(testerEmails);
 
-    await fetch("YOUR_DISCORD_WEBHOOK_URL", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        content: `New demo to test: https://yourapp.com/tester/${demoId} for testers ${emails.join(
-          ", "
-        )}`,
-      }),
-    });
-  };
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      [headers, ...rows].map((row) => row.join(",")).join("\n");
 
-  const feedbackRatings = feedback.map((fb) => fb.rating || 0);
-  const ratingCounts = [1, 2, 3, 4, 5].map(
-    (r) => feedbackRatings.filter((rate) => rate === r).length || 0
-  );
-
-  const chartData = {
-    labels: ["1", "2", "3", "4", "5"],
-    datasets: [
-      {
-        label: "Rating Distribution",
-        data: ratingCounts,
-        backgroundColor: "#00c4b4",
-        borderColor: "#00a89a",
-        borderWidth: 1,
-      },
-    ],
-  };
-
-  const options = {
-    scales: { y: { beginAtZero: true, ticks: { color: "#ffffff" } } },
-    plugins: { legend: { labels: { color: "#ffffff" } } },
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "pricing_history.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
-    <div className="bg-gray-900 min-h-screen p-4 md:p-6">
-      <motion.h1
-        className="text-4xl font-bold text-teal-400 text-center mb-6"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        Devindie Dashboard
+    <div className="bg-gray-900 min-h-screen p-6 text-white">
+      <motion.h1 className="text-4xl font-bold text-teal-400 text-center mb-6">
+        AI-Powered Game Pricing Optimization
       </motion.h1>
-      <p className="text-sm text-gray-400 text-center mb-6">
-        Upload your game demo and get real human feedback in{" "}
-        {pricingTier === "premium" ? "12" : pricingTier === "pro" ? "18" : "24"}{" "}
-        hours.
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <motion.div
-          className="bg-gray-800 p-6 rounded-lg shadow-lg"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <UploadDemo onUpload={handleUpload} />
-        </motion.div>
-        {demoUploaded && !feedback.length && (
-          <motion.div
-            className="bg-gray-800 p-6 rounded-lg shadow-lg"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h3 className="text-xl text-white mb-4">Awaiting Feedback</h3>
-            <p className="text-gray-300">
-              Your demo is being reviewed by{" "}
-              {pricingTier === "premium"
-                ? "5+"
-                : pricingTier === "pro"
-                ? "3-5"
-                : "1-3"}{" "}
-              testers. Check back in{" "}
-              {pricingTier === "premium"
-                ? "12"
-                : pricingTier === "pro"
-                ? "18"
-                : "24"}{" "}
-              hours for feedback.
-            </p>
-          </motion.div>
-        )}
-        {feedback.length > 0 && (
-          <motion.div
-            className="bg-gray-800 p-6 rounded-lg shadow-lg col-span-1 md:col-span-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h3 className="text-xl text-white mb-4">Human Feedback</h3>
-            <ul className="space-y-4">
-              {feedback.map((fb, index) => (
-                <motion.li
-                  key={index}
-                  className="text-gray-300"
-                  initial={{ x: -10, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: index * 0.1, duration: 0.3 }}
-                >
-                  Rating: {fb.rating}/5 - {fb.comment} (by Tester ID:{" "}
-                  {fb.userId})
-                </motion.li>
-              ))}
-            </ul>
-            <div className="mt-4">
-              <h4 className="text-white mb-2">Analytics</h4>
-              <Bar data={chartData} options={options} />
-              <p className="text-gray-400 mt-2">
-                Average Rating:{" "}
-                {(
-                  feedback.reduce((sum, fb) => sum + (fb.rating || 0), 0) /
-                  feedback.length
-                ).toFixed(1)}
-                /5
-              </p>
-              <p className="text-gray-400">
-                Quit Points:{" "}
-                {feedback.some((f) => f.comment?.includes("quit"))
-                  ? "Detected"
-                  : "None reported"}
-              </p>
+
+      {tierLoading ? (
+        <p className="text-gray-400 text-center">Loading your plan...</p>
+      ) : tier === "free" ? (
+        <div className="text-center">
+          <p className="text-gray-400 mb-4">Upgrade to access full features!</p>
+          <PaystackCheckout plan="pro" />
+          <PaystackCheckout plan="enterprise" />
+          <p className="text-xs text-gray-500 mt-2">
+            You’ll be charged in your local currency. Powered by Paystack.
+          </p>
+        </div>
+      ) : (
+        <>
+          <p className="text-sm text-gray-400 text-center mb-6">
+            Enter the name of games similar to yours to get the best pricing
+            recommendation based on real Steam market data.
+          </p>
+
+          <div className="max-w-md mx-auto flex space-x-2">
+            <input
+              type="text"
+              value={gameName}
+              onChange={(e) => setGameName(e.target.value)}
+              placeholder="Enter your game title..."
+              className="p-2 flex-grow bg-gray-800 rounded-lg text-white"
+            />
+            <button
+              onClick={handleCheckPricing}
+              className="bg-teal-500 px-4 py-2 rounded-lg"
+              disabled={isPricingLoading}
+            >
+              {isPricingLoading ? "Loading..." : "Get Pricing Data"}
+            </button>
+          </div>
+
+          {pricingData && (
+            <div className="mt-6 text-center">
+              <h2 className="text-xl font-bold">
+                Suggested Price: ${pricingData.suggestedPrice}
+              </h2>
+              <h3 className="mt-4 text-lg">Competitor Games:</h3>
+              <ul className="mt-2">
+                {pricingData.competitorGames.map((game, index) => (
+                  <li key={index} className="text-gray-300">
+                    {game.name} - ${game.price}
+                  </li>
+                ))}
+              </ul>
             </div>
-            {(pricingTier === "free" || pricingTier === "pro") && (
-              <motion.button
-                className="mt-6 bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 hover:scale-105 transition-transform duration-200"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.2 }}
-                onClick={() => navigate("/pricing")} // Link to pricing page or modal
-              >
-                Upgrade to {pricingTier === "free" ? "Pro" : "Premium"} for More
-                Features
-              </motion.button>
-            )}
-          </motion.div>
-        )}
-      </div>
-      {showAlert && (
-        <motion.div
-          className="fixed top-4 right-4 bg-gray-800/90 text-white p-4 rounded-lg shadow-lg border-l-4 border-teal-400"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 20 }}
-          transition={{ duration: 0.3 }}
-        >
-          {alertMessage}
-          <button
-            onClick={() => setShowAlert(false)}
-            className="ml-4 text-teal-400 hover:text-teal-300"
-          >
-            Close
-          </button>
-        </motion.div>
+          )}
+          <div className="flex justify-center mt-12">
+            <button
+              onClick={exportHistoryToCSV}
+              className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg mb-4 text-center"
+            >
+              Download CSV
+            </button>
+          </div>
+
+          {history.length > 0 && (
+            <div className="mt-10">
+              <h2 className="text-2xl font-bold text-teal-400 text-center mb-4">
+                Your Pricing History
+              </h2>
+              <div className="overflow-x-auto max-w-4xl mx-auto">
+                <table className="w-full bg-gray-800 text-white rounded-lg shadow-lg text-sm">
+                  <thead>
+                    <tr className="bg-teal-600 text-left">
+                      <th className="px-4 py-2">Date</th>
+                      <th className="px-4 py-2">Game</th>
+                      <th className="px-4 py-2">Suggested Price</th>
+                      <th className="px-4 py-2">Top Competitor</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {history.map((entry, index) => (
+                      <tr
+                        key={index}
+                        className="border-t border-gray-700 hover:bg-gray-700"
+                      >
+                        <td className="px-4 py-2">
+                          {entry.createdAt?.toDate
+                            ? entry.createdAt.toDate().toLocaleDateString()
+                            : "N/A"}
+                        </td>
+                        <td className="px-4 py-2">{entry.gameName}</td>
+                        <td className="px-4 py-2">${entry.suggestedPrice}</td>
+                        <td className="px-4 py-2">
+                          {entry.competitorGames &&
+                          entry.competitorGames.length > 0
+                            ? `${entry.competitorGames[0].name} ($${entry.competitorGames[0].price})`
+                            : "N/A"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

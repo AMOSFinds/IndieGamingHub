@@ -1,217 +1,282 @@
-// Home.js
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import NavHeader from "./NavHeader"; // Adjust path
-import Footer from "../Footer"; // Adjust path
-import { FaUnity } from "react-icons/fa";
+import NavHeader from "./NavHeader";
+import Footer from "../Footer";
 
 export default function Home() {
+  const [email, setEmail] = useState("");
+
+  const handleEmailSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!email) {
+      alert("Please enter your email.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "https://gmail.us14.list-manage.com/subscribe/post-json?u=36a93385c4941d3698bfd7432&id=1be2adad2d&c=?",
+        {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            EMAIL: email,
+          }),
+        }
+      );
+
+      // Since Mailchimp JSONP returns opaque response, simulate success
+      alert(
+        "✅ Subscription successful! The pricing guide will be sent to you shortly!"
+      );
+      // window.open(
+      //   "https://your-firebase-link.com/Indie_Game_Pricing_Guide.pdf",
+      //   "_blank"
+      // );
+      setEmail("");
+    } catch (error) {
+      console.error("Subscription failed:", error);
+      alert("There was a problem subscribing. Please try again.");
+    }
+  };
+
   return (
     <div className="bg-gray-900 min-h-screen flex flex-col text-white">
       <NavHeader />
       <main className="container mx-auto px-4 py-12 pt-16 text-center flex-grow">
-        {/* Hero Section */}
         <motion.h1
-          className="text-4xl font-bold text-teal-400 mb-4"
+          className="text-4xl md:text-5xl font-bold text-teal-400 mb-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          Fast, Affordable Human Playtesting for Indie Devs
+          AI-Powered Game Pricing Intelligence
         </motion.h1>
+
         <motion.p
-          className="text-xl text-gray-300 mb-8"
+          className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          Upload your game demo, get real feedback in 24 hours—free to start!
+          Upload an indie game title and get smart pricing recommendations based
+          on real-time Steam competitor analysis. Optimize your pricing
+          strategy, increase conversions, and stay competitive — in minutes.
         </motion.p>
+
         <motion.div
-          className="flex flex-col items-center space-y-4 mb-8"
+          className="flex justify-center mb-12"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
           <a
             href="/signup"
-            className="bg-purple-500 text-white px-6 py-3 rounded-lg hover:bg-purple-600 transition-transform hover:scale-105"
+            className="bg-purple-500 hover:bg-purple-600 px-6 py-3 rounded-lg text-white text-lg shadow-lg hover:scale-105 transition-transform"
           >
-            Sign Up Free
+            Try It Free
           </a>
-          {/* <a
-            href="/signin"
-            className="bg-teal-500 text-white px-6 py-3 rounded-lg hover:bg-teal-600 transition-transform hover:scale-105"
-          >
-            Sign In
-          </a> */}
         </motion.div>
-        <div className="max-w-md mx-auto mb-8">
-          <img
-            src="images/dashboardtest.PNG"
-            alt="Dashboard Preview"
-            className="h-48 md:h-64 w-full opacity-80 rounded-lg object-cover"
-          />
-        </div>
-        <div className="max-w-md mx-auto">
-          <p className="text-gray-400 mb-4">Trusted by 100+ Indie Devs</p>
-          <div className="flex justify-center space-x-4">
-            <img
-              src="images/unitylogo1.PNG"
-              alt="Unity"
-              className="h-8 opacity-70"
-            />
-            <img
-              src="images/godotlogo.PNG"
-              alt="Godot"
-              className="h-8 opacity-70"
-            />
-          </div>
-        </div>
 
-        <div className="mt-8">
-          <h3 className="text-4xl font-bold text-teal-400 mb-20 text-center">
+        <section className="mb-20">
+          <h3 className="text-3xl text-teal-400 font-bold mb-8">
             Why Devindie?
           </h3>
-          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 px-4 my-30">
-            <div className="text-gray-400 ">
-              <ul className="list-disc list-inside space-y-4">
-                <li className="flex items-center mt-10">
-                  <span className="text-teal-400 mr-2">✓</span>
-                  <span className="text-lg">24-hour feedback</span>
-                </li>
-                <li className="flex items-center">
-                  <span className="text-teal-400 mr-2">✓</span>
-                  <span className="text-lg">Curated testers</span>
-                </li>
-                <li className="flex items-center">
-                  <span className="text-teal-400 mr-2">✓</span>
-                  <span className="text-lg">Free analytics</span>
-                </li>
-              </ul>
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
+              <h4 className="text-xl font-semibold mb-2 text-white">
+                Smart Pricing
+              </h4>
+              <p className="text-gray-400">
+                We scan real-time Steam data to give you price suggestions based
+                on similar games in your niche.
+              </p>
             </div>
-            <div className="flex justify-center">
-              <img
-                src="images/gamingpic2.jpg" // Replace with your image path
-                alt="Game Controller"
-                className="h-48 md:h-64 w-full opacity-70 rounded-lg object-cover"
-              />
+            <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
+              <h4 className="text-xl font-semibold mb-2 text-white">
+                Competitor Insights
+              </h4>
+              <p className="text-gray-400">
+                See how your pricing compares to top and trending indie titles,
+                with actionable analytics.
+              </p>
+            </div>
+            <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
+              <h4 className="text-xl font-semibold mb-2 text-white">
+                Instant Results
+              </h4>
+              <p className="text-gray-400">
+                No setup. No integrations. Just type your game title and let our
+                system do the rest.
+              </p>
             </div>
           </div>
+        </section>
+
+        <section className="mt-16 text-center">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            What Indie Devs Are Saying
+          </h2>
+          <div className="space-y-6 max-w-2xl mx-auto">
+            <p className="text-gray-300 italic">
+              “This tool gave me instant clarity on how to price my game without
+              second-guessing myself.”
+              <br />
+              <span className="text-teal-400">– @PixelWizardDev</span>
+            </p>
+            <p className="text-gray-300 italic">
+              “The pricing insights are surprisingly accurate. I now feel
+              confident pitching to publishers.”
+              <br />
+              <span className="text-teal-400">– @RetroNovaGames</span>
+            </p>
+            <p className="text-gray-300 italic">
+              “It’s like having a market analyst for your game pricing... but
+              free.”
+              <br />
+              <span className="text-teal-400">– @LofiKnight</span>
+            </p>
+            <p className="text-gray-300 italic">
+              “It showed me exactly what my niche was charging. I raised my
+              price — and sold more.”
+              <br />
+              <span className="text-teal-400">– @DungeonBrewStudio</span>
+            </p>
+          </div>
+        </section>
+
+        <section className="mb-20 mt-20">
+          <h3 className="text-3xl font-bold text-teal-400 mb-10">
+            Simple, Transparent Pricing
+          </h3>
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
+              <h4 className="text-xl font-bold text-white mb-2">Free</h4>
+              <p className="text-gray-300 mb-4">For testing it out</p>
+              <p className="text-2xl text-teal-400 mb-4">$0 / month</p>
+              <ul className="text-gray-300 space-y-2 text-left">
+                <li>✓ 3 queries/month</li>
+                <li>✓ Basic competitor data</li>
+                <li>✓ Community support</li>
+              </ul>
+              <a
+                href="/signup"
+                className="block mt-6 bg-teal-500 text-white px-4 py-2 rounded-lg text-center hover:bg-teal-600"
+              >
+                Get Started
+              </a>
+            </div>
+            <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
+              <h4 className="text-xl font-bold text-white mb-2">Pro</h4>
+              <p className="text-gray-300 mb-4">For growing devs</p>
+              <p className="text-2xl text-teal-400 mb-4">$29 / month</p>
+              <ul className="text-gray-300 space-y-2 text-left">
+                <li>✓ 10 queries/month</li>
+                <li>✓ In-depth pricing metrics</li>
+                <li>✓ Auto-updated data</li>
+              </ul>
+              <a
+                href="/dashboard"
+                className="block mt-6 bg-teal-500 text-white px-4 py-2 rounded-lg text-center hover:bg-teal-600"
+              >
+                Upgrade to Pro
+              </a>
+            </div>
+            <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
+              <h4 className="text-xl font-bold text-white mb-2">Enterprise</h4>
+              <p className="text-gray-300 mb-4">For studios and publishers</p>
+              <p className="text-2xl text-teal-400 mb-4">$99 / month</p>
+              <ul className="text-gray-300 space-y-2 text-left">
+                <li>✓ Unlimited queries</li>
+                <li>✓ Pricing history trends</li>
+                <li>✓ Studio-level support</li>
+              </ul>
+              <a
+                href="/dashboard"
+                className="block mt-6 bg-purple-500 text-white px-4 py-2 rounded-lg text-center hover:bg-purple-600"
+              >
+                Upgrade to Enterprise
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-20 max-w-4xl mx-auto text-left">
+          <h3 className="text-3xl font-bold text-teal-400 mb-6 text-center">
+            Frequently Asked Questions
+          </h3>
+          <div className="text-gray-300 space-y-6">
+            <div>
+              <h4 className="font-semibold text-white">What is Devindie?</h4>
+              <p>
+                Devindie is a SaaS tool that helps indie game developers find
+                the best price for their games using real Steam data.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-white">How does it work?</h4>
+              <p>
+                Just type a game in the same genre or niche as your own, and
+                Devindie will analyze similar titles and return a smart pricing
+                recommendation instantly.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-white">Is it free to try?</h4>
+              <p>
+                Yes. Our Free tier lets you run 3 pricing queries per month with
+                limited data. Upgrade anytime for full access.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-white">
+                Do you support multiplayer or mobile games?
+              </h4>
+              <p>
+                Yes. As long as it's listed or comparable on Steam, Devindie can
+                analyze it.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <div className="max-w-lg mx-auto mt-12 bg-gray-800 p-6 rounded-lg shadow-lg text-white">
+          <h2 className="text-2xl font-bold text-center text-teal-400 mb-4">
+            🎁 Get the Free Indie Game Pricing Guide
+          </h2>
+          <p className="text-center text-gray-300 mb-6">
+            Subscribe for expert pricing tips, Steam market insights, and free
+            indie dev tools.
+          </p>
+
+          <form
+            onSubmit={handleEmailSubmit}
+            className="max-w-md mx-auto mb-8 text-center"
+          >
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              className="p-2 rounded-l-lg bg-gray-700 text-white w-2/3"
+            />
+            <button
+              type="submit"
+              className="p-2 bg-teal-500 rounded-r-lg w-1/3"
+            >
+              Subscribe
+            </button>
+          </form>
+
+          <p className="text-sm text-gray-500 text-center mt-4">
+            No spam. Unsubscribe anytime.
+          </p>
         </div>
       </main>
-      <section className="py-12">
-        <motion.h2
-          className="text-2xl font-bold text-teal-400 text-center mb-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          Simple, Affordable Pricing
-        </motion.h2>
-        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
-          <motion.div
-            className="bg-gray-800 p-6 rounded-lg shadow-lg"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <h3 className="text-xl text-white font-bold mb-2">Free</h3>
-            <p className="text-gray-300 mb-4">Perfect for getting started</p>
-            <p className="text-3xl text-teal-400 mb-4">$0 / month</p>
-            <ul className="text-gray-300 space-y-2">
-              <li className="flex items-center">
-                <span className="text-teal-400 mr-2">✓</span> 1 demo/month
-              </li>
-              <li className="flex items-center">
-                <span className="text-teal-400 mr-2">✓</span> 1-3 testers per
-                demo
-              </li>
-              <li className="flex items-center">
-                <span className="text-teal-400 mr-2">✓</span> 24-hour feedback
-              </li>
-              <li className="flex items-center">
-                <span className="text-teal-400 mr-2">✓</span> Basic analytics
-              </li>
-            </ul>
-            <motion.a
-              href="/signup"
-              className="mt-6 block bg-teal-500 text-white px-4 py-2 rounded-lg text-center hover:bg-teal-600"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.2 }}
-            >
-              Get Started Free
-            </motion.a>
-          </motion.div>
-          <motion.div
-            className="bg-gray-800 p-6 rounded-lg shadow-lg"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <h3 className="text-xl text-white font-bold mb-2">Pro</h3>
-            <p className="text-gray-300 mb-4">For growing indie projects</p>
-            <p className="text-3xl text-teal-400 mb-4">$15 / month</p>
-            <ul className="text-gray-300 space-y-2">
-              <li className="flex items-center">
-                <span className="text-teal-400 mr-2">✓</span> 5 demos/month
-              </li>
-              <li className="flex items-center">
-                <span className="text-teal-400 mr-2">✓</span> 3-5 testers per
-                demo
-              </li>
-              <li className="flex items-center">
-                <span className="text-teal-400 mr-2">✓</span> 18-hour feedback
-              </li>
-              <li className="flex items-center">
-                <span className="text-teal-400 mr-2">✓</span> Enhanced analytics
-              </li>
-            </ul>
-            <motion.a
-              href="/pricing"
-              className="mt-6 block bg-teal-500 text-white px-4 py-2 rounded-lg text-center hover:bg-teal-600"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.2 }}
-            >
-              Upgrade to Pro
-            </motion.a>
-          </motion.div>
-          <motion.div
-            className="bg-gray-800 p-6 rounded-lg shadow-lg"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <h3 className="text-xl text-white font-bold mb-2">Premium</h3>
-            <p className="text-gray-300 mb-4">For serious indie devs</p>
-            <p className="text-3xl text-teal-400 mb-4">$25 / month</p>
-            <ul className="text-gray-300 space-y-2">
-              <li className="flex items-center">
-                <span className="text-teal-400 mr-2">✓</span> Unlimited
-                demos/month
-              </li>
-              <li className="flex items-center">
-                <span className="text-teal-400 mr-2">✓</span> 5+ testers per
-                demo
-              </li>
-              <li className="flex items-center">
-                <span className="text-teal-400 mr-2">✓</span> 12-hour feedback
-              </li>
-              <li className="flex items-center">
-                <span className="text-teal-400 mr-2">✓</span> Advanced analytics
-              </li>
-            </ul>
-            <motion.a
-              href="/pricing"
-              className="mt-6 block bg-purple-500 text-white px-4 py-2 rounded-lg text-center hover:bg-purple-600"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.2 }}
-            >
-              Upgrade to Premium
-            </motion.a>
-          </motion.div>
-        </div>
-      </section>
       <Footer />
     </div>
   );

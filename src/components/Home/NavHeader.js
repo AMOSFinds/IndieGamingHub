@@ -56,12 +56,12 @@ export default function NavHeader() {
             >
               Dashboard
             </Link>
-            <Link
+            {/* <Link
               to="/pricing"
               className="hover:text-teal-400 transition-colors duration-200"
             >
               Pricing
-            </Link>
+            </Link> */}
             {currentUser ? (
               <div className="flex items-center space-x-4">
                 <span className="text-sm truncate max-w-xs">
