@@ -4,6 +4,8 @@ const admin = require("firebase-admin");
 const fetch = require("node-fetch");
 const functions = require("firebase-functions");
 const cors = require("cors")({ origin: true });
+const crypto = require("crypto");
+const { onDocumentCreated } = require("firebase-functions/v2/firestore");
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -59,4 +61,53 @@ exports.fetchSteamPricing = functions.https.onRequest((req, res) => {
       return res.status(500).send("Failed to fetch Steam data");
     }
   });
+});
+
+exports.updateAdminStats = onDocumentCreated("queries/{queryId}", async () => {
+  const adminDoc = db.collection("adminStats").doc("summary");
+
+  await adminDoc.set(
+    {
+      totalQueries: FieldValue.increment(1),
+      dateUpdated: admin.firestore.FieldValue.serverTimestamp(),
+    },
+    { merge: true }
+  );
+});
+
+exports.paystackWebhook = functions.https.onRequest(async (req, res) => {
+  const secret = functions.config().paystack.secret; // Set this via Firebase CLI if you want
+  const hash = crypto
+    .createHmac("sha512", secret)
+    .update(JSON.stringify(req.body))
+    .digest("hex");
+
+  if (hash !== req.headers["x-paystack-signature"]) {
+    return res.status(401).send("Unauthorized");
+  }
+
+  const event = req.body;
+
+  if (event.event === "charge.success") {
+    const email = event.data.customer.email;
+    const reference = event.data.reference;
+    const plan = event.data.metadata?.plan || "pro";
+
+    const usersRef = db.collection("users");
+    const snapshot = await usersRef.where("email", "==", email).get();
+
+    if (!snapshot.empty) {
+      const userDoc = snapshot.docs[0];
+      await userDoc.ref.set(
+        {
+          subscriptionTier: plan,
+          lastPaymentReference: reference,
+          lastPaidAt: new Date(),
+        },
+        { merge: true }
+      );
+    }
+  }
+
+  res.sendStatus(200);
 });

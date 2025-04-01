@@ -266,7 +266,7 @@ export default function Home() {
             />
             <button
               type="submit"
-              className="p-2 bg-teal-500 rounded-r-lg w-1/3"
+              className="p-2 bg-teal-500 rounded-r-lg w-1/3 hover:bg-teal-600"
             >
               Subscribe
             </button>

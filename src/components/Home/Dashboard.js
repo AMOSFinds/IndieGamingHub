@@ -4,11 +4,15 @@ import {
   addDoc,
   collection,
   serverTimestamp,
+  query,
+  where,
 } from "firebase/firestore";
 import PaystackCheckout from "./PaystackCheckout";
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import useSubscriptionTier from "./hooks/useSubscriptionTier";
+import { analytics } from "../firebase/firebase-config";
+import { logEvent } from "firebase/analytics";
 
 export default function Dashboard() {
   const { tier, loading: tierLoading } = useSubscriptionTier(); // Subscription hook
@@ -33,6 +37,11 @@ export default function Dashboard() {
 
     fetchHistory();
   }, []);
+
+  logEvent(analytics, "game_pricing_query", {
+    user_id: auth.currentUser?.uid,
+    tier: "pro",
+  });
 
   const fetchSteamPricing = async (gameName) => {
     try {
@@ -60,6 +69,37 @@ export default function Dashboard() {
 
   const handleCheckPricing = async () => {
     setIsPricingLoading(true);
+
+    // Check Monthly Usage
+    const queriesRef = collection(db, "queries");
+    const startOfMonth = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      1
+    );
+    const querySnapshot = await getDocs(
+      query(
+        queriesRef,
+        where("userId", "==", auth.currentUser.uid),
+        where("timestamp", ">=", startOfMonth)
+      )
+    );
+
+    const queryLimit = tier === "free" ? 3 : tier === "pro" ? 10 : Infinity;
+
+    if (querySnapshot.size >= queryLimit) {
+      alert(
+        "You've hit your monthly limit. Upgrade to unlock more pricing checks."
+      );
+      setIsPricingLoading(false);
+      return;
+    }
+
+    // Save query
+    await addDoc(queriesRef, {
+      userId: auth.currentUser.uid,
+      timestamp: serverTimestamp(),
+    });
 
     const competitorGames = await fetchSteamPricing(gameName);
 
@@ -136,14 +176,14 @@ export default function Dashboard() {
 
       {tierLoading ? (
         <p className="text-gray-400 text-center">Loading your plan...</p>
-      ) : tier === "free" ? (
+      ) : tier === "free" && history.length >= 3 ? (
         <div className="text-center">
-          <p className="text-gray-400 mb-4">Upgrade to access full features!</p>
-          <PaystackCheckout plan="pro" />
-          <PaystackCheckout plan="enterprise" />
-          <p className="text-xs text-gray-500 mt-2">
-            You’ll be charged in your local currency. Powered by Paystack.
+          <p className="text-gray-400 mb-4">
+            You’ve used all your free pricing queries this month.
           </p>
+          <PaystackCheckout plan="pro" />
+          <br />
+          <PaystackCheckout plan="enterprise" />
         </div>
       ) : (
         <>
@@ -162,7 +202,7 @@ export default function Dashboard() {
             />
             <button
               onClick={handleCheckPricing}
-              className="bg-teal-500 px-4 py-2 rounded-lg"
+              className="bg-teal-500 px-4 py-2 rounded-lg hover:bg-teal-600"
               disabled={isPricingLoading}
             >
               {isPricingLoading ? "Loading..." : "Get Pricing Data"}
@@ -178,22 +218,37 @@ export default function Dashboard() {
               <ul className="mt-2">
                 {pricingData.competitorGames.map((game, index) => (
                   <li key={index} className="text-gray-300">
-                    {game.name} - ${game.price}
+                    {game.name} - {game.price}
                   </li>
                 ))}
               </ul>
+              {tier === "free" && (
+                <div className="mt-4 text-center">
+                  <p className="text-gray-400 mb-2">
+                    Want more queries and CSV export?
+                  </p>
+                  <PaystackCheckout plan="pro" />
+                </div>
+              )}
             </div>
           )}
-          <div className="flex justify-center mt-12">
-            <button
-              onClick={exportHistoryToCSV}
-              className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg mb-4 text-center"
-            >
-              Download CSV
-            </button>
-          </div>
+          {tier === "pro" || tier === "enterprise" ? (
+            <div className="flex justify-center mt-12">
+              <button
+                onClick={exportHistoryToCSV}
+                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg mb-4 text-center"
+              >
+                Download CSV
+              </button>
+            </div>
+          ) : (
+            <div className="text-center mt-10">
+              <p className="text-gray-400 mb-2">CSV Export is a Pro feature.</p>
+              <PaystackCheckout plan="pro" />
+            </div>
+          )}
 
-          {history.length > 0 && (
+          {(tier === "pro" || tier === "enterprise") && history.length > 0 && (
             <div className="mt-10">
               <h2 className="text-2xl font-bold text-teal-400 text-center mb-4">
                 Your Pricing History
@@ -222,9 +277,8 @@ export default function Dashboard() {
                         <td className="px-4 py-2">{entry.gameName}</td>
                         <td className="px-4 py-2">${entry.suggestedPrice}</td>
                         <td className="px-4 py-2">
-                          {entry.competitorGames &&
-                          entry.competitorGames.length > 0
-                            ? `${entry.competitorGames[0].name} ($${entry.competitorGames[0].price})`
+                          {entry.competitorGames?.length > 0
+                            ? `${entry.competitorGames[0].name} (${entry.competitorGames[0].price})`
                             : "N/A"}
                         </td>
                       </tr>

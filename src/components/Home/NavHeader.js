@@ -1,14 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase/firebase-config";
 import { useAuth } from "../Authentication/AuthContext";
 import "./NavHeader.css";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { motion } from "framer-motion";
+import LoadingIndicator from "../LoadingIndicator";
 
 export default function NavHeader() {
   const { currentUser, loading } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [outloading, setOutLoading] = useState(false);
+  const navigate = useNavigate();
 
   if (loading) {
     return <div>Loading...</div>; // Optional: Show loading spinner
@@ -27,6 +32,31 @@ export default function NavHeader() {
     }
     return email;
   };
+
+  const handleSignOut = async () => {
+    setOutLoading(true);
+    try {
+      await auth.signOut();
+      setAlertMessage("You have signed out successfully.");
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+
+        navigate("/");
+        setOutLoading(false);
+      }, 3000);
+    } catch (error) {
+      console.error("Error signing out: ", error);
+      setAlertMessage("Error signing out. Please try again.");
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+        setOutLoading(false);
+      }, 3000); // Hide alert after 3 seconds
+    }
+  };
+
+  if (outloading) return <LoadingIndicator />;
 
   return (
     <motion.header
@@ -64,13 +94,15 @@ export default function NavHeader() {
             </Link> */}
             {currentUser ? (
               <div className="flex items-center space-x-4">
-                <span className="text-sm truncate max-w-xs">
+                {/* <span className="text-sm truncate max-w-xs">
                   {currentUser.email}
-                </span>
+                </span> */}
+                <span>Welcome, {auth.currentUser?.displayName || "User"}!</span>
                 <button
-                  onClick={() => {
-                    auth.signOut();
-                  }}
+                  // onClick={() => {
+                  //   auth.signOut();
+                  // }}
+                  onClick={handleSignOut}
                   className="bg-teal-500 px-3 py-1 rounded-md hover:bg-teal-600 transition-colors duration-200"
                 >
                   Sign Out
@@ -158,6 +190,23 @@ export default function NavHeader() {
           </motion.div>
         )}
       </nav>
+      {showAlert && (
+        <motion.div
+          className="fixed top-4 right-4 bg-dark-bg/90 text-white p-4 rounded-lg shadow-lg border-l-4 border-teal"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 20 }}
+          transition={{ duration: 0.3 }}
+        >
+          {alertMessage}
+          <button
+            onClick={() => setShowAlert(false)}
+            className="ml-4 text-teal hover:text-teal-hover"
+          >
+            Close
+          </button>
+        </motion.div>
+      )}
     </motion.header>
   );
 }

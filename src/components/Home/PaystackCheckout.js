@@ -2,10 +2,12 @@ import React from "react";
 import { PaystackButton } from "react-paystack";
 import { auth, db } from "../firebase/firebase-config";
 import { doc, setDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 export default function PaystackCheckout({ plan }) {
-  const publicKey = "pk_test_bb6112ce981b89dc74aa16b8db3f46160fb0419c"; // Replace with your Paystack Public Key
+  const publicKey = process.env.REACT_APP_PAYSTACK_PUBLIC_KEY;
   const user = auth.currentUser;
+  const navigate = useNavigate();
 
   const handleSuccess = async (reference) => {
     if (user) {
@@ -17,20 +19,37 @@ export default function PaystackCheckout({ plan }) {
     }
   };
 
+  const handlePreCheck = () => {
+    if (!user) {
+      alert("You must be signed in to upgrade your plan.");
+      navigate("/signup");
+    }
+  };
+
   const componentProps = {
-    email: user ? user.email : "example@email.com",
-    amount: plan === "pro" ? 53900 : 183900, // R539 / R1,839 in cents
-    currency: "ZAR", // Must match your Paystack account currency
+    email: user?.email || "example@email.com",
+    amount: plan === "pro" ? 53900 : 183900,
+    currency: "ZAR",
     publicKey,
     text: `Subscribe to ${plan}`,
-    onSuccess: (reference) => handleSuccess(reference),
+    onSuccess: handleSuccess,
     onClose: () => alert("Transaction was not completed"),
+    className:
+      "bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition",
   };
 
   return (
-    <PaystackButton
-      {...componentProps}
-      className="bg-teal-500 text-white px-4 py-2 rounded-lg"
-    />
+    <div className="mt-4 text-center">
+      {user ? (
+        <PaystackButton {...componentProps} />
+      ) : (
+        <button
+          onClick={handlePreCheck}
+          className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition"
+        >
+          Subscribe to {plan.charAt(0).toUpperCase() + plan.slice(1)}
+        </button>
+      )}
+    </div>
   );
 }
