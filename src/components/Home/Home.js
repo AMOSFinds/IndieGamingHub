@@ -203,6 +203,10 @@ export default function Home() {
               </a>
             </div>
           </div>
+          <p className="text-sm text-gray-400 text-center mt-4">
+            One-time payment giving you access for 30 days. Subscriptions
+            launching soon!
+          </p>
         </section>
 
         <section className="mb-20 max-w-4xl mx-auto text-left">
