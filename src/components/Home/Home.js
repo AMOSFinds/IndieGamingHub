@@ -44,11 +44,44 @@ export default function Home() {
     }
   };
 
+  const Countdown = () => {
+    const [timeLeft, setTimeLeft] = useState(getTimeRemaining());
+
+    function getTimeRemaining() {
+      const deadline = new Date("2025-04-10T23:59:59Z");
+      const total = Date.parse(deadline) - Date.now();
+      const seconds = Math.floor((total / 1000) % 60);
+      const minutes = Math.floor((total / 1000 / 60) % 60);
+      const hours = Math.floor((total / 1000 / 60 / 60) % 24);
+      const days = Math.floor(total / (1000 * 60 * 60 * 24));
+      return { total, days, hours, minutes, seconds };
+    }
+
+    React.useEffect(() => {
+      const timer = setInterval(() => {
+        setTimeLeft(getTimeRemaining());
+      }, 1000);
+      return () => clearInterval(timer);
+    }, []);
+
+    if (timeLeft.total <= 0)
+      return <p className="text-teal-400 font-bold">Beta is closed</p>;
+
+    return (
+      <div className="text-2xl font-mono text-teal-400 flex justify-center space-x-4">
+        <span>{timeLeft.days}d</span>
+        <span>{timeLeft.hours}h</span>
+        <span>{timeLeft.minutes}m</span>
+        <span>{timeLeft.seconds}s</span>
+      </div>
+    );
+  };
+
   return (
     <div className="bg-gray-900 min-h-screen flex flex-col text-white">
       <NavHeader />
       <main className="container mx-auto px-4 py-12 pt-16 text-center flex-grow">
-        <motion.h1
+        {/* <motion.h1
           className="text-4xl md:text-5xl font-bold text-teal-400 mb-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -66,7 +99,37 @@ export default function Home() {
           Upload an indie game title and get smart pricing recommendations based
           on real-time Steam competitor analysis. Optimize your pricing
           strategy, increase conversions, and stay competitive — in minutes.
-        </motion.p>
+        </motion.p> */}
+
+        <div className="mb-10">
+          <div className="inline-block px-4 py-1 text-sm bg-red-600 text-white rounded-full uppercase font-bold tracking-wide mb-4">
+            Limited Beta: 50 Indie Devs Only
+          </div>
+
+          <motion.h1
+            className="text-4xl md:text-5xl font-bold text-white mb-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            Price Your Game Wrong, Lose Everything
+          </motion.h1>
+
+          <motion.p
+            className="text-md md:text-xl text-gray-300 max-w-2xl mx-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
+            Most indie games fail to price themselves right—and it kills their
+            momentum. Our tool analyzes real Steam competitors to help you price
+            smart and grow fast. Beta closes in:
+          </motion.p>
+
+          <div className="mt-6 text-center">
+            <Countdown />
+          </div>
+        </div>
 
         <motion.div
           className="flex justify-center mb-12"
@@ -74,11 +137,17 @@ export default function Home() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <a
+          {/* <a
             href="/signup"
             className="bg-purple-500 hover:bg-purple-600 px-6 py-3 rounded-lg text-white text-lg shadow-lg hover:scale-105 transition-transform"
           >
             Try It Free
+          </a> */}
+          <a
+            href="/signup"
+            className="mt-6 inline-block bg-teal-500 hover:bg-teal-600 px-6 py-3 rounded-lg text-white text-lg shadow-lg hover:scale-105 transition-transform"
+          >
+            Join the Beta Now (50 Spots Only)
           </a>
         </motion.div>
 
