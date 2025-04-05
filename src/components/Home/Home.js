@@ -293,9 +293,9 @@ export default function Home() {
             <div>
               <h4 className="font-semibold text-white">How does it work?</h4>
               <p>
-                Just type a game in the same genre or niche as your own, and
-                Devindie will analyze similar titles and return a smart pricing
-                recommendation instantly.
+                Navigate to the Dashboard and just type a game in the same genre
+                or niche as your own, and Devindie will analyze similar titles
+                and return a smart pricing recommendation instantly.
               </p>
             </div>
             <div>
