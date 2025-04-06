@@ -147,7 +147,7 @@ export default function Home() {
             href="/signup"
             className="mt-6 inline-block bg-teal-500 hover:bg-teal-600 px-6 py-3 rounded-lg text-white text-lg shadow-lg hover:scale-105 transition-transform"
           >
-            Join the Beta Now (50 Spots Only - 41 left)
+            Join the Beta Now (50 Spots Only - 39 left)
           </a>
         </motion.div>
 
