@@ -15,10 +15,13 @@ import { analytics } from "../firebase/firebase-config";
 import { logEvent } from "firebase/analytics";
 
 export default function Dashboard() {
-  const { tier, loading: tierLoading } = useSubscriptionTier(); // Subscription hook
+  const { tier, loading: tierLoading } = useSubscriptionTier();
   const [gameName, setGameName] = useState("");
+  const [genre, setGenre] = useState("");
+  const [playtime, setPlaytime] = useState("");
+  const [scope, setScope] = useState("");
   const [pricingData, setPricingData] = useState(null);
-  const [isPricingLoading, setIsPricingLoading] = useState(false); // Renamed to avoid conflict
+  const [isPricingLoading, setIsPricingLoading] = useState(false);
   const [history, setHistory] = useState([]);
 
   useEffect(() => {
@@ -40,7 +43,7 @@ export default function Dashboard() {
 
   logEvent(analytics, "game_pricing_query", {
     user_id: auth.currentUser?.uid,
-    tier: "pro",
+    tier: tier,
   });
 
   const fetchSteamPricing = async (gameName) => {
@@ -56,11 +59,32 @@ export default function Dashboard() {
         return [];
       }
 
-      return data.items.map((item) => ({
-        gameId: item.id,
-        name: item.name,
-        price: item.price ? `$${(item.price.final / 100).toFixed(2)}` : "N/A",
-      }));
+      const appDetails = await Promise.all(
+        data.items.slice(0, 10).map(async (item) => {
+          const appId = item.id;
+          try {
+            const detailsRes = await fetch(
+              `https://us-central1-my-gaming-platform.cloudfunctions.net/getSteamGameDetails?appid=${appId}`
+            );
+            const details = await detailsRes.json();
+            const price = item.price
+              ? `$${(item.price.final / 100).toFixed(2)}`
+              : "N/A";
+            return {
+              gameId: appId,
+              name: item.name,
+              price,
+              genres:
+                details[appId]?.data?.genres?.map((g) => g.description) || [],
+              playtime: details[appId]?.data?.average_playtime || 0,
+            };
+          } catch (err) {
+            return null;
+          }
+        })
+      );
+
+      return appDetails.filter((game) => game !== null);
     } catch (error) {
       console.error("Error fetching Steam pricing:", error);
       return [];
@@ -70,7 +94,6 @@ export default function Dashboard() {
   const handleCheckPricing = async () => {
     setIsPricingLoading(true);
 
-    // Check Monthly Usage
     const queriesRef = collection(db, "queries");
     const startOfMonth = new Date(
       new Date().getFullYear(),
@@ -85,7 +108,7 @@ export default function Dashboard() {
       )
     );
 
-    const queryLimit = tier === "free" ? 3 : tier === "pro" ? 10 : Infinity;
+    const queryLimit = tier === "free" ? 10 : tier === "pro" ? 30 : Infinity;
 
     if (querySnapshot.size >= queryLimit) {
       alert(
@@ -95,7 +118,6 @@ export default function Dashboard() {
       return;
     }
 
-    // Save query
     await addDoc(queriesRef, {
       userId: auth.currentUser.uid,
       timestamp: serverTimestamp(),
@@ -103,32 +125,50 @@ export default function Dashboard() {
 
     const competitorGames = await fetchSteamPricing(gameName);
 
-    if (competitorGames.length > 0) {
-      const suggestedPrice = (
-        competitorGames
-          .map((game) => parseFloat(game.price.replace("$", "")) || 0)
-          .reduce((sum, price) => sum + price, 0) / competitorGames.length
-      ).toFixed(2);
+    const filteredGames = competitorGames.filter((game) => {
+      const genreMatch = genre
+        ? game.genres.some((g) => g.toLowerCase().includes(genre.toLowerCase()))
+        : true;
+      return genreMatch;
+    });
 
-      const user = auth.currentUser;
-      if (user) {
-        await addDoc(collection(db, "games"), {
-          userId: user.uid,
-          gameName,
-          suggestedPrice,
-          competitorGames,
-          createdAt: serverTimestamp(),
-        });
-      }
+    const validPrices = filteredGames
+      .map((game) => parseFloat(game.price.replace("$", "")))
+      .filter((price) => !isNaN(price) && price > 0);
 
-      setPricingData({
+    const suggestedPrice =
+      validPrices.length > 0
+        ? Math.min(
+            validPrices.reduce((sum, price) => sum + price, 0) /
+              validPrices.length,
+            49.99
+          ).toFixed(2)
+        : "N/A";
+
+    const user = auth.currentUser;
+    if (user) {
+      await addDoc(collection(db, "games"), {
+        userId: user.uid,
+        gameName,
+        genre,
+        playtime,
+        scope,
         suggestedPrice,
-        competitorGames,
+        competitorGames: filteredGames,
+        createdAt: serverTimestamp(),
       });
-    } else {
-      setPricingData(null);
-      alert("No competitor pricing data found for this game.");
     }
+
+    if (suggestedPrice === "N/A") {
+      alert(
+        "We couldn't generate a price due to missing or bad competitor data. Try refining your input."
+      );
+    }
+
+    setPricingData({
+      suggestedPrice,
+      competitorGames: filteredGames,
+    });
 
     setIsPricingLoading(false);
   };
@@ -176,7 +216,7 @@ export default function Dashboard() {
 
       {tierLoading ? (
         <p className="text-gray-400 text-center">Loading your plan...</p>
-      ) : tier === "free" && history.length >= 3 ? (
+      ) : tier === "free" && history.length >= 10 ? (
         <div className="text-center">
           <p className="text-gray-400 mb-4">
             You’ve used all your free pricing queries this month.
@@ -187,19 +227,58 @@ export default function Dashboard() {
         </div>
       ) : (
         <>
-          <p className="text-sm text-gray-400 text-center mb-6">
+          {/* <p className="text-sm text-gray-400 text-center mb-6">
             Enter the name of games similar to yours to get the best pricing
             recommendation based on real Steam market data.
+          </p> */}
+
+          <p className="text-sm text-gray-400 text-center mb-6 max-w-xl mx-auto">
+            <strong>Step 1:</strong> Enter a popular or similar indie game on
+            Steam that resembles yours.
+            <br />
+            <strong>Step 2:</strong> Tell us about your own game’s genre,
+            playtime, and scope so we can fine-tune the pricing.
           </p>
 
-          <div className="max-w-md mx-auto flex space-x-2">
+          <div className="max-w-md mx-auto flex flex-col space-y-3">
             <input
               type="text"
               value={gameName}
               onChange={(e) => setGameName(e.target.value)}
               placeholder="Enter your game title..."
-              className="p-2 flex-grow bg-gray-800 rounded-lg text-white"
+              className="p-2 bg-gray-800 rounded-lg text-white"
             />
+            <select
+              value={genre}
+              onChange={(e) => setGenre(e.target.value)}
+              className="p-2 bg-gray-800 rounded-lg text-white"
+            >
+              <option value="">Select Genre</option>
+              <option value="Platformer">Platformer</option>
+              <option value="RPG">RPG</option>
+              <option value="FPS">FPS</option>
+              <option value="Puzzle">Puzzle</option>
+            </select>
+            <select
+              value={playtime}
+              onChange={(e) => setPlaytime(e.target.value)}
+              className="p-2 bg-gray-800 rounded-lg text-white"
+            >
+              <option value="">Select Playtime</option>
+              <option value="Short (<3 hrs)">Short (&lt;3 hrs)</option>
+              <option value="Medium (3-10 hrs)">Medium (3–10 hrs)</option>
+              <option value="Long (10+ hrs)">Long (10+ hrs)</option>
+            </select>
+            <select
+              value={scope}
+              onChange={(e) => setScope(e.target.value)}
+              className="p-2 bg-gray-800 rounded-lg text-white"
+            >
+              <option value="">Scope</option>
+              <option value="Solo">Solo Developer</option>
+              <option value="Small Team">Small Team</option>
+              <option value="Studio-Level">Studio-Level</option>
+            </select>
             <button
               onClick={handleCheckPricing}
               className="bg-teal-500 px-4 py-2 rounded-lg hover:bg-teal-600"
@@ -214,25 +293,26 @@ export default function Dashboard() {
               <h2 className="text-xl font-bold">
                 Suggested Price: ${pricingData.suggestedPrice}
               </h2>
+              <p className="text-gray-400 mt-3 text-sm">
+                Based on {pricingData.competitorGames.length} Steam titles
+                similar to the one you entered, adjusted for your game’s genre,
+                playtime, and scope: <strong>{genre}</strong>, scope:{" "}
+                <strong>{scope}</strong>, and playtime:{" "}
+                <strong>{playtime}</strong>.
+              </p>
               <h3 className="mt-4 text-lg">Competitor Games:</h3>
               <ul className="mt-2">
                 {pricingData.competitorGames.map((game, index) => (
                   <li key={index} className="text-gray-300">
-                    {game.name} - {game.price}
+                    <span className="font-semibold">{game.name}</span> —{" "}
+                    {game.price || "N/A"}
                   </li>
                 ))}
               </ul>
-              {tier === "free" && (
-                <div className="mt-4 text-center">
-                  <p className="text-gray-400 mb-2">
-                    Want more queries and CSV export?
-                  </p>
-                  <PaystackCheckout plan="pro" />
-                </div>
-              )}
             </div>
           )}
-          {tier === "pro" || tier === "enterprise" ? (
+
+          {(tier === "pro" || tier === "enterprise") && (
             <div className="flex justify-center mt-12">
               <button
                 onClick={exportHistoryToCSV}
@@ -240,52 +320,6 @@ export default function Dashboard() {
               >
                 Download CSV
               </button>
-            </div>
-          ) : (
-            <div className="text-center mt-10">
-              <p className="text-gray-400 mb-2">CSV Export is a Pro feature.</p>
-              <PaystackCheckout plan="pro" />
-            </div>
-          )}
-
-          {(tier === "pro" || tier === "enterprise") && history.length > 0 && (
-            <div className="mt-10">
-              <h2 className="text-2xl font-bold text-teal-400 text-center mb-4">
-                Your Pricing History
-              </h2>
-              <div className="overflow-x-auto max-w-4xl mx-auto">
-                <table className="w-full bg-gray-800 text-white rounded-lg shadow-lg text-sm">
-                  <thead>
-                    <tr className="bg-teal-600 text-left">
-                      <th className="px-4 py-2">Date</th>
-                      <th className="px-4 py-2">Game</th>
-                      <th className="px-4 py-2">Suggested Price</th>
-                      <th className="px-4 py-2">Top Competitor</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {history.map((entry, index) => (
-                      <tr
-                        key={index}
-                        className="border-t border-gray-700 hover:bg-gray-700"
-                      >
-                        <td className="px-4 py-2">
-                          {entry.createdAt?.toDate
-                            ? entry.createdAt.toDate().toLocaleDateString()
-                            : "N/A"}
-                        </td>
-                        <td className="px-4 py-2">{entry.gameName}</td>
-                        <td className="px-4 py-2">${entry.suggestedPrice}</td>
-                        <td className="px-4 py-2">
-                          {entry.competitorGames?.length > 0
-                            ? `${entry.competitorGames[0].name} (${entry.competitorGames[0].price})`
-                            : "N/A"}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
             </div>
           )}
         </>

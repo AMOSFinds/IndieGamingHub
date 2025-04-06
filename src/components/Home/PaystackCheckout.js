@@ -28,7 +28,7 @@ export default function PaystackCheckout({ plan }) {
 
   const componentProps = {
     email: user?.email || "example@email.com",
-    amount: plan === "pro" ? 53900 : 183900,
+    amount: plan === "pro" ? 9500 : 55300,
     currency: "ZAR",
     publicKey,
     text: `Subscribe to ${plan}`,

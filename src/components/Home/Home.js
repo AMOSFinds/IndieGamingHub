@@ -222,13 +222,16 @@ export default function Home() {
           <h3 className="text-3xl font-bold text-teal-400 mb-10">
             Simple, Transparent Pricing
           </h3>
+          <h5 className="text-2xl font-bold text-teal-400 mb-10">
+            Beta Launch Pricing! — Lock in low rates before full release.
+          </h5>
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
               <h4 className="text-xl font-bold text-white mb-2">Free</h4>
               <p className="text-gray-300 mb-4">For testing it out</p>
               <p className="text-2xl text-teal-400 mb-4">$0 / month</p>
               <ul className="text-gray-300 space-y-2 text-left">
-                <li>✓ 3 queries/month</li>
+                <li>✓ 10 queries/month</li>
                 <li>✓ Basic competitor data</li>
                 <li>✓ Community support</li>
               </ul>
@@ -242,9 +245,9 @@ export default function Home() {
             <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
               <h4 className="text-xl font-bold text-white mb-2">Pro</h4>
               <p className="text-gray-300 mb-4">For growing devs</p>
-              <p className="text-2xl text-teal-400 mb-4">$29 / month</p>
+              <p className="text-2xl text-teal-400 mb-4">$9 / month</p>
               <ul className="text-gray-300 space-y-2 text-left">
-                <li>✓ 10 queries/month</li>
+                <li>✓ 30 queries/month</li>
                 <li>✓ In-depth pricing metrics</li>
                 <li>✓ Auto-updated data</li>
               </ul>
@@ -258,7 +261,7 @@ export default function Home() {
             <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
               <h4 className="text-xl font-bold text-white mb-2">Enterprise</h4>
               <p className="text-gray-300 mb-4">For studios and publishers</p>
-              <p className="text-2xl text-teal-400 mb-4">$99 / month</p>
+              <p className="text-2xl text-teal-400 mb-4">$29 / month</p>
               <ul className="text-gray-300 space-y-2 text-left">
                 <li>✓ Unlimited queries</li>
                 <li>✓ Pricing history trends</li>

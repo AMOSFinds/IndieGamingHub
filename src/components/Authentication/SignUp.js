@@ -62,7 +62,7 @@ function SignUp() {
           Create an Account
         </h2>
         <p className="text-sm text-gray-400 text-center mb-6">
-          Get started with AI-powered pricing tools for indie games.
+          Get started with smart pricing tools for indie games.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -96,8 +96,8 @@ function SignUp() {
             onChange={(e) => setPricingTier(e.target.value)}
           >
             <option value="free">Free Plan</option>
-            <option value="pro">Pro – $29/month</option>
-            <option value="enterprise">Enterprise – $99/month</option>
+            <option value="pro">Pro – $9/month</option>
+            <option value="enterprise">Enterprise – $29/month</option>
           </select>
 
           <button

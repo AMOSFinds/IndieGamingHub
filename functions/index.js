@@ -111,3 +111,21 @@ exports.paystackWebhook = functions.https.onRequest(async (req, res) => {
 
   res.sendStatus(200);
 });
+
+exports.getSteamGameDetails = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    const appid = req.query.appid;
+    if (!appid) return res.status(400).send("Missing Steam appid");
+
+    try {
+      const response = await fetch(
+        `https://store.steampowered.com/api/appdetails?appids=${appid}`
+      );
+      const data = await response.json();
+      return res.status(200).json(data);
+    } catch (error) {
+      console.error("Steam game details fetch error:", error);
+      return res.status(500).send("Failed to fetch Steam game details");
+    }
+  });
+});
