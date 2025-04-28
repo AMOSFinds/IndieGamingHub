@@ -28,10 +28,15 @@ export default function PaystackCheckout({ plan }) {
 
   const componentProps = {
     email: user?.email || "example@email.com",
-    amount: plan === "pro" ? 9500 : 55300,
+    amount: 0, // Leave this 0 for subscriptions
     currency: "ZAR",
     publicKey,
-    text: `Subscribe to ${plan}`,
+    plan: plan === "pro" ? "PLN_0egnyzfebv170fz" : "PLN_dyndo3b33qj2ggf", // 👈 use real plan_codes
+    metadata: {
+      plan,
+      userId: user?.uid,
+    },
+    text: `Upgrade to ${plan.charAt(0).toUpperCase() + plan.slice(1)} Plan`,
     onSuccess: handleSuccess,
     onClose: () => alert("Transaction was not completed"),
     className:

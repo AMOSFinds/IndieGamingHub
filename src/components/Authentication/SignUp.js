@@ -14,11 +14,34 @@ function SignUp() {
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [loading, setLoading] = useState(false);
+  const bannedDomains = ["tempmail.com", "mailinator.com", "10minutemail.com"];
   const navigate = useNavigate();
+
+  const isValidEmail = (email) => {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    if (!isValidEmail(email)) {
+      setAlertMessage("Please enter a valid email address.");
+      setShowAlert(true);
+      setLoading(false);
+      return;
+    }
+
+    const domain = email.split("@")[1].toLowerCase();
+    if (bannedDomains.includes(domain)) {
+      setAlertMessage(
+        "Disposable emails are not allowed. Please use a real email."
+      );
+      setShowAlert(true);
+      setLoading(false);
+      return;
+    }
 
     try {
       const userCredential = await createUserWithEmailAndPassword(

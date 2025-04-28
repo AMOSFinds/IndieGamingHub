@@ -1,0 +1,2718 @@
+[
+  {
+    "appid": 4000,
+    "name": "Garry's Mod",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Simulation"
+    ],
+    "price": "5.99",
+    "short_description": "Garry's Mod is a physics sandbox. There aren't any predefined aims or goals. We give you the tools and leave you to play."
+  },
+  {
+    "appid": 4920,
+    "name": "Natural Selection 2",
+    "genres": [
+      "Action",
+      "Indie",
+      "Strategy"
+    ],
+    "price": "52.00",
+    "short_description": "A fast paced multiplayer shooter that pits aliens against humans in a strategic and action-packed struggle for survival!"
+  },
+  {
+    "appid": 26800,
+    "name": "Braid",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Strategy"
+    ],
+    "price": "159.00",
+    "short_description": "This is the original version of Braid from 2009, which may not work well on newer systems. For an updated version of the game with nicer graphics, more levels and a large amount of developer commentary, see Braid, Anniversary Edition."
+  },
+  {
+    "appid": 35700,
+    "name": "Trine Enchanted Edition",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "159.00",
+    "short_description": "Three Heroes make their way through dangers untold in a fairytale world of great castles and strange machinery, featuring physics-based puzzles, beautiful sights and online co-op."
+  },
+  {
+    "appid": 40800,
+    "name": "Super Meat Boy",
+    "genres": [
+      "Indie"
+    ],
+    "price": "159.00",
+    "short_description": "The infamous, tough-as-nails platformer comes to Steam with a playable Head Crab character (Steam-exclusive)!"
+  },
+  {
+    "appid": 41000,
+    "name": "Serious Sam HD: The First Encounter",
+    "genres": [
+      "Action",
+      "Indie"
+    ],
+    "price": "159.00",
+    "short_description": "Serious Sam HD: The First Encounter is a visually upgraded and fully Steam supported remake version of the original high-adrenaline single-play and 16-player co-operative arcade-action FPS which was Gamespot's Game of the Year 2001 and which scored overall of 87% on Metacritic!"
+  },
+  {
+    "appid": 48000,
+    "name": "LIMBO",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "10.00",
+    "short_description": "Uncertain of his sister's fate, a boy enters LIMBO"
+  },
+  {
+    "appid": 65800,
+    "name": "Dungeon Defenders",
+    "genres": [
+      "Action",
+      "Indie",
+      "RPG",
+      "Strategy"
+    ],
+    "price": "145.00",
+    "short_description": "Create a hero from one of four classes to save Etheria in this 4-player coop Tower Defense Action-RPG. Includes Steam exclusive Portal gun &amp; TF2 familiars!"
+  },
+  {
+    "appid": 70000,
+    "name": "Dino D-Day",
+    "genres": [
+      "Action",
+      "Indie"
+    ],
+    "price": "109.00",
+    "short_description": "Frantic, multiplayer action involving Nazis and dinosaurs! What are you waiting for? This is World War II as it should have been!"
+  },
+  {
+    "appid": 96000,
+    "name": "The Tiny Bang Story",
+    "genres": [
+      "Adventure",
+      "Casual",
+      "Indie"
+    ],
+    "price": "55.00",
+    "short_description": "Life on Tiny Planet was calm and carefree until a great disaster occurred - Tiny Planet was hit by a meteor! The world fell apart and now its future depends only on you! Use your imagination and creativity: in order to restore Tiny Planet and help its inhabitants you will have to fix a variety of machines and mechanisms as well as solve..."
+  },
+  {
+    "appid": 99900,
+    "name": "Spiral Knights",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Casual",
+      "Free To Play",
+      "Indie",
+      "Massively Multiplayer",
+      "RPG"
+    ],
+    "price": null,
+    "short_description": "Join the ranks of the Spiral Knights. Stranded on an alien world, you must explore the ever-changing Clockworks beneath its surface."
+  },
+  {
+    "appid": 104900,
+    "name": "ORION: Prelude",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG"
+    ],
+    "price": "12.00",
+    "short_description": "Work together to survive the devastating Dinosaur horde in huge, endless environments."
+  },
+  {
+    "appid": 105600,
+    "name": "Terraria",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG"
+    ],
+    "price": "4.99",
+    "short_description": "Dig, fight, explore, build! Nothing is impossible in this action-packed adventure game. Four Pack also available!"
+  },
+  {
+    "appid": 107100,
+    "name": "Bastion",
+    "genres": [
+      "Action",
+      "Indie",
+      "RPG"
+    ],
+    "price": "19.49",
+    "short_description": "Discover the secrets of the Calamity, a surreal catastrophe that shattered the world to pieces."
+  },
+  {
+    "appid": 108600,
+    "name": "Project Zomboid",
+    "genres": [
+      "Indie",
+      "RPG",
+      "Simulation",
+      "Early Access"
+    ],
+    "price": "185.00",
+    "short_description": "Project Zomboid is the ultimate in zombie survival. Alone or in MP: you loot, build, craft, fight, farm and fish in a struggle to survive. A hardcore RPG skillset, a vast map, massively customisable sandbox and a cute tutorial raccoon await the unwary. So how will you die? All it takes is a bite.."
+  },
+  {
+    "appid": 113020,
+    "name": "Monaco: What's Yours Is Mine",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Casual",
+      "Indie",
+      "Strategy"
+    ],
+    "price": "159.00",
+    "short_description": "Monaco: What's Yours Is Mine is a single player or co-op heist game. Assemble a crack team of thieves, case the joint, and pull off the perfect heist."
+  },
+  {
+    "appid": 113200,
+    "name": "The Binding of Isaac",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG"
+    ],
+    "price": "22.00",
+    "short_description": "Now 20% More Evil with the Free Halloween update!"
+  },
+  {
+    "appid": 200210,
+    "name": "Realm of the Mad God Exalt",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Massively Multiplayer",
+      "RPG",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "Embark on an exhilarating journey into the pixelated Realm of the Mad God! Join, an action-packed, free-to-play MMO bullet hell game. Discover a world with danger, challenges, and hidden treasures as you battle through waves of enemies. Team up with players and conquer dungeons to become a legend!"
+  },
+  {
+    "appid": 200710,
+    "name": "Torchlight II",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG"
+    ],
+    "price": "219.00",
+    "short_description": "The adventure continues in Torchlight II! An Action RPG filled with epic battles, bountiful treasure, and a fully randomized world. Bring your friends along for the journey with online and LAN multiplayer."
+  },
+  {
+    "appid": 201790,
+    "name": "Orcs Must Die! 2",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG",
+      "Strategy"
+    ],
+    "price": "31.50",
+    "short_description": "You’ve tossed, burned and sliced them by the thousands – now orcs must die more than ever before! Grab a friend and slay orcs in untold numbers in this sequel to the 2011 AIAS Strategy Game of the Year from Robot Entertainment."
+  },
+  {
+    "appid": 204300,
+    "name": "Awesomenauts - the 2D moba",
+    "genres": [
+      "Action",
+      "Indie",
+      "Strategy",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "Use your power, show your might! Play this Multiplayer Online Battle Arena (MOBA) game for FREE now! AWESOMENAUTS combines 2D platforming with team-based strategy and hero based action. Whether you are a new recruit or an intergalactic legend, play AWESOMENAUTS!"
+  },
+  {
+    "appid": 204340,
+    "name": "Serious Sam 2",
+    "genres": [
+      "Action",
+      "Indie"
+    ],
+    "price": "100.00",
+    "short_description": "Serious Sam 2 is a shot of adrenaline to the hearts of first-person shooter fans across the world. This is serious!"
+  },
+  {
+    "appid": 204360,
+    "name": "Castle Crashers®",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Casual",
+      "Indie",
+      "RPG"
+    ],
+    "price": "16.99",
+    "short_description": "Hack, slash, and smash your way to victory in this award winning 2D arcade adventure from The Behemoth!"
+  },
+  {
+    "appid": 204880,
+    "name": "Sins of a Solar Empire®: Rebellion",
+    "genres": [
+      "Action",
+      "Indie",
+      "Simulation",
+      "Strategy"
+    ],
+    "price": "185.00",
+    "short_description": "Command a space-faring empire in Sins of a Solar Empire: Rebellion, the new stand-alone expansion that combines 4X depth with real-time strategy gameplay."
+  },
+  {
+    "appid": 206440,
+    "name": "To the Moon",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "RPG"
+    ],
+    "price": "12.99",
+    "short_description": "A story-driven experience about two doctors traversing backwards through a dying man's memories to artificially fulfill his last wish."
+  },
+  {
+    "appid": 206500,
+    "name": "AirMech",
+    "genres": [
+      "Action",
+      "Indie",
+      "Strategy",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "AirMech® Strike is a fast paced Action-RTS game that can be played solo, coop, or competitively online. Earn Kudos and Experience in battle and unlock a wide collection of AirMechs and Units while you practice the perfect strategy to emerge victorious!"
+  },
+  {
+    "appid": 207140,
+    "name": "SpeedRunners",
+    "genres": [
+      "Action",
+      "Casual",
+      "Indie",
+      "Racing",
+      "Sports"
+    ],
+    "price": "2.99",
+    "short_description": "Cut-throat multiplayer running game that pits 4 players against each other, locally and/or online. Run, jump, swing around, and use devious weapons and pick-ups to knock opponents off-screen! One of the most competitive games you'll ever play."
+  },
+  {
+    "appid": 207230,
+    "name": "ArcheBlade™",
+    "genres": [
+      "Action",
+      "Free To Play",
+      "Indie"
+    ],
+    "price": null,
+    "short_description": "ArcheBlade is a free to play 3D multiplayer fighting game that captures the essence of combo-based fighting games combined with unique game modes. Play as one of many characters and master your skills to become the best fighter."
+  },
+  {
+    "appid": 208090,
+    "name": "Loadout",
+    "genres": [
+      "Action",
+      "Free To Play",
+      "Indie"
+    ],
+    "price": null,
+    "short_description": "Loadout is an outrageous new multi-player shooter that’s all about the guns, baby! Build a massive variety of absolutely insane weaponry - billions of combinations - totally customized, totally unique, and totally deadly."
+  },
+  {
+    "appid": 209080,
+    "name": "Guns of Icarus Online",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Simulation"
+    ],
+    "price": "39.00",
+    "short_description": "Assemble your crew, take to the skies in the premier PvP airship combat game. Guns of Icarus Online is all about flying massive airships, shooting big turret weapons, and working as a team for supremacy of the skies. Everyone as one, victory or death, together."
+  },
+  {
+    "appid": 209670,
+    "name": "Cortex Command",
+    "genres": [
+      "Action",
+      "Indie",
+      "Strategy"
+    ],
+    "price": "219.00",
+    "short_description": "Choose between different factions, with their own set of expendable soldiers, mechas, and weapons. Protect your brain, mine gold, and destroy the enemy cortex in his bunker complex!"
+  },
+  {
+    "appid": 210770,
+    "name": "Sanctum 2",
+    "genres": [
+      "Action",
+      "Indie",
+      "Strategy"
+    ],
+    "price": "145.00",
+    "short_description": "Sanctum 2 is the sequel to the world’s first Tower Defense/FPS hybrid game. Pick from four unique character classes and embark on a mission to protect the oxygen-producing Cores from hordes of deadly aliens who are threatened by their existence."
+  },
+  {
+    "appid": 211820,
+    "name": "Starbound",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Casual",
+      "Indie",
+      "RPG"
+    ],
+    "price": "58.00",
+    "short_description": "You’ve fled your home, only to find yourself lost in space with a damaged ship. Your only option is to beam down to the planet below, repair your ship and set off to explore the universe..."
+  },
+  {
+    "appid": 212680,
+    "name": "FTL: Faster Than Light",
+    "genres": [
+      "Indie",
+      "Simulation",
+      "Strategy"
+    ],
+    "price": "32.70",
+    "short_description": "This &quot;spaceship simulation roguelike-like&quot; allows you to take your ship and crew on an adventure through a randomly generated galaxy filled with glory and bitter defeat."
+  },
+  {
+    "appid": 214420,
+    "name": "Gear Up",
+    "genres": [
+      "Action",
+      "Free To Play",
+      "Indie"
+    ],
+    "price": null,
+    "short_description": "Feel the adrenaline as you control your unique tank in multiplayer arcade action! Build your ultimate war machine from over a million different combinations. Now, will you go for the rumbling caterpillar tracks or the crawling spider legs?"
+  },
+  {
+    "appid": 214560,
+    "name": "Mark of the Ninja",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": null,
+    "short_description": "In Mark of the Ninja, you'll know what it is to truly be a ninja. You must be silent, agile and clever to outwit your opponents in a world of gorgeous scenery and flowing animation. Marked with cursed tattoos giving you heightened senses, every situation presents you with options."
+  },
+  {
+    "appid": 215080,
+    "name": "WAKFU",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Casual",
+      "Indie",
+      "Massively Multiplayer",
+      "RPG",
+      "Strategy",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "Immerse yourself in the WAKFU universe with this free to play MMORPG. Select your class, travel the world, meet adventurers to challenge powerful monsters in epic turn-based battles.Participate in the kingdom’s economy and politics and create your own legend!"
+  },
+  {
+    "appid": 219150,
+    "name": "Hotline Miami",
+    "genres": [
+      "Action",
+      "Indie"
+    ],
+    "price": "9.99",
+    "short_description": "Hotline Miami is a high-octane action game overflowing with raw brutality, hard-boiled gunplay and skull crushing close combat."
+  },
+  {
+    "appid": 219640,
+    "name": "Chivalry: Medieval Warfare",
+    "genres": [
+      "Action",
+      "Indie"
+    ],
+    "price": "12.49",
+    "short_description": "Besiege castles and raid villages in Chivalry: Medieval Warfare, a fast-paced medieval first person slasher with a focus on multiplayer battles"
+  },
+  {
+    "appid": 219740,
+    "name": "Don't Starve",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "Simulation"
+    ],
+    "price": "0.82",
+    "short_description": "Don’t Starve is an uncompromising wilderness survival game full of science and magic. Enter a strange and unexplored world full of strange creatures, dangers, and surprises. Gather resources to craft items and structures that match your survival style."
+  },
+  {
+    "appid": 225080,
+    "name": "Brothers - A Tale of Two Sons",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "14.99",
+    "short_description": "Guide two brothers on an epic fairy tale journey from visionary Swedish film director, Josef Fares and top-tier developer Starbreeze Studios. Control both brothers at once as you experience co-op play in single player mode, like never before."
+  },
+  {
+    "appid": 239030,
+    "name": "Papers, Please",
+    "genres": [
+      "Adventure",
+      "Indie"
+    ],
+    "price": "9.99",
+    "short_description": "Congratulations. The October labor lottery is complete. Your name was pulled. For immediate placement, report to the Ministry of Admission at Grestin Border Checkpoint. An apartment will be provided for you and your family in East Grestin. Expect a Class-8 dwelling."
+  },
+  {
+    "appid": 239820,
+    "name": "Game Dev Tycoon",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Simulation",
+      "Strategy"
+    ],
+    "price": "4.49",
+    "short_description": "In Game Dev Tycoon you replay the history of the gaming industry by starting your own video game development company in the 80s. Create best selling games. Research new technologies and invent new game types. Become the leader of the market and gain worldwide fans."
+  },
+  {
+    "appid": 252130,
+    "name": "Divide By Sheep",
+    "genres": [
+      "Adventure",
+      "Casual",
+      "Indie"
+    ],
+    "price": "2.99",
+    "short_description": "Divide By Sheep is a mind-bending math puzzler about friendship and slicing sheep in half with lasers. The Grim Reaper flooded the world, and it's up to you to save critters stranded on islands. Insane math skills required."
+  },
+  {
+    "appid": 252490,
+    "name": "Rust",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Massively Multiplayer",
+      "RPG"
+    ],
+    "price": "18.99",
+    "short_description": "The only aim in Rust is to survive. Everything wants you to die - the island’s wildlife, other inhabitants, the environment, and other survivors. Do whatever it takes to last another night."
+  },
+  {
+    "appid": 262060,
+    "name": "Darkest Dungeon®",
+    "genres": [
+      "Indie",
+      "RPG",
+      "Strategy"
+    ],
+    "price": "4.87",
+    "short_description": "Darkest Dungeon is a challenging gothic roguelike turn-based RPG about the psychological stresses of adventuring. Recruit, train, and lead a team of flawed heroes against unimaginable horrors, stress, disease, and the ever-encroaching dark. Can you keep your heroes together when all hope is lost?"
+  },
+  {
+    "appid": 270880,
+    "name": "American Truck Simulator",
+    "genres": [
+      "Indie",
+      "Simulation"
+    ],
+    "price": "11.75",
+    "short_description": "Experience legendary American trucks and deliver various cargoes across sunny California, sandy Nevada, and the Grand Canyon State of Arizona. American Truck Simulator takes you on a journey through the breathtaking landscapes and widely recognized landmarks around the States."
+  },
+  {
+    "appid": 274170,
+    "name": "Hotline Miami 2: Wrong Number",
+    "genres": [
+      "Action",
+      "Indie"
+    ],
+    "price": "14.99",
+    "short_description": "Hotline Miami 2: Wrong Number is the brutal conclusion to the Hotline Miami saga, set against a backdrop of escalating violence and retribution over spilled blood in the original game."
+  },
+  {
+    "appid": 274190,
+    "name": "Broforce",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Casual",
+      "Indie"
+    ],
+    "price": "14.79",
+    "short_description": "Broforce is an action-packed side-scrolling run ‘n’ gun ode to freedom, putting you in control of an under-funded, overpowered paramilitary organization dealing exclusively in excessive force."
+  },
+  {
+    "appid": 275390,
+    "name": "Guacamelee! Super Turbo Championship Edition",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "19.49",
+    "short_description": "The definitive version of the smash hit Metroidvania-style action-platformer, Guacamelee! STCE adds new levels, powers, challenges and refinements to the sprawling, ridiculous, Mexican-inspired adventure of the original Guacamelee! Gold Edition."
+  },
+  {
+    "appid": 302670,
+    "name": "Call to Arms",
+    "genres": [
+      "Action",
+      "Indie",
+      "Simulation",
+      "Strategy"
+    ],
+    "price": "145.00",
+    "short_description": "Call to Arms offers an innovative mix of real-time strategy and 3rd, as well as 1st person controls. Set in the time of modern warfare, the game offers realistically modeled vehicles and heavy weaponry. Command your troops to victory or fight by yourself in the 3rd or 1st person action mode."
+  },
+  {
+    "appid": 303390,
+    "name": "Dead Bits",
+    "genres": [
+      "Action",
+      "Casual",
+      "Indie"
+    ],
+    "price": "55.00",
+    "short_description": "Quilly was abducted by aliens, now, he has to fight for his freedom! Destroy cube aliens with guns, bats and inteligence... avoid traps and more. Dead Bits is a first-person shooter with original dubstep soundtrack for Windows and Mac."
+  },
+  {
+    "appid": 304430,
+    "name": "INSIDE",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "2.59",
+    "short_description": "Hunted and alone, a boy finds himself drawn into the center of a dark project. INSIDE is a dark, narrative-driven platformer combining intense action with challenging puzzles. It has been critically acclaimed for its moody art style, ambient soundtrack and unsettling atmosphere."
+  },
+  {
+    "appid": 304670,
+    "name": "Aeon Command",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Strategy"
+    ],
+    "price": "35.00",
+    "short_description": "Aeon Command is a tug of war strategy game, where you play as one of three unique factions to help gain dominance over the Aeon Nebula! Take control of your mother ship to gather resources, produce ships and fight off the enemy mother ship. Grow stronger as you progress through the 24 mission campaign and unlock new upgrades."
+  },
+  {
+    "appid": 304930,
+    "name": "Unturned",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Casual",
+      "Indie",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "You're a survivor in the zombie infested ruins of society, and must work with your friends and forge alliances to remain among the living."
+  },
+  {
+    "appid": 305620,
+    "name": "The Long Dark",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "Simulation",
+      "Strategy"
+    ],
+    "price": "25.99",
+    "short_description": "THE LONG DARK is a thoughtful, exploration-survival experience that challenges solo players to think for themselves as they explore an expansive frozen wilderness in the aftermath of a geomagnetic disaster. There are no zombies -- only you, the cold, and all the threats Mother Nature can muster."
+  },
+  {
+    "appid": 308040,
+    "name": "Back to Bed",
+    "genres": [
+      "Action",
+      "Casual",
+      "Indie"
+    ],
+    "price": "52.00",
+    "short_description": "Guide Bob the sleepwalker to the safety of his bed by taking control of his subconscious guardian, Subob. Explore a surreal and hand-painted dream world, avoid dangers and get Bob safely back to bed."
+  },
+  {
+    "appid": 308600,
+    "name": "Gene Shift Auto",
+    "genres": [
+      "Action",
+      "Casual",
+      "Indie",
+      "Free To Play",
+      "Early Access"
+    ],
+    "price": null,
+    "short_description": "Gene Shift Auto is a GTA-style battle royale with roguelike build crafting. Loot, shoot, and adapt your build to create godlike synergies before the final fight."
+  },
+  {
+    "appid": 311690,
+    "name": "Enter the Gungeon",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "145.00",
+    "short_description": "Enter the Gungeon is a bullet hell dungeon crawler following a band of misfits seeking to shoot, loot, dodge roll and table-flip their way to personal absolution by reaching the legendary Gungeon’s ultimate treasure: the gun that can kill the past."
+  },
+  {
+    "appid": 311860,
+    "name": "Data Hacker: Initiation",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "RPG",
+      "Simulation"
+    ],
+    "price": "11.00",
+    "short_description": "Data Hacker: Initiation sets the stage for the Datastream saga; an epic series of tales revolving around the possibility of virtual realms existing beyond our current reach. Once the bridge is crafted, everything will change."
+  },
+  {
+    "appid": 312520,
+    "name": "Rain World",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "230.00",
+    "short_description": "You are a nomadic slugcat, both predator and prey in a broken ecosystem. Grab your spear and brave the industrial wastes, hunting enough food to survive, but be wary— other, bigger creatures have the same plan... and slugcats look delicious."
+  },
+  {
+    "appid": 312530,
+    "name": "Duck Game",
+    "genres": [
+      "Action",
+      "Indie"
+    ],
+    "price": "95.00",
+    "short_description": "Enter the futuristic year of 1984, an age where ducks run wild in a frantic battle for glory. Blast your friends with Shotguns, Net Guns, Mind Control Rays, Saxophones, Magnet Guns, and much, much more. This is DUCK GAME. Don't blink."
+  },
+  {
+    "appid": 312990,
+    "name": "The Expendabros",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "The Expendabros have assembled and set their sights on the forces of ruthless arms dealer Conrad Stonebanks in the forests of Eastern Europe."
+  },
+  {
+    "appid": 317360,
+    "name": "Double Action: Boogaloo",
+    "genres": [
+      "Action",
+      "Indie",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "Double Action is a free stylish multiplayer game about diving, flipping, and sliding your way into action movie mayhem."
+  },
+  {
+    "appid": 319510,
+    "name": "Five Nights at Freddy's",
+    "genres": [
+      "Indie",
+      "Simulation"
+    ],
+    "price": "42.00",
+    "short_description": "Welcome to your new summer job at Freddy Fazbear's Pizza, where kids and parents alike come for entertainment and food! The main attraction is Freddy Fazbear, of course; and his two friends. They are animatronic robots, programmed to please the crowds!"
+  },
+  {
+    "appid": 319830,
+    "name": "AX:EL - Air XenoDawn",
+    "genres": [
+      "Action",
+      "Indie",
+      "Simulation"
+    ],
+    "price": null,
+    "short_description": "Combining the very best of sci-fi and aerial dogfighting gameplay, AX:EL delivers a totally new gaming experience. Create your very own shape-shifting vehicle and dominate both the sky and the ocean."
+  },
+  {
+    "appid": 322170,
+    "name": "Geometry Dash",
+    "genres": [
+      "Action",
+      "Indie"
+    ],
+    "price": "52.00",
+    "short_description": "Jump and fly your way through danger in this rhythm-based action platformer!"
+  },
+  {
+    "appid": 322330,
+    "name": "Don't Starve Together",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG",
+      "Simulation",
+      "Strategy"
+    ],
+    "price": "5.09",
+    "short_description": "Fight, Farm, Build and Explore Together in the standalone multiplayer expansion to the uncompromising wilderness survival game, Don't Starve."
+  },
+  {
+    "appid": 322500,
+    "name": "SUPERHOT",
+    "genres": [
+      "Action",
+      "Indie"
+    ],
+    "price": "59.70",
+    "short_description": "SUPERHOT is the smash-hit FPS where time moves only when you move. No regenerating health bars. No conveniently placed ammo drops. It's you, alone, outnumbered and outgunned. Snatch weapons from fallen enemies to shoot, slice and dodge through a truly cinematic hurricane of slow-motion bullets."
+  },
+  {
+    "appid": 323580,
+    "name": "Jotun: Valhalla Edition",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "14.99",
+    "short_description": "Jotun is a hand-drawn action-exploration game set in Norse mythology. In Jotun, you play Thora, a Viking warrior who died an inglorious death and must prove herself to the Gods to enter Valhalla. Impress the Gods!"
+  },
+  {
+    "appid": 323850,
+    "name": "Move or Die",
+    "genres": [
+      "Action",
+      "Indie"
+    ],
+    "price": "159.00",
+    "short_description": "Move or Die is an absurdly fast-paced 4-player local and online party game where the mechanics change every 20 seconds! It's THE friendship-ruining game."
+  },
+  {
+    "appid": 330020,
+    "name": "Children of Morta",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG"
+    ],
+    "price": "30.00",
+    "short_description": "Children of Morta is a story-driven action RPG game about an extraordinary family of heroes. Lead the Bergsons, with all their flaws and virtues, against the forthcoming Corruption. Will you be able to sacrifice everything to save the ones you care for?"
+  },
+  {
+    "appid": 331470,
+    "name": "Everlasting Summer",
+    "genres": [
+      "Adventure",
+      "Casual",
+      "Indie",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "Visual novel loved by many – Everlasting Summer – now on Steam!"
+  },
+  {
+    "appid": 334210,
+    "name": "Fortified",
+    "genres": [
+      "Action",
+      "Indie",
+      "Strategy"
+    ],
+    "price": "159.00",
+    "short_description": "Fortified is an explosive strategy shooter where players will defend the Earth against a menacing Martian invasion in the 1950s. Play as one-of-four pulp inspired heroes as they fight swarms of terrifying robots with an arsenal of Cold War era weapons and experimental technology."
+  },
+  {
+    "appid": 335240,
+    "name": "Transformice",
+    "genres": [
+      "Free To Play",
+      "Indie",
+      "Massively Multiplayer"
+    ],
+    "price": null,
+    "short_description": "Transformice is an MMO platformer about dozens of mice running to bring back the cheese! Will the almighty Shaman help you or just ruin everything? Millions of levels, hectic physics, skill trees, and more importantly... hats!"
+  },
+  {
+    "appid": 337320,
+    "name": "Paint the Town Red",
+    "genres": [
+      "Action",
+      "Indie"
+    ],
+    "price": "185.00",
+    "short_description": "Paint the Town Red is a chaotic first person melee combat game set in different locations and time periods. The voxel-based enemies can be punched, bashed, kicked, stabbed and sliced completely dynamically using almost anything that isn't nailed down."
+  },
+  {
+    "appid": 341800,
+    "name": "Keep Talking and Nobody Explodes",
+    "genres": [
+      "Indie"
+    ],
+    "price": "145.00",
+    "short_description": "Find yourself trapped alone in a room with a ticking time bomb. Your friends have the manual to defuse it, but they can't see the bomb, so you're going to have to talk it out – fast!"
+  },
+  {
+    "appid": 346010,
+    "name": "Besiege",
+    "genres": [
+      "Indie",
+      "Simulation"
+    ],
+    "price": "125.00",
+    "short_description": "Besiege is a physics building game about constructing mechanical machines to annihilate armies, obliterate castles and overcome challenging obstacles. Conquer the campaign or skirmish with friends in Multiplayer!"
+  },
+  {
+    "appid": 346110,
+    "name": "ARK: Survival Evolved",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Massively Multiplayer",
+      "RPG"
+    ],
+    "price": "145.00",
+    "short_description": "Stranded on the shores of a mysterious island, you must learn to survive. Use your cunning to kill or tame the primeval creatures roaming the land, and encounter other players to survive, dominate... and escape!"
+  },
+  {
+    "appid": 346330,
+    "name": "BrainBread 2",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "Grab a weapon, demolish your enemies, level up, become more powerful, let the gore flow, let the limbs fly. BrainBread 2 introduces a zombie fps mixed with RPG / Arcade elements, the game is very action-packed and generally fast-paced."
+  },
+  {
+    "appid": 346900,
+    "name": "AdVenture Capitalist",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "Welcome, eager young investor, to AdVenture Capitalist! Arguably the world's greatest Capitalism simulator!"
+  },
+  {
+    "appid": 349700,
+    "name": "Romero's Aftermath",
+    "genres": [
+      "Violent",
+      "Action",
+      "Free To Play",
+      "Indie",
+      "Massively Multiplayer"
+    ],
+    "price": null,
+    "short_description": "Play with your friends in a Zombie Infested World as you face the remnants of zombie hordes &amp; rebuild society in a truly massive sandbox world. Choose how you want to play with hundreds of items, skins, weapons, character customizations, base building, crafting, zombies &amp; more!"
+  },
+  {
+    "appid": 351940,
+    "name": "The Descendant",
+    "genres": [
+      "Adventure",
+      "Casual",
+      "Indie"
+    ],
+    "price": "159.00",
+    "short_description": "In THE DESCENDANT, the end of the world is only the start. With what remains of humanity protected in underground Ark facilities, your mission is to keep survivors alive, while discovering a far greater conspiracy buried within Ark-01."
+  },
+  {
+    "appid": 361420,
+    "name": "ASTRONEER",
+    "genres": [
+      "Adventure",
+      "Indie"
+    ],
+    "price": "89.10",
+    "short_description": "Interact with strange new worlds in a unique and tactile way, molding the environment itself as if it were clay in your hands. Build your base, master resource management, automate your production lines, and more as you unravel the mysteries of the universe, alone or with friends."
+  },
+  {
+    "appid": 362890,
+    "name": "Black Mesa",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "185.00",
+    "short_description": "Relive Half-Life."
+  },
+  {
+    "appid": 363970,
+    "name": "Clicker Heroes",
+    "genres": [
+      "Adventure",
+      "Casual",
+      "Indie",
+      "RPG",
+      "Simulation",
+      "Strategy",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "Ever wondered what one quadrillion damage per second feels like? Wonder no more! Embark on your quest to attain it today!"
+  },
+  {
+    "appid": 365450,
+    "name": "Hacknet",
+    "genres": [
+      "Indie",
+      "Simulation"
+    ],
+    "price": "9.99",
+    "short_description": "Hacknet is an immersive, terminal-based hacking simulator for PC. Dive down a rabbit hoIe as you follow the instructions of a recently deceased hacker, whose death may not have been the accident the media reports."
+  },
+  {
+    "appid": 367520,
+    "name": "Hollow Knight",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "145.00",
+    "short_description": "Forge your own path in Hollow Knight! An epic action adventure through a vast ruined kingdom of insects and heroes. Explore twisting caverns, battle tainted creatures and befriend bizarre bugs, all in a classic, hand-drawn 2D style."
+  },
+  {
+    "appid": 368230,
+    "name": "Kingdom: Classic",
+    "genres": [
+      "Indie",
+      "Simulation",
+      "Strategy"
+    ],
+    "price": null,
+    "short_description": "Kingdom is a 2D sidescrolling strategy/resource management hybrid with a minimalist feel wrapped in a beautiful, modern pixel art aesthetic."
+  },
+  {
+    "appid": 370910,
+    "name": "Kathy Rain",
+    "genres": [
+      "Adventure",
+      "Indie"
+    ],
+    "price": "100.00",
+    "short_description": "Set in the '90s, Kathy Rain tells the story of a strong-willed journalism major who has to come to terms with her troubled past as she investigates the mysterious death of her recently deceased grandfather."
+  },
+  {
+    "appid": 373420,
+    "name": "Divinity: Original Sin - Enhanced Edition",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "RPG",
+      "Strategy"
+    ],
+    "price": "39.99",
+    "short_description": "Gather your party and get ready for the kick-ass new version of GameSpot's PC Game of the Year 2014. With hours of new content, new game modes, full voiceovers, split-screen multiplayer, and thousands of improvements, there's never been a better time to explore the epic world of Rivellon!"
+  },
+  {
+    "appid": 376210,
+    "name": "The Isle",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Massively Multiplayer",
+      "Simulation",
+      "Early Access"
+    ],
+    "price": "219.00",
+    "short_description": "Experience fierce open world survival gameplay as you attempt to stay alive on an unforgiving island inhabited by dinosaurs! Hunt. Grow. Survive."
+  },
+  {
+    "appid": 383080,
+    "name": "Sakura Clicker",
+    "genres": [
+      "Casual",
+      "Free To Play",
+      "Indie"
+    ],
+    "price": null,
+    "short_description": "The latest entry in the Sakura series is more action-packed than ever before! Sakura Clickers is a fast-paced, exciting adventure, full of content, in which you defeat your foes with the power of your mouse!"
+  },
+  {
+    "appid": 383870,
+    "name": "Firewatch",
+    "genres": [
+      "Adventure",
+      "Indie"
+    ],
+    "price": "185.00",
+    "short_description": "Firewatch is a single-player first-person mystery set in the Wyoming wilderness, where your only emotional lifeline is the person on the other end of a handheld radio."
+  },
+  {
+    "appid": 386940,
+    "name": "Ultimate Chicken Horse",
+    "genres": [
+      "Action",
+      "Casual",
+      "Indie"
+    ],
+    "price": "140.00",
+    "short_description": "Ultimate Chicken Horse is a party platformer game where you build the level as you play, placing traps and hazards to screw your friends over, but trying not to screw yourself."
+  },
+  {
+    "appid": 387990,
+    "name": "Scrap Mechanic",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Simulation",
+      "Early Access"
+    ],
+    "price": "219.00",
+    "short_description": "Enter the creative paradise of Scrap Mechanic! Build fantastic machines, go on adventures with your friends and defend against waves of evil Farmbots in this imaginative multiplayer survival sandbox. With Scrap Mechanic’s powerful creation tools you can engineer your own adventures!"
+  },
+  {
+    "appid": 391540,
+    "name": "Undertale",
+    "genres": [
+      "Indie",
+      "RPG"
+    ],
+    "price": "32.70",
+    "short_description": "UNDERTALE! The RPG game where you don't have to destroy anyone."
+  },
+  {
+    "appid": 391720,
+    "name": "Layers of Fear (2016)",
+    "genres": [
+      "Adventure",
+      "Indie"
+    ],
+    "price": "219.00",
+    "short_description": "Layers of Fear is a first-person psychedelic horror game with a heavy focus on story and exploration. Players take control of a painter whose sole purpose is to finish his Magnum Opus. The player must navigate a constantly changing Victorian-era mansion and ghastly visions of the painter’s psyche."
+  },
+  {
+    "appid": 393380,
+    "name": "Squad",
+    "genres": [
+      "Action",
+      "Indie",
+      "Massively Multiplayer",
+      "Strategy"
+    ],
+    "price": "499.00",
+    "short_description": "Squad is a tactical FPS that provides authentic combat experiences through teamwork, communication, and realistic combat. It bridges the gap between arcade shooter and military realism with 100-player battles, combined-arms warfare, and base building."
+  },
+  {
+    "appid": 395170,
+    "name": "DISTRAINT: Deluxe Edition",
+    "genres": [
+      "Adventure",
+      "Casual",
+      "Indie"
+    ],
+    "price": "0.69",
+    "short_description": "DISTRAINT is a 2D psychological horror adventure game for PC. In order to secure a partnership in a famous company, Price seizes the property of an elderly woman. In that very moment, he finds out the price of his humanity."
+  },
+  {
+    "appid": 397900,
+    "name": "Business Tour - Board Game with Online Multiplayer",
+    "genres": [
+      "Adventure",
+      "Casual",
+      "Indie",
+      "Massively Multiplayer",
+      "Simulation",
+      "Strategy",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "&quot;Business Tour&quot; is a free to play multiplayer tabletop game. Build your monopoly with friends. Complete daily tasks, compete against the other players and receive trade items rewards!"
+  },
+  {
+    "appid": 407530,
+    "name": "ARK: The Survival Of The Fittest",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Massively Multiplayer",
+      "RPG",
+      "Strategy"
+    ],
+    "price": null,
+    "short_description": "ARK: The Survival of the Fittest is a prototype spin-off of ARK: Survival Evolved, pitting up to 60 combatants against each other in a fast-paced, action-packed struggle for survival, where players are ultimately pushed into an epic final showdown leading their Dinosaur Armies into battle."
+  },
+  {
+    "appid": 412220,
+    "name": "DDNet",
+    "genres": [
+      "Action",
+      "Indie",
+      "Racing",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "Want to play the hardest cooperative 2D platformer ever? Want to finish no map ever? Want to be in pain for hours and cry, getting nothing in return? Come play DDNet with a large community of other sufferers!"
+  },
+  {
+    "appid": 413150,
+    "name": "Stardew Valley",
+    "genres": [
+      "Indie",
+      "RPG",
+      "Simulation"
+    ],
+    "price": "16.99",
+    "short_description": "You've inherited your grandfather's old farm plot in Stardew Valley. Armed with hand-me-down tools and a few coins, you set out to begin your new life. Can you learn to live off the land and turn these overgrown fields into a thriving home?"
+  },
+  {
+    "appid": 414340,
+    "name": "Hellblade: Senua's Sacrifice",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "95.70",
+    "short_description": "From the makers of Heavenly Sword, Enslaved: Odyssey to the West, and DmC: Devil May Cry, comes a warrior’s brutal journey into myth and madness. Set in the Viking age, a broken Celtic warrior embarks on a haunting vision quest into Viking Hell to fight for the soul of her dead lover."
+  },
+  {
+    "appid": 414700,
+    "name": "Outlast 2",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "270.00",
+    "short_description": "Outlast 2 introduces you to Sullivan Knoth and his followers, who left our wicked world behind to give birth to Temple Gate, a town, deep in the wilderness and hidden from civilization. Knoth and his flock are preparing for the tribulations of the end of times and you’re right in the thick of it."
+  },
+  {
+    "appid": 417860,
+    "name": "Emily is Away",
+    "genres": [
+      "Adventure",
+      "Casual",
+      "Free To Play",
+      "Indie",
+      "Simulation"
+    ],
+    "price": null,
+    "short_description": "Emily is Away is an interactive story. Create a screenname and choose your path through the branching narrative."
+  },
+  {
+    "appid": 418070,
+    "name": "Turbo Pug",
+    "genres": [
+      "Casual",
+      "Indie"
+    ],
+    "price": "0.90",
+    "short_description": "It's time to unleash your inner pug! Turbo Pug is a casual runner with difficult, random, procedurally generated levels. Enjoy random weather and try to avoid getting zapped by lightning. Unlock new costumes for your pug and new characters to play as. Please try not to squish your pug!"
+  },
+  {
+    "appid": 418240,
+    "name": "Shadow Tactics: Blades of the Shogun",
+    "genres": [
+      "Indie",
+      "Strategy"
+    ],
+    "price": "49.99",
+    "short_description": "Shadow Tactics is a hardcore tactical stealth game set in Japan around the Edo period. A new Shogun seizes power over Japan and enforces nationwide peace. In his battle against conspiracy and rebellion, he recruits five specialists with extraordinary skills for assassination, sabotage and espionage."
+  },
+  {
+    "appid": 424370,
+    "name": "Wolcen: Lords of Mayhem",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG"
+    ],
+    "price": "219.00",
+    "short_description": "Carve your path in this Hack’n’Slash free from class boundaries. Purify a world shattered by corruption, and uncover the grim secrets and forgotten horrors lurking in the shadows of this forsaken land as you rise in Power. Your Inner aspect beckons—will you answer?"
+  },
+  {
+    "appid": 427520,
+    "name": "Factorio",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Simulation",
+      "Strategy"
+    ],
+    "price": "300.00",
+    "short_description": "Factorio is a game about building and creating automated factories to produce items of increasing complexity, within an infinite 2D world. Use your imagination to design your factory, combine simple elements into ingenious structures, and finally protect it from the creatures who don't really like you."
+  },
+  {
+    "appid": 427730,
+    "name": "Who's Your Daddy?!",
+    "genres": [
+      "Action",
+      "Casual",
+      "Indie"
+    ],
+    "price": "23.00",
+    "short_description": "Who's Your Daddy is a casual multiplayer game featuring a clueless father attempting to prevent his infant son from certain death. Play with up to 7 of your friends, and test your parenting skills in a competitive setup with wacky physics and over 69 potentially ominous household items."
+  },
+  {
+    "appid": 429470,
+    "name": "Space Pilgrim Episode I: Alpha Centauri",
+    "genres": [
+      "Adventure",
+      "Indie"
+    ],
+    "price": null,
+    "short_description": "Captain Gail Pilgrim has been flying starships since she was a kid, ferrying passengers between planets and space stations across the galaxy. She has no reason to expect that this latest trip to Alpha Centauri will be anything special, even if her passengers are a little more diverse than usual...."
+  },
+  {
+    "appid": 431240,
+    "name": "Golf With Your Friends",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Sports"
+    ],
+    "price": "269.00",
+    "short_description": "Why have friends if not to play Golf... With Your Friends! Nothing is out of bounds as you take on courses filled with fast paced, exciting, simultaneous mini golf for up to 12 players!"
+  },
+  {
+    "appid": 431960,
+    "name": "Wallpaper Engine",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Animation & Modeling",
+      "Design & Illustration",
+      "Photo Editing",
+      "Utilities"
+    ],
+    "price": "7.50",
+    "short_description": "Use stunning live wallpapers on your desktop. Animate your own images to create new wallpapers or import videos/websites and share them on the Steam Workshop!"
+  },
+  {
+    "appid": 433340,
+    "name": "Slime Rancher",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Simulation"
+    ],
+    "price": "199.00",
+    "short_description": "Slime Rancher is the tale of Beatrix LeBeau, a plucky, young rancher who sets out for a life a thousand light years away from Earth on the ‘Far, Far Range’ where she tries her hand at making a living wrangling slimes."
+  },
+  {
+    "appid": 434650,
+    "name": "Lost Castle / 失落城堡",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG"
+    ],
+    "price": "109.00",
+    "short_description": "Lost Castle is an action RPG beat'em up with roguelike elements and randomized dungeons for up to four players online and local!"
+  },
+  {
+    "appid": 436520,
+    "name": "Line of Sight",
+    "genres": [
+      "Action",
+      "Free To Play",
+      "Indie",
+      "Massively Multiplayer"
+    ],
+    "price": null,
+    "short_description": "Fast paced FPS with high customizational freedom. From game mode customization to an in depth weapon tuning and attachment system up to detailed character customizations, while it was developed so you can choose to either go for high performance or graphical fidelity without an high end PC."
+  },
+  {
+    "appid": 437220,
+    "name": "The Culling",
+    "genres": [
+      "Action",
+      "Free To Play",
+      "Indie"
+    ],
+    "price": null,
+    "short_description": "Battle Royale is back! In a remote island paradise, 16 contestants have 25 minutes to explore, scavenge items, craft weapons, build traps, hunt and kill each other. Only one will be crowned the winner, do you have the guts to survive?"
+  },
+  {
+    "appid": 437900,
+    "name": "Party Jousting",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Sports"
+    ],
+    "price": null,
+    "short_description": "A one-button party game for 2-16 players, sharing a keyboard or controller."
+  },
+  {
+    "appid": 437920,
+    "name": "Tricky Towers",
+    "genres": [
+      "Casual",
+      "Indie"
+    ],
+    "price": "145.00",
+    "short_description": "With your brilliant robe and magic powers, it’s time to build some Tricky Towers! Stack your bricks in this land of fable, whose marvelous tower will be the most stable? Battle your friends and rise to fame, in this frantic physics game."
+  },
+  {
+    "appid": 438040,
+    "name": "Shakes and Fidget",
+    "genres": [
+      "Adventure",
+      "Casual",
+      "Indie",
+      "Massively Multiplayer",
+      "RPG",
+      "Strategy",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "Shakes &amp; Fidget is a hilarious fantasy role-playing satire and at the same time, an award-winning RPG! Sounds crazy? With over 50 million enthusiastic players, it ranks among the most celebrated online role-playing games worldwide!"
+  },
+  {
+    "appid": 439190,
+    "name": "Stories: The Path of Destinies",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG"
+    ],
+    "price": "145.00",
+    "short_description": "Stories: The Path of Destinies is an Action RPG, an enchanted storybook filled with madcap fantasy tales, each told by a zippy narrator attuned to the player’s choices and actions."
+  },
+  {
+    "appid": 445980,
+    "name": "Wizard of Legend",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "110.00",
+    "short_description": "Wizard of Legend is a no-nonsense, action-packed take on wizardry that emphasizes precise movements and smart comboing of spells in a rogue-like dungeon crawler that features over a hundred unique spells and relics!"
+  },
+  {
+    "appid": 447820,
+    "name": "Day of Infamy",
+    "genres": [
+      "Action",
+      "Indie",
+      "Strategy"
+    ],
+    "price": "105.00",
+    "short_description": "Experience close-quarters battles in iconic WWII settings. Defend the line, storm the beach, torch the enemy, or use a radio to call in fire support. Day of Infamy is a teamwork-oriented shooter that will keep you on your toes and coming back for more with its diverse game modes and authentic arsenal."
+  },
+  {
+    "appid": 457140,
+    "name": "Oxygen Not Included",
+    "genres": [
+      "Indie",
+      "Simulation"
+    ],
+    "price": "150.00",
+    "short_description": "Oxygen Not Included is a space-colony simulation game. Deep inside an alien space rock your industrious crew will need to master science, overcome strange new lifeforms, and harness incredible space tech to survive, and possibly, thrive."
+  },
+  {
+    "appid": 459820,
+    "name": "Crush Crush",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "Welcome to Crush Crush - the Idle Dating Sim! Meet, flirt, and fall in love with a motley cast of girls in this heartfelt and hilarious game."
+  },
+  {
+    "appid": 460950,
+    "name": "Katana ZERO",
+    "genres": [
+      "Action",
+      "Indie"
+    ],
+    "price": "19.49",
+    "short_description": "Katana ZERO is a stylish neo-noir, action-platformer featuring breakneck action and instant-death combat. Slash, dash, and manipulate time to unravel your past in a beautifully brutal acrobatic display."
+  },
+  {
+    "appid": 466240,
+    "name": "Deceit",
+    "genres": [
+      "Action",
+      "Indie",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "Test your instincts at trust and deception in an action-filled, multiplayer first-person shooter. You wake up in unknown surroundings to the sound of the Game Master’s unfamiliar voice, surrounded by five others. A third of your group have been infected with a virus, but who will escape?"
+  },
+  {
+    "appid": 466560,
+    "name": "Northgard",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "Simulation",
+      "Strategy"
+    ],
+    "price": "43.75",
+    "short_description": "Northgard is a critically acclaimed strategy game based on Norse mythology. Lead your clan, uncover the secrets of a mysterious newfound continent and defeat your enemies to conquer the Throne!"
+  },
+  {
+    "appid": 475550,
+    "name": "Beholder",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "Strategy"
+    ],
+    "price": "7.79",
+    "short_description": "You’re a state-installed landlord in a totalitarian country. Place listening devices, steal and sneak into your tenants’ apartments. Use what you uncovered to report anyone capable of plotting against the state. You MUST! But WILL you?"
+  },
+  {
+    "appid": 477160,
+    "name": "Human Fall Flat",
+    "genres": [
+      "Adventure",
+      "Casual",
+      "Indie",
+      "Simulation"
+    ],
+    "price": "159.00",
+    "short_description": "Human Fall Flat is a hilarious, light-hearted platformer set in floating dreamscapes that can be played solo or with up to 8 players online. Free new levels keep its vibrant community rewarded."
+  },
+  {
+    "appid": 489520,
+    "name": "Minion Masters",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG",
+      "Strategy",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "An addictive fast-paced hybrid of Card games &amp; Tower-Defense. Play 1v1 - or bring a friend for 2v2 - and engage in epic online multiplayer battles full of innovative strategy and awesome plays! Collect 200+ cards with unique mechanics, all free!"
+  },
+  {
+    "appid": 490220,
+    "name": "Prismata",
+    "genres": [
+      "Free To Play",
+      "Indie",
+      "Simulation",
+      "Strategy",
+      "Early Access"
+    ],
+    "price": null,
+    "short_description": "A perfect-information strategy game inspired by RTS, deckbuilders, and board games. Choose from three distinct technology classes and outwit your foes by snowballing your starting resources into a powerful cybernetic army. ABSOLUTELY NO PAY-TO-WIN."
+  },
+  {
+    "appid": 491950,
+    "name": "Orwell: Keeping an Eye On You",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "Simulation"
+    ],
+    "price": "79.00",
+    "short_description": "Big Brother has arrived - and it’s you. Investigate the lives of citizens to find those responsible for a series of terror attacks. Information from the internet, personal communications and private files are all accessible to you. But, be warned, the information you supply will have consequences."
+  },
+  {
+    "appid": 504230,
+    "name": "Celeste",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "185.00",
+    "short_description": "Help Madeline survive her inner demons on her journey to the top of Celeste Mountain, in this super-tight platformer from the creators of TowerFall. Brave hundreds of hand-crafted challenges, uncover devious secrets, and piece together the mystery of the mountain."
+  },
+  {
+    "appid": 506540,
+    "name": "Last Man Standing",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Free To Play",
+      "Indie",
+      "Massively Multiplayer",
+      "Strategy"
+    ],
+    "price": null,
+    "short_description": "The Ultimate BATTLE ROYALE! Sharpen your skills and kill everyone in your way as you hunt for guns, gear and glory in a massive battlefield where only ONE can be crowned the LAST MAN STANDING. Earn cash prizes in a monthly competitions,"
+  },
+  {
+    "appid": 508440,
+    "name": "Totally Accurate Battle Simulator",
+    "genres": [
+      "Indie",
+      "Simulation",
+      "Strategy"
+    ],
+    "price": "199.00",
+    "short_description": "Be the leader of wobblers from ancient lands, spooky places, and fantasy worlds. Watch them fight in simulations made with the wobbliest physics system ever created, make your own wobblers in the unit creator and send your army off to fight your friends in multiplayer."
+  },
+  {
+    "appid": 510840,
+    "name": "Evolvation",
+    "genres": [
+      "Action",
+      "Casual",
+      "Indie",
+      "Simulation"
+    ],
+    "price": "21.50",
+    "short_description": "Evolvation is a casual multiplayer and fast-paced and class based space flying shooter developed by a two-man-army (Eric and Jacob) from Amsterdam. Classes are: Highspeed, Fighter, Stealth, Support and Tank. Each class has its own special ability which provides a dynamic gameplay."
+  },
+  {
+    "appid": 511470,
+    "name": "Glass Masquerade",
+    "genres": [
+      "Casual",
+      "Indie"
+    ],
+    "price": "52.00",
+    "short_description": "Welcome to Glass Masquerade - an artistic puzzle game inspired by Art Deco &amp; stained glass artisans of the 20th century. You need to combine hidden glass pieces to unveil clocks and themes exhibited by various cultures of the world at the 'International Times Exhibition'"
+  },
+  {
+    "appid": 513710,
+    "name": "SCUM",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Massively Multiplayer",
+      "Early Access"
+    ],
+    "price": "446.00",
+    "short_description": "Traverse punishing environments, looting, crafting and evading the constant threats to your life. The unprecedented levels of character customization and progression are your ultimate tools for survival."
+  },
+  {
+    "appid": 515690,
+    "name": "Warriors of Vilvatikta",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "RPG"
+    ],
+    "price": "11.00",
+    "short_description": "Warriors of Vilvatikta is an epic RPG inspired by real Indonesian history."
+  },
+  {
+    "appid": 516750,
+    "name": "My Summer Car",
+    "genres": [
+      "Indie",
+      "Racing",
+      "Simulation"
+    ],
+    "price": "159.00",
+    "short_description": "My Summer Car is the ultimate car owning, building, fixing, tuning, maintenance AND permadeath life survival simulator. You start the game with hundreds of loose parts and assemble both car and engine."
+  },
+  {
+    "appid": 526870,
+    "name": "Satisfactory",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "Simulation",
+      "Strategy"
+    ],
+    "price": "330.00",
+    "short_description": "Satisfactory is a first-person open-world factory building game with a dash of exploration and combat. Play alone or with friends, explore an alien planet, create multi-story factories, and enter conveyor belt heaven!"
+  },
+  {
+    "appid": 527230,
+    "name": "For The King",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "RPG",
+      "Strategy"
+    ],
+    "price": "130.00",
+    "short_description": "For The King is a strategic RPG that blends tabletop and roguelike elements in a challenging adventure that spans the realms. Set off on a single player experience or play cooperatively both online and locally."
+  },
+  {
+    "appid": 527430,
+    "name": "Warhammer 40,000: Inquisitor - Martyr",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG"
+    ],
+    "price": "499.00",
+    "short_description": "Enter the Chaos-infested Caligari Sector and purge the unclean with the most powerful agents of the Imperium of Man! W40k: Inquisitor – Martyr is a grim Action-RPG featuring multiple classes of the Inquisition who will carry out the Emperor’s will."
+  },
+  {
+    "appid": 535930,
+    "name": "Two Point Hospital",
+    "genres": [
+      "Indie",
+      "Simulation"
+    ],
+    "price": "539.00",
+    "short_description": "Design stunning hospitals, cure peculiar illnesses and manage troublesome staff as you spread your budding healthcare organisation across Two Point County."
+  },
+  {
+    "appid": 544810,
+    "name": "KARDS - The WW2 Card Game",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Strategy",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "KARDS, The World War II Card Game, combines traditional CCG gameplay with innovative mechanics inspired by classic strategy games and real battlefield tactics. Take command and challenge other players in grand-scale warfare on the ground, air, or seas."
+  },
+  {
+    "appid": 552500,
+    "name": "Warhammer: Vermintide 2",
+    "genres": [
+      "Action",
+      "Indie",
+      "RPG"
+    ],
+    "price": "54.00",
+    "short_description": "The critically acclaimed Vermintide 2 is a visually stunning and groundbreaking melee action game pushing the boundaries of the first person co-op genre. Join the fight now!"
+  },
+  {
+    "appid": 555570,
+    "name": "Infestation: The New Z",
+    "genres": [
+      "Action",
+      "Indie",
+      "Massively Multiplayer",
+      "RPG",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "The New Z is a FREE TO PLAY multi-game mode experience. SURVIVE with friends and gather loot, stash and trade. Go into wars against other groups in a massive OPEN WORLD or face them 5 v 5 in COMPETITIVE."
+  },
+  {
+    "appid": 588650,
+    "name": "Dead Cells",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "12.49",
+    "short_description": "Dead Cells is a roguelite, metroidvania inspired, action-platformer. You'll explore a sprawling, ever-changing castle... assuming you’re able to fight your way past its keepers in 2D souls-lite combat. No checkpoints. Kill, die, learn, repeat."
+  },
+  {
+    "appid": 590380,
+    "name": "Into the Breach",
+    "genres": [
+      "Indie",
+      "RPG",
+      "Simulation",
+      "Strategy"
+    ],
+    "price": "6.12",
+    "short_description": "Control powerful mechs from the future to defeat an alien threat. Each attempt to save the world presents a new randomly generated challenge in this turn-based strategy game."
+  },
+  {
+    "appid": 646570,
+    "name": "Slay the Spire",
+    "genres": [
+      "Indie",
+      "Strategy"
+    ],
+    "price": "10.87",
+    "short_description": "We fused card games and roguelikes together to make the best single player deckbuilder we could. Craft a unique deck, encounter bizarre creatures, discover relics of immense power, and Slay the Spire!"
+  },
+  {
+    "appid": 683320,
+    "name": "GRIS",
+    "genres": [
+      "Adventure",
+      "Indie"
+    ],
+    "price": "19.49",
+    "short_description": "Gris is a hopeful young girl lost in her own world, dealing with a painful experience in her life. Her journey through sorrow is manifested in her dress, which grants new abilities to better navigate her faded reality."
+  },
+  {
+    "appid": 701160,
+    "name": "Kingdom Two Crowns",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "Simulation",
+      "Strategy"
+    ],
+    "price": "2.62",
+    "short_description": "Gather coins, build defenses and reclaim your fallen Kingdom. Explore and uncover secrets, unlock new technologies and protect your crown versus waves of Greed monsters that come at night. Kingdom is a solo or co-op micro-strategy and tower defense game set in an atmospheric pixel world."
+  },
+  {
+    "appid": 728880,
+    "name": "Overcooked! 2",
+    "genres": [
+      "Action",
+      "Casual",
+      "Indie"
+    ],
+    "price": "7.24",
+    "short_description": "Overcooked returns with a brand-new helping of chaotic cooking action! Journey back to the Onion Kingdom and assemble your team of chefs in classic couch co-op or online play for up to four players. Hold onto your aprons… it’s time to save the world again!"
+  },
+  {
+    "appid": 739630,
+    "name": "Phasmophobia",
+    "genres": [
+      "Action",
+      "Indie",
+      "Early Access"
+    ],
+    "price": "25.99",
+    "short_description": "Phasmophobia is a 4 player online co-op psychological horror. Paranormal activity is on the rise and it’s up to you and your team to use all the ghost-hunting equipment at your disposal in order to gather as much evidence as you can."
+  },
+  {
+    "appid": 815370,
+    "name": "Green Hell",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Simulation"
+    ],
+    "price": "233.99",
+    "short_description": "Plunge into the open-world survival simulation set in the extreme conditions of the uncharted Amazon jungle. Use real-life survival techniques to craft, hunt, fight, and gather resources, set a makeshift shelter, or raise a fortress. Survive alone or team up with your friends and challenge the jungle together."
+  },
+  {
+    "appid": 892970,
+    "name": "Valheim",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG",
+      "Early Access"
+    ],
+    "price": "529.00",
+    "short_description": "A brutal exploration and survival game for 1-10 players, set in a procedurally-generated purgatory inspired by viking culture. Battle, build, and conquer your way to a saga worthy of Odin’s patronage!"
+  },
+  {
+    "appid": 1016920,
+    "name": "Unrailed!",
+    "genres": [
+      "Action",
+      "Casual",
+      "Indie"
+    ],
+    "price": "10.99",
+    "short_description": "Unrailed! is a co-op multiplayer game where you have to work together with your friends to build a train track across endless procedurally generated worlds. Master random encounters with its inhabitants, upgrade your train and keep it from derailing!"
+  },
+  {
+    "appid": 1017180,
+    "name": "The Long Drive",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Casual",
+      "Indie",
+      "Simulation",
+      "Early Access"
+    ],
+    "price": "155.00",
+    "short_description": "Random generated open world semi-post apocalyptic survival car driving game."
+  },
+  {
+    "appid": 1049590,
+    "name": "Eternal Return",
+    "genres": [
+      "Indie",
+      "Strategy",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "Eternal Return is a free-to-play, 2.5D perspective Battle Royale game. Search, Craft, Hunt, and Fight using a variety of characters. Plan your strategy and become the last survivor on this eternal experiment."
+  },
+  {
+    "appid": 1089980,
+    "name": "The Henry Stickmin Collection",
+    "genres": [
+      "Adventure",
+      "Casual",
+      "Indie"
+    ],
+    "price": "59.60",
+    "short_description": "A choose-your-own-path where failing is more fun than succeeding."
+  },
+  {
+    "appid": 1092790,
+    "name": "Inscryption",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "Strategy"
+    ],
+    "price": "4.19",
+    "short_description": "Inscryption is an inky black card-based odyssey that blends the deckbuilding roguelike, escape-room style puzzles, and psychological horror into a blood-laced smoothie. Darker still are the secrets inscrybed upon the cards..."
+  },
+  {
+    "appid": 1094520,
+    "name": "Sands of Salzaar",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "RPG",
+      "Strategy"
+    ],
+    "price": "145.00",
+    "short_description": "Bringing you to an exotic desert where you’ll recruit, train, and guide your troops into battle against rival cities and factions. Embark on an adventure that’s uniquely yours; Customizable characters, professions, and factions. The land is filled with a variety of hidden secrets."
+  },
+  {
+    "appid": 1097150,
+    "name": "Fall Guys",
+    "genres": [
+      "Action",
+      "Casual",
+      "Indie",
+      "Massively Multiplayer",
+      "Sports"
+    ],
+    "price": null,
+    "short_description": "Fall Guys is a free, cross-platform massively multiplayer party royale game. Clumsily compete in absurd obstacle courses with friends or build your very own chaotic course to share with the community."
+  },
+  {
+    "appid": 1116170,
+    "name": "CyberCorp",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG",
+      "Early Access"
+    ],
+    "price": "145.00",
+    "short_description": "Brutal fast-paced isometric Co-op Loot Shooter in Cyberpunk world. Equipment-based combos. Exotic Weapons and Armor. Easy to start, hard to master. Play solo or with friends."
+  },
+  {
+    "appid": 1118200,
+    "name": "People Playground",
+    "genres": [
+      "Action",
+      "Casual",
+      "Indie",
+      "Simulation"
+    ],
+    "price": "79.00",
+    "short_description": "Shoot, stab, burn, poison, tear, vaporise, or crush ragdolls in a large open space."
+  },
+  {
+    "appid": 1129580,
+    "name": "Medieval Dynasty",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG",
+      "Simulation"
+    ],
+    "price": "399.00",
+    "short_description": "Hunt, survive, build and lead in the harsh Middle Ages: Create your own Medieval Dynasty and ensure its long-lasting prosperity or die trying! Play alone or team up with friends to enjoy the ultimate medieval experience."
+  },
+  {
+    "appid": 1144200,
+    "name": "Ready or Not",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "244.50",
+    "short_description": "Ready or Not is an intense, tactical, first-person shooter that depicts a modern-day world in which SWAT police units are called to defuse hostile and confronting situations."
+  },
+  {
+    "appid": 1145350,
+    "name": "Hades II",
+    "genres": [
+      "Action",
+      "Indie",
+      "RPG",
+      "Early Access"
+    ],
+    "price": "38.99",
+    "short_description": "Battle beyond the Underworld using dark sorcery to take on the Titan of Time in this bewitching sequel to the award-winning rogue-like dungeon crawler."
+  },
+  {
+    "appid": 1145360,
+    "name": "Hades",
+    "genres": [
+      "Action",
+      "Indie",
+      "RPG"
+    ],
+    "price": "230.00",
+    "short_description": "Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre."
+  },
+  {
+    "appid": 1147550,
+    "name": "Not For Broadcast",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "Simulation"
+    ],
+    "price": "230.00",
+    "short_description": "A new political Party has won a landslide in the General Election, and for some reason the editor at the news station you work at has done a runner. Now it’s up to you, the Janitor, to take over the editing booth in this tumultuous time - will you help the government, or stand in their way?"
+  },
+  {
+    "appid": 1147560,
+    "name": "Skul: The Hero Slayer",
+    "genres": [
+      "Action",
+      "Indie"
+    ],
+    "price": "92.50",
+    "short_description": "Guide 'Skul' on his quest to single-handedly take on the Imperial Army and rescue his King from captivity, in an action-packed rogue-lite 2D platformer for the ages."
+  },
+  {
+    "appid": 1150690,
+    "name": "OMORI",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "RPG"
+    ],
+    "price": "130.00",
+    "short_description": "Explore a strange world full of colorful friends and foes. When the time comes, the path you’ve chosen will determine your fate... and perhaps the fate of others as well."
+  },
+  {
+    "appid": 1167630,
+    "name": "Teardown",
+    "genres": [
+      "Action",
+      "Indie",
+      "Simulation",
+      "Strategy"
+    ],
+    "price": "399.00",
+    "short_description": "Prepare the perfect heist in this simulated and fully destructible voxel world. Tear down walls with vehicles or explosives to create shortcuts. Stack objects to reach higher. Use the environment to your advantage in the most creative way you can think of."
+  },
+  {
+    "appid": 1178830,
+    "name": "Bright Memory: Infinite",
+    "genres": [
+      "Action",
+      "Indie"
+    ],
+    "price": "18.50",
+    "short_description": "Bright Memory: Infinite is an all-new lightning-fast fusion of the FPS and action genres, created by FYQD-Studio. Combine a wide variety of skills and abilities to unleash dazzling combo attacks."
+  },
+  {
+    "appid": 1180380,
+    "name": "Stay Out",
+    "genres": [
+      "Action",
+      "Indie",
+      "Massively Multiplayer",
+      "RPG",
+      "Free To Play",
+      "Early Access"
+    ],
+    "price": null,
+    "short_description": "Stay Out - is a MMORPG with shooter elements, based on spirit of “stalking” - an urban exploration, searching and exploring mysterious, abandoned and forgotten by humanity pieces of our planet."
+  },
+  {
+    "appid": 1217060,
+    "name": "Gunfire Reborn",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG"
+    ],
+    "price": "189.00",
+    "short_description": "Gunfire Reborn is a level-based adventure game featuring FPS, Roguelite and RPG. Players can control heroes with various abilities to experience diverse Build gameplay, use various weapons to explore procedurally-generated levels. You can play the game alone, or join 4-player coop."
+  },
+  {
+    "appid": 1222700,
+    "name": "A Way Out",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "449.95",
+    "short_description": "A Way Out is an exclusively co-op adventure where you play the role of one of two prisoners making their daring escape from prison."
+  },
+  {
+    "appid": 1229490,
+    "name": "ULTRAKILL",
+    "genres": [
+      "Action",
+      "Indie",
+      "Early Access"
+    ],
+    "price": "230.00",
+    "short_description": "ULTRAKILL is a fast-paced ultraviolent retro FPS combining the skill-based style scoring from character action games with unadulterated carnage inspired by the best shooters of the '90s. Rip apart your foes with varied destructive weapons and shower in their blood to regain your health."
+  },
+  {
+    "appid": 1241100,
+    "name": "POLYGON",
+    "genres": [
+      "Action",
+      "Indie",
+      "Massively Multiplayer",
+      "Free To Play",
+      "Early Access"
+    ],
+    "price": null,
+    "short_description": "POLYGON is a tactical multiplayer team 1st person shooter. Using various weapons, you will battle with up to 32 players on large-scale maps. Properly managing your arsenal and skills, you will lead your team to victory!"
+  },
+  {
+    "appid": 1260320,
+    "name": "Party Animals",
+    "genres": [
+      "Action",
+      "Casual",
+      "Indie"
+    ],
+    "price": "249.00",
+    "short_description": "Fight your friends as puppies, kittens and other fuzzy creatures in PARTY ANIMALS! Paw it out with your friends remotely, or huddle together for chaotic fun on the same screen. Interact with the world under our realistic physics engine. Did I mention PUPPIES?"
+  },
+  {
+    "appid": 1262350,
+    "name": "SIGNALIS",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "355.00",
+    "short_description": "A classic survival horror experience set in a dystopian future where humanity has uncovered a dark secret. Unravel a cosmic mystery, escape terrifying creatures, and scavenge an off-world government facility as Elster, a technician Replika searching for her lost dreams."
+  },
+  {
+    "appid": 1266680,
+    "name": "Strobophagia | Rave Horror",
+    "genres": [
+      "Adventure",
+      "Indie"
+    ],
+    "price": "26.00",
+    "short_description": "An occult forest rave ⸸ Strange rituals ⸸ Enigmatic organisers ⸸ An ancient evil ⸸ Pure Psychedelic Horror"
+  },
+  {
+    "appid": 1274570,
+    "name": "DEVOUR",
+    "genres": [
+      "Indie"
+    ],
+    "price": "100.00",
+    "short_description": "DEVOUR is a co-op horror survival game for 1-4 players. Stop possessed cultists before they drag you to hell. Run. Scream. Hide. Just don't get caught."
+  },
+  {
+    "appid": 1282730,
+    "name": "Loop Hero",
+    "genres": [
+      "Indie",
+      "RPG",
+      "Strategy"
+    ],
+    "price": "145.00",
+    "short_description": "The Lich has thrown the world into a timeless loop and plunged its inhabitants into never ending chaos. Wield an expanding deck of mystical cards to place enemies, buildings, and terrain along each unique expedition loop for the brave hero."
+  },
+  {
+    "appid": 1289310,
+    "name": "Helltaker",
+    "genres": [
+      "Adventure",
+      "Free To Play",
+      "Indie"
+    ],
+    "price": null,
+    "short_description": "Helltaker is a short game about sharply dressed demon girls."
+  },
+  {
+    "appid": 1290000,
+    "name": "PowerWash Simulator",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Simulation"
+    ],
+    "price": "275.00",
+    "short_description": "Release the Pressure with PowerWash Simulator! Wash away your worries with the soothing sounds of high-pressure water. Fire up your power washer and blast away every speck of dirt and grime you can find, all with the simple satisfaction of power-washing to a sparkling finish."
+  },
+  {
+    "appid": 1296830,
+    "name": "暖雪 Warm Snow",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG"
+    ],
+    "price": "120.00",
+    "short_description": "'Warm Snow' is a Rogue-like action game with a background set in a dark fantasy world, where the eerie 'Warm Snow' holds sway. You will play as the Warrior 'Bi-an' on a crusade against the Five Great Clans, in order to save a world teetering on the brink of destruction."
+  },
+  {
+    "appid": 1304930,
+    "name": "The Outlast Trials",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "330.00",
+    "short_description": "Red Barrels invites you to experience mind-numbing terror, this time with friends. Whether you go through the trials alone or in teams, if you survive long enough and complete the therapy, Murkoff will happily let you leave… but will you be the same?"
+  },
+  {
+    "appid": 1313140,
+    "name": "Cult of the Lamb",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Strategy"
+    ],
+    "price": "27.99",
+    "short_description": "Start your own cult in a land of false prophets, venturing out into diverse and mysterious regions to build a loyal community of woodland Followers and spread your Word to become the one true cult."
+  },
+  {
+    "appid": 1326470,
+    "name": "Sons Of The Forest",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Simulation"
+    ],
+    "price": "270.00",
+    "short_description": "Sent to find a missing billionaire on a remote island, you find yourself in a cannibal-infested hellscape. Craft, build, and struggle to survive, alone or with friends, in this terrifying new open-world survival horror simulator."
+  },
+  {
+    "appid": 1332010,
+    "name": "Stray",
+    "genres": [
+      "Adventure",
+      "Indie"
+    ],
+    "price": "165.00",
+    "short_description": "Lost, alone and separated from family, a stray cat must untangle an ancient mystery to escape a long-forgotten cybercity and find their way home."
+  },
+  {
+    "appid": 1353950,
+    "name": "Ring of Fire: Prologue",
+    "genres": [
+      "Adventure",
+      "Casual",
+      "Free To Play",
+      "Indie",
+      "Simulation"
+    ],
+    "price": null,
+    "short_description": "Ring of Fire: Prologue is the first case in a search-based detective noir puzzler with a mature narrative set in the hyper-stylized streets of New London. Scour police records. Antagonize your suspects. Comb through a disturbing crime scene. You'll stop at nothing to expose the truth."
+  },
+  {
+    "appid": 1361210,
+    "name": "Warhammer 40,000: Darktide",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "599.00",
+    "short_description": "Take back the city of Tertium from hordes of bloodthirsty foes in this intense and brutal action shooter. Warhammer 40,000: Darktide is the new co-op focused experience from the award-winning team behind the Vermintide series. As Tertium falls, Rejects Will Rise."
+  },
+  {
+    "appid": 1366540,
+    "name": "Dyson Sphere Program",
+    "genres": [
+      "Indie",
+      "Simulation",
+      "Strategy",
+      "Early Access"
+    ],
+    "price": "117.00",
+    "short_description": "Build the most efficient intergalactic factory in space simulation strategy game Dyson Sphere Program! Harness the power of stars, collect resources, plan and design production lines and develop your interstellar factory from a small space workshop to a galaxy-wide industrial empire."
+  },
+  {
+    "appid": 1366800,
+    "name": "Crosshair X",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Animation & Modeling",
+      "Design & Illustration",
+      "Education",
+      "Photo Editing",
+      "Utilities",
+      "Game Development"
+    ],
+    "price": "89.99",
+    "short_description": "Overlay custom crosshairs on every game you play. Choose from thousands of unique crosshairs created by the Crosshair X community or design your own using the designer."
+  },
+  {
+    "appid": 1380400,
+    "name": "Saving Grace",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Strategy"
+    ],
+    "price": "21.50",
+    "short_description": "A first-person horror game revolving around the abduction of your daughter Grace. Cultists needs a sacrifice to resurrect the devil. Play as the father. Explore the past, present and future of this terrifying interactive story. Grace is counting on you."
+  },
+  {
+    "appid": 1388770,
+    "name": "Cruelty Squad",
+    "genres": [
+      "Action",
+      "Indie",
+      "Simulation"
+    ],
+    "price": "22.79",
+    "short_description": "An immersive power fantasy simulator with tactical stealth elements set in a sewage infused garbage world"
+  },
+  {
+    "appid": 1454400,
+    "name": "Cookie Clicker",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Simulation",
+      "Strategy"
+    ],
+    "price": "6.49",
+    "short_description": "An idle game about making cookies! Originally released in 2013 on the web, and actively developed since then. This is the official version for Steam."
+  },
+  {
+    "appid": 1466640,
+    "name": "Road 96 🛣️",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "80.00",
+    "short_description": "Hitchhike your way to freedom in this crazy procedurally generated road trip. No one's road is the same!"
+  },
+  {
+    "appid": 1468810,
+    "name": "鬼谷八荒 Tale of Immortal",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG",
+      "Simulation"
+    ],
+    "price": "160.00",
+    "short_description": "Tale of Immortal is an open-world sandbox based on Chinese mythology and cultivation. You will grow to become immortal, conquer the beasts from the Classic of Mountains and Season, make your choices carefully and grasp your own destiny."
+  },
+  {
+    "appid": 1476970,
+    "name": "IdleOn - The Idle RPG",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Massively Multiplayer",
+      "RPG",
+      "Simulation",
+      "Free To Play",
+      "Early Access"
+    ],
+    "price": null,
+    "short_description": "Create different classes who all work together when you're gone! When you return, spend their loot on powerful upgrades and synergies - but don't be fooled by the simple graphics, IdleOn gets more complex with each World Boss you defeat!"
+  },
+  {
+    "appid": 1483870,
+    "name": "Draw & Guess",
+    "genres": [
+      "Casual",
+      "Indie"
+    ],
+    "price": "32.00",
+    "short_description": "An online party game of drawing and guessing for up to 16 players with a variety of modes. Bring out the best (or worst) of your drawing and guessing skills!"
+  },
+  {
+    "appid": 1509960,
+    "name": "PICO PARK",
+    "genres": [
+      "Action",
+      "Casual",
+      "Indie"
+    ],
+    "price": "42.00",
+    "short_description": "PICO PARK is a cooperative local/online multiplay action puzzle game for 2-8 players."
+  },
+  {
+    "appid": 1522820,
+    "name": "Orcs Must Die! 3",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Strategy"
+    ],
+    "price": "52.50",
+    "short_description": "Slice, burn, toss, zap, grind and gib massive hordes of repugnant orcs in this long-awaited successor to the award-winning Orcs Must Die! series."
+  },
+  {
+    "appid": 1536610,
+    "name": "OpenTTD",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Simulation",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "OpenTTD is a business simulation game in which players earn money by transporting passengers and cargo via road, rail, water, and air. It is an open-source remake and expansion of the 1995 Chris Sawyer video game Transport Tycoon Deluxe."
+  },
+  {
+    "appid": 1557740,
+    "name": "ROUNDS",
+    "genres": [
+      "Action",
+      "Indie"
+    ],
+    "price": "59.00",
+    "short_description": "Rounds is a 1v1 rogue-lite shooter where each round gets more intense. The losing player of each round unlocks clever upgrades to create a better build to counter their opponent."
+  },
+  {
+    "appid": 1610430,
+    "name": "OPG: Clan Wars",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Massively Multiplayer",
+      "Simulation",
+      "Early Access"
+    ],
+    "price": "50.00",
+    "short_description": "Online multiplayer with PVPVE battles. Five game modes. Single-player, team battles, raids, global mode, and bunkers.Arena shooter, open world, quests and crafting resources await you. Join the world of OPG."
+  },
+  {
+    "appid": 1619450,
+    "name": "Heart of a Warrior",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG"
+    ],
+    "price": "85.00",
+    "short_description": "Heart of a warrior is a RPG game in an open world where you play as Nahele, a young warrior of ancient bloodline on his journey to rescue his twin sister from the underworld, as he travel through portals to different realms of existence."
+  },
+  {
+    "appid": 1621690,
+    "name": "Core Keeper",
+    "genres": [
+      "Adventure",
+      "Casual",
+      "Indie",
+      "RPG"
+    ],
+    "price": "129.50",
+    "short_description": "Explore a vast cavern of creatures, relics and resources in a mining sandbox adventure for 1-8 players. Mine, build, fight, craft and farm to unravel the mystery of the ancient Core."
+  },
+  {
+    "appid": 1623730,
+    "name": "Palworld",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "RPG",
+      "Early Access"
+    ],
+    "price": "270.00",
+    "short_description": "Fight, farm, build and work alongside mysterious creatures called &quot;Pals&quot; in this completely new multiplayer, open world survival and crafting game!"
+  },
+  {
+    "appid": 1637320,
+    "name": "Dome Keeper",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Simulation"
+    ],
+    "price": "67.20",
+    "short_description": "Defend against waves of alien attackers in this innovative roguelike survival miner. Dig for resources and choose from powerful upgrade paths. Is there enough time to mine a little deeper and get back to defend before the monsters attack your dome?"
+  },
+  {
+    "appid": 1676130,
+    "name": "Deadlink",
+    "genres": [
+      "Action",
+      "Indie"
+    ],
+    "price": "230.00",
+    "short_description": "Get ready to put a sizable dent in the profits of megacorporations in Deadlink, a guns-blazing cyberpunk FPS with roguelite elements. Your mission is to conduct covert ops while piloting a humanoid combat shell. And no, &quot;covert&quot; doesn’t mean &quot;quiet.&quot;"
+  },
+  {
+    "appid": 1677740,
+    "name": "Stumble Guys",
+    "genres": [
+      "Action",
+      "Casual",
+      "Indie",
+      "Massively Multiplayer",
+      "Free To Play"
+    ],
+    "price": null,
+    "short_description": "Race through obstacle courses against up to 32 players online. Run, jump and dash to the finish line until the best player takes the crown!"
+  },
+  {
+    "appid": 1721470,
+    "name": "Poppy Playtime",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": null,
+    "short_description": "You must stay alive in this horror/puzzle adventure. Try to survive the vengeful toys waiting for you in the abandoned toy factory. Use your GrabPack to hack electrical circuits or nab anything from afar. Explore the mysterious facility... and don't get caught."
+  },
+  {
+    "appid": 1794680,
+    "name": "Vampire Survivors",
+    "genres": [
+      "Action",
+      "Casual",
+      "Indie",
+      "RPG"
+    ],
+    "price": "39.20",
+    "short_description": "Mow down thousands of night creatures and survive until dawn! Vampire Survivors is a gothic horror casual game with rogue-lite elements, where your choices can allow you to quickly snowball against the hundreds of monsters that get thrown at you."
+  },
+  {
+    "appid": 1832640,
+    "name": "Mirror 2: Project X",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "RPG",
+      "Early Access"
+    ],
+    "price": "21.50",
+    "short_description": "Enter the parallel worlds enriched by the stories and match-3 games developed using cel-shading techniques powered by Unreal Engine 4. Ponder on your choices because each of them will determine the fate of all."
+  },
+  {
+    "appid": 1929610,
+    "name": "Demonologist",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "145.00",
+    "short_description": "Demonologist is a Co-Op horror game that can be played with at least 1 and up to 4 players. Your goal is to identify the type of evil spirit in cursed places and exorcise it using your equipment, either alone or with your team."
+  },
+  {
+    "appid": 1942280,
+    "name": "Brotato",
+    "genres": [
+      "Action",
+      "Casual",
+      "Indie",
+      "RPG"
+    ],
+    "price": "2.99",
+    "short_description": "Brotato is a top-down arena shooter roguelite where you play a potato wielding up to 6 weapons at a time to fight off hordes of aliens. Choose from a variety of traits and items to create unique builds and survive until help arrives."
+  },
+  {
+    "appid": 1943950,
+    "name": "Escape the Backrooms",
+    "genres": [
+      "Indie",
+      "Early Access"
+    ],
+    "price": "79.00",
+    "short_description": "Escape the Backrooms is a 1-4 player co-op horror exploration game. Traverse through eerie backrooms levels while avoiding entities and other danger to try and escape. Free content updates with new levels and game modes keep the community rewarded."
+  },
+  {
+    "appid": 1966720,
+    "name": "Lethal Company",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Early Access"
+    ],
+    "price": "100.00",
+    "short_description": "A co-op horror about scavenging at abandoned moons to sell scrap to the Company."
+  },
+  {
+    "appid": 1987080,
+    "name": "Inside the Backrooms",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "Early Access"
+    ],
+    "price": "79.00",
+    "short_description": "Inside the Backrooms is a horror multiplayer game mixed with different mechanics that will make you spend an intense night with friends. Explore, think, interact, but be careful, it is rumored that there are several entities wishing to find you..."
+  },
+  {
+    "appid": 2186680,
+    "name": "Warhammer 40,000: Rogue Trader",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "RPG",
+      "Strategy"
+    ],
+    "price": "415.00",
+    "short_description": "Made in a close partnership with Games Workshop, Warhammer 40,000: Rogue Trader is a story-rich classical RPG from Owlcat Games, developers of the critically acclaimed game, Pathfinder: Wrath of the Righteous."
+  },
+  {
+    "appid": 2231450,
+    "name": "Pizza Tower",
+    "genres": [
+      "Action",
+      "Indie"
+    ],
+    "price": "120.00",
+    "short_description": "Pizza Tower is a fast paced 2D platformer, with an emphasis on movement, exploration and score attack. Featuring highly stylized pixel art inspired by the cartoons from the '90s, and a highly energetic soundtrack."
+  },
+  {
+    "appid": 2322560,
+    "name": "Love Is All Around",
+    "genres": [
+      "Adventure",
+      "Indie",
+      "RPG",
+      "Simulation",
+      "Strategy"
+    ],
+    "price": "100.00",
+    "short_description": "The player becomes Gu Yi, uses the first-person perspective to immerse himself in meeting six beauties, and embarks on a joyful and sweet love journey with them. Six girls that are charming, innocent, intelligent, wild, sexy, glamorous, who will go to the end with you is up to you to decide."
+  },
+  {
+    "appid": 2379780,
+    "name": "Balatro",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Strategy"
+    ],
+    "price": "130.50",
+    "short_description": "The poker roguelike. Balatro is a hypnotically satisfying deckbuilder where you play illegal poker hands, discover game-changing jokers, and trigger adrenaline-pumping, outrageous combos."
+  },
+  {
+    "appid": 2399830,
+    "name": "ARK: Survival Ascended",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie",
+      "Massively Multiplayer",
+      "RPG",
+      "Early Access"
+    ],
+    "price": "860.00",
+    "short_description": "ARK is reimagined from the ground-up into the next-generation of video game technology with Unreal Engine 5! Form a tribe, tame &amp; breed hundreds of unique dinosaurs and primeval creatures, explore, craft, build, and fight your way to the top of the food-chain. Your new world awaits!"
+  },
+  {
+    "appid": 2567870,
+    "name": "Chained Together",
+    "genres": [
+      "Adventure",
+      "Casual",
+      "Indie",
+      "Simulation"
+    ],
+    "price": "52.00",
+    "short_description": "From the depths of hell, climb chained to your friends through diverse worlds. Solo or co-op, try to reach the summit and discover what awaits you there..."
+  },
+  {
+    "appid": 2670630,
+    "name": "Supermarket Simulator",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Simulation",
+      "Early Access"
+    ],
+    "price": "127.00",
+    "short_description": "Run your own supermarket. Stock shelves, set prices as you'd like, take payments, hire staff, expand and design your store. Online orders &amp; delivery, shoplifters, security, local market are upcoming."
+  },
+  {
+    "appid": 2835570,
+    "name": "Buckshot Roulette",
+    "genres": [
+      "Action",
+      "Indie",
+      "Simulation"
+    ],
+    "price": "22.40",
+    "short_description": "Play Russian roulette with a 12-gauge shotgun. Four enter. One leaves. Roll the dice with your life. Good luck!"
+  },
+  {
+    "appid": 2881650,
+    "name": "Content Warning",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Indie"
+    ],
+    "price": "82.00",
+    "short_description": "Film your friends doing scary things to become SpöökTube famous! (strongly advised to not go alone)"
+  },
+  {
+    "appid": 3097560,
+    "name": "Liar's Bar",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Simulation",
+      "Strategy",
+      "Early Access"
+    ],
+    "price": "72.00",
+    "short_description": "Dive into this multiplayer online experience set in a sketchy bar where the games are as dangerous as the patrons. Join a table of 4 and test your skills in Liar's Dice and Liar's Deck, where lying and bluffing are key to victory. Ready for a night at Liar's Bar?"
+  },
+  {
+    "appid": 3146520,
+    "name": "WEBFISHING",
+    "genres": [
+      "Casual",
+      "Indie",
+      "Massively Multiplayer"
+    ],
+    "price": "52.00",
+    "short_description": "WEBFISHING a multiplayer chatroom-focused fishing game! Relax and fish (on the web!)"
+  }
+]

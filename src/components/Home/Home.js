@@ -44,39 +44,6 @@ export default function Home() {
     }
   };
 
-  const Countdown = () => {
-    const [timeLeft, setTimeLeft] = useState(getTimeRemaining());
-
-    function getTimeRemaining() {
-      const deadline = new Date("2025-04-10T23:59:59Z");
-      const total = Date.parse(deadline) - Date.now();
-      const seconds = Math.floor((total / 1000) % 60);
-      const minutes = Math.floor((total / 1000 / 60) % 60);
-      const hours = Math.floor((total / 1000 / 60 / 60) % 24);
-      const days = Math.floor(total / (1000 * 60 * 60 * 24));
-      return { total, days, hours, minutes, seconds };
-    }
-
-    React.useEffect(() => {
-      const timer = setInterval(() => {
-        setTimeLeft(getTimeRemaining());
-      }, 1000);
-      return () => clearInterval(timer);
-    }, []);
-
-    if (timeLeft.total <= 0)
-      return <p className="text-teal-400 font-bold">Beta is closed</p>;
-
-    return (
-      <div className="text-2xl font-mono text-teal-400 flex justify-center space-x-4">
-        <span>{timeLeft.days}d</span>
-        <span>{timeLeft.hours}h</span>
-        <span>{timeLeft.minutes}m</span>
-        <span>{timeLeft.seconds}s</span>
-      </div>
-    );
-  };
-
   return (
     <div className="bg-gray-900 min-h-screen flex flex-col text-white">
       <NavHeader />
@@ -102,8 +69,8 @@ export default function Home() {
         </motion.p> */}
 
         <div className="mb-10">
-          <div className="inline-block px-4 py-1 text-sm bg-red-600 text-white rounded-full uppercase font-bold tracking-wide mb-4">
-            Limited Beta: 50 Indie Devs Only
+          <div className="inline-block px-4 py-1 text-sm bg-teal-600 text-white rounded-full uppercase font-bold tracking-wide mb-4">
+            Now Live – Trusted by Indie Devs
           </div>
 
           <motion.h1
@@ -112,7 +79,7 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            Price Your Game Wrong, Lose Everything
+            Price Your Game Smarter – Sell More Copies
           </motion.h1>
 
           <motion.p
@@ -125,10 +92,6 @@ export default function Home() {
             momentum. Our tool analyzes real Steam competitors to help you price
             smart and grow fast. Beta closes in:
           </motion.p>
-
-          <div className="mt-6 text-center">
-            <Countdown />
-          </div>
         </div>
 
         <motion.div
@@ -147,7 +110,7 @@ export default function Home() {
             href="/signup"
             className="mt-6 inline-block bg-teal-500 hover:bg-teal-600 px-6 py-3 rounded-lg text-white text-lg shadow-lg hover:scale-105 transition-transform"
           >
-            Join the Beta Now (50 Spots Only - 39 left)
+            Start for Free – Get Smart Pricing
           </a>
         </motion.div>
 
@@ -183,6 +146,34 @@ export default function Home() {
                 system do the rest.
               </p>
             </div>
+          </div>
+        </section>
+
+        <section className="mb-20">
+          <h3 className="text-3xl text-teal-400 font-bold mb-8">
+            See It in Action
+          </h3>
+          <div className="bg-gray-800 p-6 rounded-lg shadow-lg max-w-2xl mx-auto">
+            <h4 className="text-xl font-semibold mb-2 text-white">
+              Example: Pricing “Hollow Knight” as a New Indie Dev
+            </h4>
+            <p className="text-gray-400 mb-2">
+              Your game is a 2D platformer with 10+ hours of playtime, developed
+              by a small team.
+            </p>
+            <p className="text-teal-400 text-lg font-bold mb-2">
+              💡 Suggested Price: <span className="text-white">$14.99</span>
+            </p>
+            <p className="text-gray-400">
+              Based on AI-matched titles including <strong>Celeste</strong>{" "}
+              ($19.99), <strong>Ori and the Blind Forest</strong> ($19.99), and{" "}
+              <strong>Axiom Verge</strong> ($17.99).
+            </p>
+            <p className="mt-3 text-gray-500 italic">
+              “$14.99 is a sweet spot based on similar platformers with a
+              similar length and review profile. It positions your game
+              competitively without underselling.” – Devindie AI
+            </p>
           </div>
         </section>
 
@@ -222,16 +213,13 @@ export default function Home() {
           <h3 className="text-3xl font-bold text-teal-400 mb-10">
             Simple, Transparent Pricing
           </h3>
-          <h5 className="text-2xl font-bold text-teal-400 mb-10">
-            Beta Launch Pricing! — Lock in low rates before full release.
-          </h5>
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
               <h4 className="text-xl font-bold text-white mb-2">Free</h4>
               <p className="text-gray-300 mb-4">For testing it out</p>
               <p className="text-2xl text-teal-400 mb-4">$0 / month</p>
               <ul className="text-gray-300 space-y-2 text-left">
-                <li>✓ 10 queries/month</li>
+                <li>✓ 5 queries/month</li>
                 <li>✓ Basic competitor data</li>
                 <li>✓ Community support</li>
               </ul>
@@ -247,7 +235,7 @@ export default function Home() {
               <p className="text-gray-300 mb-4">For growing devs</p>
               <p className="text-2xl text-teal-400 mb-4">$9 / month</p>
               <ul className="text-gray-300 space-y-2 text-left">
-                <li>✓ 30 queries/month</li>
+                <li>✓ Unlimited queries</li>
                 <li>✓ In-depth pricing metrics</li>
                 <li>✓ Auto-updated data</li>
               </ul>
@@ -261,11 +249,11 @@ export default function Home() {
             <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
               <h4 className="text-xl font-bold text-white mb-2">Enterprise</h4>
               <p className="text-gray-300 mb-4">For studios and publishers</p>
-              <p className="text-2xl text-teal-400 mb-4">$29 / month</p>
+              <p className="text-2xl text-teal-400 mb-4">$19 / month</p>
               <ul className="text-gray-300 space-y-2 text-left">
                 <li>✓ Unlimited queries</li>
                 <li>✓ Pricing history trends</li>
-                <li>✓ Studio-level support</li>
+                <li>✓ Priority support</li>
               </ul>
               <a
                 href="/dashboard"
@@ -276,8 +264,7 @@ export default function Home() {
             </div>
           </div>
           <p className="text-sm text-gray-400 text-center mt-4">
-            One-time payment giving you access for 30 days. Subscriptions
-            launching soon!
+            Monthly billing via Paystack. Upgrade, downgrade, or cancel anytime.
           </p>
         </section>
 
@@ -304,7 +291,7 @@ export default function Home() {
             <div>
               <h4 className="font-semibold text-white">Is it free to try?</h4>
               <p>
-                Yes. Our Free tier lets you run 3 pricing queries per month with
+                Yes. Our Free tier lets you run 5 pricing queries per month with
                 limited data. Upgrade anytime for full access.
               </p>
             </div>
@@ -320,7 +307,7 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="max-w-lg mx-auto mt-12 bg-gray-800 p-6 rounded-lg shadow-lg text-white">
+        {/* <div className="max-w-lg mx-auto mt-12 bg-gray-800 p-6 rounded-lg shadow-lg text-white">
           <h2 className="text-2xl font-bold text-center text-teal-400 mb-4">
             🎁 Get the Free Indie Game Pricing Guide
           </h2>
@@ -351,7 +338,7 @@ export default function Home() {
           <p className="text-sm text-gray-500 text-center mt-4">
             No spam. Unsubscribe anytime.
           </p>
-        </div>
+        </div> */}
       </main>
       <Footer />
     </div>
