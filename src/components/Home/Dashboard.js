@@ -284,7 +284,7 @@ export default function Dashboard() {
           )}
 
           {tier === "free" && (
-            <div className="flex justify-center mt-6">
+            <div className="flex justify-center mt-6 space-x-4">
               <PaystackCheckout plan="pro" />
               <PaystackCheckout plan="enterprise" />
             </div>
