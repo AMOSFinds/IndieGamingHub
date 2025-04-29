@@ -20,7 +20,7 @@ export default function Pricing() {
         {/* Pro */}
         <div className="bg-gray-800 rounded-lg p-6 text-center border border-teal-400">
           <h2 className="text-xl font-bold">Pro</h2>
-          <p className="text-3xl text-teal-400 my-4">$29</p>
+          <p className="text-3xl text-teal-400 my-4">$9</p>
           <p className="text-gray-300 mb-4">Full AI tool + pricing history</p>
           <PaystackCheckout plan="pro" />
         </div>
@@ -28,7 +28,7 @@ export default function Pricing() {
         {/* Enterprise */}
         <div className="bg-gray-800 rounded-lg p-6 text-center">
           <h2 className="text-xl font-bold">Enterprise</h2>
-          <p className="text-3xl text-teal-400 my-4">$99</p>
+          <p className="text-3xl text-teal-400 my-4">$19</p>
           <p className="text-gray-300 mb-4">All features + concierge support</p>
           <PaystackCheckout plan="enterprise" />
         </div>

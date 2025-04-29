@@ -240,7 +240,7 @@ export default function Home() {
                 <li>✓ Auto-updated data</li>
               </ul>
               <a
-                href="/dashboard"
+                href="/pricing"
                 className="block mt-6 bg-teal-500 text-white px-4 py-2 rounded-lg text-center hover:bg-teal-600"
               >
                 Upgrade to Pro
@@ -256,7 +256,7 @@ export default function Home() {
                 <li>✓ Priority support</li>
               </ul>
               <a
-                href="/dashboard"
+                href="/pricing"
                 className="block mt-6 bg-purple-500 text-white px-4 py-2 rounded-lg text-center hover:bg-purple-600"
               >
                 Upgrade to Enterprise
