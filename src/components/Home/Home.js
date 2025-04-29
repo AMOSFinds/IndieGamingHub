@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import NavHeader from "./NavHeader";
 import Footer from "../Footer";
+import PaystackCheckout from "./PaystackCheckout";
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -240,7 +241,7 @@ export default function Home() {
                 <li>✓ Auto-updated data</li>
               </ul>
               <a
-                href="/pricing"
+                href="/dashboard"
                 className="block mt-6 bg-teal-500 text-white px-4 py-2 rounded-lg text-center hover:bg-teal-600"
               >
                 Upgrade to Pro
@@ -256,7 +257,7 @@ export default function Home() {
                 <li>✓ Priority support</li>
               </ul>
               <a
-                href="/pricing"
+                href="/dashboard"
                 className="block mt-6 bg-purple-500 text-white px-4 py-2 rounded-lg text-center hover:bg-purple-600"
               >
                 Upgrade to Enterprise
@@ -283,9 +284,9 @@ export default function Home() {
             <div>
               <h4 className="font-semibold text-white">How does it work?</h4>
               <p>
-                Navigate to the Dashboard and just type a game in the same genre
-                or niche as your own, and Devindie will analyze similar titles
-                and return a smart pricing recommendation instantly.
+                Navigate to the Dashboard and describe your game, and Devindie
+                will analyze similar titles and return a smart pricing
+                recommendation instantly.
               </p>
             </div>
             <div>
